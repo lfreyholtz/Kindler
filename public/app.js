@@ -212,13 +212,14 @@
   // ---------- Tabs ----------
 
   function showView(name) {
-    for (const v of ["liste", "daten", "kontakte", "woerter", "unterlagen"]) $("#view-" + v).hidden = v !== name;
+    for (const v of ["liste", "daten", "kontakte", "woerter", "unterlagen", "gebuehren"]) $("#view-" + v).hidden = v !== name;
     $$(".tab").forEach((b) => { if (b.dataset.view === name) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
     store.set("kindler.view", name);
     if (name === "daten") renderProfileForm();
     if (name === "kontakte") renderContacts();
     if (name === "woerter") renderGlossary();
     if (name === "unterlagen") renderPapers();
+    if (name === "gebuehren") renderFees();
     window.scrollTo({ top: 0 });
   }
   $$(".tab").forEach((b) => b.addEventListener("click", () => showView(b.dataset.view)));
@@ -704,6 +705,40 @@
           )
           .join("")
       : `<p class="muted">Keine Unterlagen gefunden.</p>`;
+  }
+
+  function renderFees() {
+    const groups = K.fees || [];
+    const stepTitle = (id) => { const st = K.steps.find((s) => s.id === id); return st ? st.title : ""; };
+    const stepDone = (id) => isDone(id);
+    let fixed = 0, open = 0, free = 0;
+    groups.forEach((g) => g.items.forEach((i) => { if (/^kostenlos/.test(i.amount)) free++; else if (/Dollar|Euro/.test(i.amount)) fixed++; else open++; }));
+    $("#fees-summary").innerHTML = `<span class="pill">${fixed} mit festem Betrag</span><span class="pill">${open} ohne festen Betrag</span><span class="pill">${free} kostenlos</span>`;
+    $("#fees").innerHTML = groups
+      .map(
+        (g) => `
+      <section class="fee-group">
+        <h3>${esc(g.group)}</h3>
+        ${g.items
+          .map(
+            (i) => `
+        <div class="fee${stepDone(i.step) ? " is-done" : ""}">
+          <div class="fee-head">
+            <div class="fee-title">${esc(i.title)}</div>
+            <div class="fee-amount${/^kostenlos/.test(i.amount) ? " is-free" : ""}">${esc(i.amount)}</div>
+          </div>
+          <div class="fee-when"><span class="fee-label">Wann:</span> ${esc(i.when)}</div>
+          ${i.note ? `<div class="fee-note">${esc(i.note)}</div>` : ""}
+          <div class="fee-actions">
+            <a class="cite" href="${esc(i.source.url)}" target="_blank" rel="noopener">Quelle: ${esc(i.source.title)}</a>
+            <button class="btn btn-small btn-ghost" type="button" data-goto="${esc(i.step)}">Zum Schritt: ${esc(stepTitle(i.step))}</button>
+          </div>
+        </div>`
+          )
+          .join("")}
+      </section>`
+      )
+      .join("");
   }
 
   function renderGlossary() {

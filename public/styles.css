@@ -330,3 +330,19 @@ legend { font-family: var(--font-display); font-weight: 300; font-size: 24px; pa
 .paper-main { flex: 1; min-width: 200px; }
 .paper-title { color: var(--ink); }
 .paper-actions { display: flex; gap: 8px; }
+
+/* Gebühren */
+.fees-summary { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; }
+.fees { display: grid; gap: 28px; }
+.fee-group h3 { font-family: var(--font-display, "Newsreader", serif); font-weight: 300; font-size: 1.35rem; margin: 0 0 12px; letter-spacing: -0.01em; }
+.fee-group { display: grid; gap: 10px; }
+.fee { background: var(--surface); border-radius: var(--r-lg); padding: 16px 18px; display: grid; gap: 6px; }
+.fee.is-done { opacity: 0.6; }
+.fee-head { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; flex-wrap: wrap; }
+.fee-title { color: var(--ink); font-weight: 500; }
+.fee-amount { font-family: var(--font-display, "Newsreader", serif); font-size: 1.25rem; font-weight: 400; color: var(--ink); white-space: nowrap; }
+.fee-amount.is-free { color: var(--muted); }
+.fee-when, .fee-note { font-size: 0.95rem; color: var(--muted); }
+.fee-label { color: var(--ink); font-weight: 500; }
+.fee-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 6px; }
+@media (max-width: 600px) { .fee-amount { white-space: normal; } }
