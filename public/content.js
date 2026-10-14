@@ -168,15 +168,33 @@ window.KINDLER = {
       url: "https://de.usembassy.gov/",
     },
     ssa: {
-      name: "Social-Security-Büro (für die Sozialversicherungsnummer)",
+      name: "Social-Security-Büro Griffin",
+      address: "1548 Flynt St, Griffin, GA 30223",
       phone: "1-800-772-1213",
-      note: "Das nächste Büro findet ihr auf der Webseite. Postleitzahl eingeben.",
-      url: "https://secure.ssa.gov/ICON/main.jsp",
+      hours: "Mo bis Fr, 9 bis 16 Uhr",
+      note: "Prüft vorher mit eurer Postleitzahl auf ssa.gov/locator, ob Griffin für euch zuständig ist.",
+      url: "https://www.ssa.gov/locator",
     },
-    dds: {
-      name: "Führerscheinstelle (DDS)",
-      note: "Die nächste Stelle findet ihr auf der Webseite.",
-      url: "https://dds.georgia.gov/locations",
+    ddsGriffin: {
+      name: "Führerscheinstelle Griffin (DDS)",
+      address: "1313 Arthur K Bolton Pkwy, Griffin, GA 30223",
+      phone: "678-413-8400",
+      hours: "Di bis Fr, 8 bis 18 Uhr. Sa bis Mo geschlossen.",
+      url: "https://dds.georgia.gov/locations/griffin",
+    },
+    ddsThomaston: {
+      name: "Führerscheinstelle Thomaston (DDS)",
+      address: "281 Knight Trail, Thomaston, GA 30286",
+      phone: "678-413-8400",
+      hours: "Di bis Fr, 8 bis 18 Uhr. Sa bis Mo geschlossen.",
+      url: "https://dds.georgia.gov/locations/thomaston",
+    },
+    extensionLamar: {
+      name: "UGA Extension Lamar County (Wassertests)",
+      address: "790 Veterans Parkway, Barnesville, GA 30204",
+      phone: "770-358-5163",
+      email: "lamar.extension@uga.edu",
+      url: "https://extension.uga.edu/county-offices/lamar.html",
     },
   },
 
@@ -356,11 +374,13 @@ window.KINDLER = {
           to: "770-358-1483, dann die 2",
           lines: [
             { en: "Hello, this is {{owner1}} from {{businessName}}. We spoke recently about our food truck permit, and I have a few follow-up questions.", de: "Hallo, hier ist … von … Wir haben kürzlich über die Genehmigung für unseren Food Truck gesprochen. Ich habe noch ein paar Fragen." },
-            { en: "Our kitchen is a separate building on our property, and we also live on the property. Is that acceptable as our base of operation?", de: "Unsere Küche ist ein eigenes Gebäude auf unserem Grundstück, und wir wohnen auch dort. Ist das als Stützpunkt in Ordnung?" },
+            { en: "Our kitchen is a separate building on our property, so it is detached from our living quarters. Is anything else needed for it to qualify as our base of operation?", de: "Unsere Küche ist ein eigenes Gebäude auf dem Grundstück, also getrennt vom Wohnbereich. Brauchen Sie sonst noch etwas, damit sie als Stützpunkt anerkannt wird?" },
+            { en: "Will we need any changes to the septic system for wastewater from the truck?", de: "Müssen wir an der Klärgrube etwas ändern, damit wir das Abwasser aus dem Truck ablassen dürfen?" },
             { en: "Should we submit everything in Thomaston or in Barnesville?", de: "Wo geben wir die Unterlagen ab? Thomaston oder Barnesville?" },
             { en: "Can we submit the application before our visa interview on November 12?", de: "Dürfen wir vor unserem Visumstermin am 12. November den Antrag stellen?" },
-            { en: "We can only register the truck after our visa is issued, so we won't have a license plate yet. Can we submit the application with the VIN and add the plate number later?", de: "Wir können den Truck erst nach dem Visum anmelden und haben deshalb noch kein Kennzeichen. Können wir den Antrag mit der Fahrgestellnummer einreichen und das Kennzeichen nachreichen?" },
-            { en: "Is the plan review fee still $250, and which payment methods do you accept?", de: "Ist die Gebühr noch 250 Dollar? Wie können wir bezahlen?" },
+            { en: "We can only register the truck once our visa is issued, so we won't have a license plate yet. Is the VIN enough for now?", de: "Wir können den Truck erst nach dem Visum anmelden und haben deshalb noch kein Kennzeichen. Reicht vorerst die Fahrgestellnummer?" },
+            { en: "What are the plan review and permit fees, and which payment methods do you accept?", de: "Wie hoch sind die Gebühren für Prüfung und Genehmigung, und wie können wir bezahlen?" },
+            { en: "Our water comes from a private well. Do you need the W-33 chemical test, the W-33C version, or also a bacteria test?", de: "Unser Wasser kommt aus einem eigenen Brunnen. Brauchen Sie den Chemie-Test W-33, die Version W-33C, oder auch einen Bakterien-Test?" },
             { en: "Which food safety manager certifications do you accept?", de: "Welche Hygiene-Prüfung akzeptieren Sie?" },
             { en: "Could you email me the application and any other forms we need? My address is {{email}}.", de: "Können Sie uns bitte alle Formulare per E-Mail schicken? Unsere E-Mail ist …" },
             { en: "May I have your name, in case we have more questions?", de: "Wie ist Ihr Name, bitte? Falls wir noch Fragen haben." },
@@ -377,7 +397,9 @@ window.KINDLER = {
             "- The separate kitchen building on our property at {{baseStreet}}, {{baseCity}}, GA {{baseZip}} (Lamar County) is acceptable as our base of operation.\n" +
             "- We will submit the pre-application and the permit application at [OFFICE].\n" +
             "- We may submit before our visa interview on November 12.\n" +
-            "- The plan review fee is [AMOUNT].\n\n" +
+            "- The VIN is sufficient for now; we will provide the license plate number once the truck is registered.\n" +
+            "- The fees are [AMOUNT].\n" +
+            "- For our well, you require [TEST].\n\n" +
             "Please let us know if any of this is incorrect. We would also appreciate it if you could send us the application form and any other forms we will need.\n\n" +
             "Best regards,\n{{owner1}}\n{{businessName}}\n{{phone}}\n{{email}}",
           de: "Auf Deutsch: Danke für Ihre Hilfe. Haben wir richtig verstanden? Die Küche auf unserem Grundstück ist als Stützpunkt in Ordnung. Wir geben in [BÜRO] ab. Wir dürfen vor dem 12. November beantragen. Die Gebühr ist [BETRAG]. Bitte sagen Sie uns, wenn etwas nicht stimmt.\n\nWichtig: Vor dem Senden die Stellen in eckigen Klammern ausfüllen. Und alles streichen, was die Dame anders gesagt hat. Die E-Mail-Adresse bekommt ihr am Telefon.",
@@ -401,7 +423,8 @@ window.KINDLER = {
       bring: [
         "Das Vorab-Formular",
         "Den Kaufvertrag oder Grundsteuerbescheid für das Grundstück",
-        "Die Flurstücknummer (Parcel ID), falls ihr sie habt",
+        "Die Flurstücknummer (Parcel ID). Nachschlagen könnt ihr sie bei qPublic (Link unten unter „Woher wir das wissen“)",
+        "Eine Liste mit Orten, an denen ihr verkaufen wollt. Das Formular hat dafür drei Zeilen („Proposed Set-Up Locations“). Ungefähre Angaben reichen, zum Beispiel „Barnesville, Downtown“ oder „Veranstaltungen in Lamar und Upson County“",
       ],
       emails: [
         {
@@ -419,10 +442,15 @@ window.KINDLER = {
           de: "Auf Deutsch: Uns gehört das Grundstück. Darauf steht eine eigene Küche, getrennt vom Wohnhaus. Dort wollen wir für den Truck vorbereiten, den Truck abstellen, Wasser auffüllen, Abwasser ablassen, putzen und lagern. Verkauf und Kunden gibt es dort nicht. Wir fragen: (1) Ist das erlaubt? (2) Können Sie das Formular vom Gesundheitsamt unterschreiben, und wann können wir kommen? (3) Brauchen wir einen Gewerbeschein oder eine andere Genehmigung?",
         },
       ],
-      upload: "Bitte ladet hier die Antwort vom Bauamt hoch: die E-Mail (als PDF oder Bildschirmfoto), einen Brief oder ein Foto vom unterschriebenen Formular. Dann ist schriftlich festgehalten, dass die Küche auf eurem Grundstück in Ordnung ist.",
+      prepare: [
+        "Gute Nachricht: Das Gesundheitsamt von Georgia erlaubt einen Stützpunkt auf dem eigenen Wohngrundstück ausdrücklich, wenn er vom Wohnbereich getrennt ist. In den häufigen Fragen steht als Beispiel wörtlich „ein Nebengebäude in eurem Garten“. Genau das habt ihr. Bedingungen: Das Bauamt muss es erlauben, das Abwasser muss geregelt sein, und bei eigenem Brunnen muss das Wasser getestet sein.",
+        "Nur in der Wohnung selbst ist es verboten. Das Nebengebäude ist der erlaubte Weg.",
+      ],
+      upload: "Bitte ladet hier die Antwort vom Bauamt hoch: die E-Mail (als PDF oder Bildschirmfoto), einen Brief oder ein Foto vom unterschriebenen Formular. Dann ist schriftlich festgehalten, dass die Küche auf eurem Grundstück erlaubt ist.",
       sources: [
         { title: "Bauamt Lamar County", url: "https://www.lamarcountyga.com/departments/buildingzoning-department/" },
-        { title: "Gesundheitsamt Georgia: häufige Fragen zu Food Trucks", url: "https://dph.georgia.gov/document/document/mobile-food-frequency-asked-questions/download" },
+        { title: "Gesundheitsamt Georgia: häufige Fragen zu Food Trucks (erlaubt das Nebengebäude)", url: "https://dph.georgia.gov/document/document/mobile-food-frequency-asked-questions/download" },
+        { title: "Grundstück nachschlagen (qPublic Lamar County)", url: "https://qpublic.schneidercorp.com/Application.aspx?App=LamarCountyGA&Layer=Parcels&PageType=Search" },
       ],
     },
     {
@@ -432,6 +460,11 @@ window.KINDLER = {
       online: [{ title: "Antragsformular „LC Business License“ herunterladen", url: "https://www.lamarcountyga.com/?p=918" }],
       summary: "Eure Firma braucht einen Gewerbeschein vom County, in dem eure Küche steht. Das ist Lamar County.",
       why: "Das Vorab-Formular verlangt, dass ihr den Gewerbeschein beim Bauamt beantragt. Er muss jedes Jahr bis zum 31. März erneuert werden.",
+      prepare: [
+        "Gebühren laut Satzung von Lamar County: 25 Dollar Bearbeitungsgebühr plus die Jahresgebühr nach Mitarbeiterzahl. Bei einem Mitarbeiter 100 Dollar, bei 2 bis 9 Mitarbeitern 125 Dollar. Wer erst ab 1. Juli anfängt, zahlt die halbe Jahresgebühr.",
+        "Wer zu spät erneuert, zahlt 10 Prozent Strafe. Ohne Gewerbeschein zu arbeiten kann bis zu 500 Dollar kosten.",
+        "Das Amt prüft dabei auch, ob die Nutzung baurechtlich in Ordnung ist und ob ihr die Gesundheitsgenehmigung habt. Darum passt der Termin gut mit der Zoning-Unterschrift zusammen.",
+      ],
       where: [{ ref: "lamarPlanning" }],
       todo: [
         "Das Antragsformular herunterladen (Link oben).",
@@ -474,46 +507,28 @@ window.KINDLER = {
           ],
         },
       ],
-      sources: [{ title: "Lamar County: Gewerbeschein", url: "https://www.lamarcountyga.com/?p=918" }],
+      sources: [
+        { title: "Lamar County: Gewerbeschein", url: "https://www.lamarcountyga.com/?p=918" },
+        { title: "Lamar County: Satzung zur Gewerbesteuer (Gebühren)", url: "https://www.lamarcountyga.com/wp-content/uploads/2019/10/Occupational-tax-ordinance-final-02326098xA0B3B.pdf" },
+      ],
     },
     {
       id: "standort-eigentuemer",
       phase: "jetzt",
-      title: "Klären, wem das Grundstück gehört",
-      summary: "Wenn das Grundstück euch privat gehört, die Genehmigung aber für die Firma ist, braucht ihr vielleicht eine Erlaubnis an eure eigene Firma.",
-      why: "Für das Amt sind ihr und eure Firma zwei verschiedene „Personen“. Gehört das Grundstück nicht der Firma, will das Amt eine schriftliche Erlaubnis vom Eigentümer sehen. Auch wenn das ihr selbst seid.",
+      title: "Die Erlaubnis für das Grundstück unterschreiben",
+      online: [{ title: "Grundstück nachschlagen (qPublic Lamar County)", url: "https://qpublic.schneidercorp.com/Application.aspx?App=LamarCountyGA&Layer=Parcels&PageType=Search" }],
+      summary: "Das Grundstück gehört euch, die Genehmigung läuft auf die Firma. Deshalb unterschreibt ihr eine Erlaubnis an eure eigene Firma, beim Notar.",
+      why: "Für das Amt sind ihr und eure Firma zwei verschiedene „Personen“. Weil das Grundstück euch privat gehört und die Genehmigung auf die Firma läuft, braucht das Amt die schriftliche Erlaubnis des Eigentümers. Ihr erteilt sie also euch selbst. Das klingt umständlich, ist aber genau so vorgesehen.",
       todo: [
-        "Im Kaufvertrag oder Grundsteuerbescheid nachsehen, wer als Eigentümer steht. Unter „Unsere Daten“ eintragen.",
-        "Steht dort die Firma: fertig. Eine Kopie für den Antrag machen.",
-        "Steht dort ihr privat: das Gesundheitsamt fragen (Sätze unten).",
-        "Wenn das Amt eine Erlaubnis will: das Formular bei einem Notar unterschreiben.",
+        "Bei qPublic nachschlagen, unter welchem Namen das Grundstück geführt wird (Link oben). Genau diesen Namen braucht ihr auf dem Formular.",
+        "Den Namen unter „Unsere Daten“ eintragen.",
+        "Das Blatt „Landlord & Property Use Agreement“ aus dem Vorab-Formular ausfüllen. Ihr unterschreibt beide Rollen: als Eigentümer und als Truck-Eigentümer.",
+        "Mit dem Blatt zu einem Notar gehen und dort unterschreiben.",
       ],
-      scripts: [
-        {
-          title: "Frage an das Gesundheitsamt",
-          kind: "call",
-          to: "770-358-1483, dann die 2",
-          lines: [
-            { en: "The property is in our personal names, but the permit will be issued to our company, {{businessName}}.", de: "Das Grundstück gehört uns privat. Die Genehmigung ist für unsere Firma." },
-            { en: "Do we still need to sign the property owner affidavit for our own company?", de: "Müssen wir das Eigentümer-Formular für unsere eigene Firma unterschreiben?" },
-            { en: "Does it need to be notarized?", de: "Muss es auch ein Notar unterschreiben?" },
-          ],
-        },
-      ],
-      forms: [
-        {
-          title: "Erlaubnis des Eigentümers (nur wenn das Amt sie will)",
-          url: "https://dph.georgia.gov/environmental-health/food-service",
-          note: "Auf dem Vorab-Formular heißt es „Affidavit“, beim Staat „Property Use Agreement“. Erst beim Notar unterschreiben.",
-          fields: [
-            { label: "Property owner name", value: "{{baseOwner}}" },
-            { label: "Property address", value: "{{baseStreet}}, {{baseCity}}, GA {{baseZip}}" },
-            { label: "Parcel ID", value: "{{baseParcel}}" },
-            { label: "Business name", value: "{{businessName}}" },
-            { label: "Phone", value: "{{phone}}" },
-            { label: "Use of property", value: "Kitchen and base for a food truck: food preparation, parking, fresh water, wastewater, cleaning and storage." },
-          ],
-        },
+      prepare: [
+        "Das Blatt steckt schon in eurem Vorab-Formular. Es heißt dort „Mobile Food Service Unit Landlord & Property Use Agreement“.",
+        "Ihr erklärt darin, dass eure Firma das Grundstück als Stützpunkt nutzen darf, dass die Adresse auf der Genehmigung stehen darf und dass das Amt jederzeit kontrollieren darf.",
+        "Einen Notar findet ihr in vielen Banken und UPS-Läden. Nehmt euren Pass mit.",
       ],
     },
     {
@@ -522,25 +537,39 @@ window.KINDLER = {
       title: "Das Wasser klären",
       summary: "Kommt euer Wasser aus der öffentlichen Leitung, ist alles einfach. Habt ihr einen eigenen Brunnen, muss das Wasser getestet werden.",
       why: "Das Wasser im Truck muss sauber sein und von eurem Stützpunkt kommen. Das Amt will das sehen.",
+      where: [{ ref: "extensionLamar" }],
+      online: [{ title: "Wassertests der Universität Georgia (Preise und Ablauf)", url: "https://aesl.ces.uga.edu/water.html" }],
       todo: [
         "Herausfinden: Öffentliches Wasser oder eigener Brunnen? Unter „Unsere Daten“ eintragen.",
-        "Öffentliches Wasser: im Vorab-Formular „Public Water“ ankreuzen. Fertig.",
-        "Eigener Brunnen: beim Extension Office anrufen (Sätze unten) und den Test bestellen.",
-        "Eigener Brunnen: auf das Ergebnis warten. Ist etwas nicht in Ordnung, muss es repariert und neu getestet werden.",
-        "Eigener Brunnen: das Ergebnis kopieren und zum Antrag legen.",
+        "Öffentliches Wasser: im Vorab-Formular „Public Water“ ankreuzen. Dieser Schritt ist damit erledigt.",
+        "Eigener Brunnen: beim Gesundheitsamt fragen, welchen Test sie genau wollen (die Frage steht im Schritt „Offene Fragen beim Gesundheitsamt“).",
+        "Eigener Brunnen: beim Extension Office in Barnesville die Probenflaschen holen (Sätze unten).",
+        "Eigener Brunnen: Probe abgeben. Das Labor in Athens braucht etwa 7 bis 10 Werktage.",
+        "Eigener Brunnen: Ist etwas nicht in Ordnung, muss es behoben und neu getestet werden.",
+        "Eigener Brunnen: das Ergebnis kopieren, zum Antrag legen und hier hochladen.",
       ],
+      prepare: [
+        "Es geht um zwei Tests: die Chemie-Analyse „W-33“ (die größere Version heißt „W-33C“) und den Bakterien-Test „W-35“ auf Coliforme und E. coli.",
+        "Preise beim Labor der Universität: Bakterien-Test W-35 kostet 40 Dollar, W-33C etwa 125 bis 130 Dollar. Das Extension Office in Lamar County nennt für eine einfache Wasserprobe 25 Dollar, bar oder per Scheck.",
+        "Für den Bakterien-Test braucht ihr eine spezielle Flasche vom Labor. Proben werden Montag bis Donnerstag angenommen.",
+      ],
+      upload: "Ladet hier das Testergebnis hoch, sobald es da ist (nur bei eigenem Brunnen).",
       scripts: [
         {
           title: "Anruf zum Wassertest (nur bei Brunnen)",
           kind: "call",
-          to: "Extension Office, 706-647-8989 (Nummer aus dem Vorab-Formular)",
+          to: "UGA Extension Lamar County, 770-358-5163",
           lines: [
             { en: "Hello, I need a complete well water analysis for a health department food service permit.", de: "Hallo, ich brauche einen kompletten Brunnenwasser-Test für das Gesundheitsamt." },
-            { en: "The health department requires the coliform and fecal coliform bacteria test and the full EPD W-33 analysis.", de: "Ich brauche den Bakterien-Test und den EPD-W-33-Test." },
+            { en: "The health department requires the W-33 chemical analysis and the W-35 bacteria test for coliform and E. coli.", de: "Das Gesundheitsamt verlangt die Chemie-Analyse W-33 und den Bakterien-Test W-35 auf Coliforme und E. coli." },
             { en: "How do I get the sample kit, and what does it cost?", de: "Wie bekomme ich die Flaschen? Was kostet es?" },
             { en: "How long does it usually take to get the results?", de: "Wie lange dauert es normalerweise bis zum Ergebnis?" },
           ],
         },
+      ],
+      sources: [
+        { title: "UGA Extension Lamar County: Wassertests", url: "https://extension.uga.edu/county-offices/lamar/agriculture-and-natural-resources/testing-services.html" },
+        { title: "Labor der Universität Georgia: Wassertests und Preise", url: "https://aesl.ces.uga.edu/water.html" },
       ],
     },
     {
@@ -630,8 +659,8 @@ window.KINDLER = {
         { title: "Gesundheitsamt Georgia: Antrag für Food Trucks (zeigt alle Anforderungen)", url: "https://dph.georgia.gov/document/document/dph-mobile-food-unit-permit-application-pdf/download" },
       ],
       cautions: [
-        "Kaufen könnt ihr den Truck jetzt schon. Anmelden (Kennzeichen) geht in Georgia aber meist erst mit einem Georgia-Führerschein, und den bekommt ihr erst nach dem Visum. Fahrt den Truck bis dahin nur, wenn er noch eine gültige Zulassung hat, oder lasst ihn liefern.",
-        "Fragt die Zulassungsstelle, ob der Truck schon jetzt auf die Firma angemeldet werden kann (Sätze im Schritt „Autos versichern und anmelden“).",
+        "Kaufen könnt ihr den Truck jetzt schon. Für ein Fahrzeug, das der Firma gehört, verlangt Georgia keine Führerscheinnummer auf dem Antrag. Die Anmeldung auf die Firma sollte also auch ohne Georgia-Führerschein gehen. Klärt am Schalter nur, welchen Ausweis die Person braucht, die für die Firma unterschreibt.",
+        "Beim Privatkauf müsst ihr das Fahrzeug in Georgia innerhalb von 7 Werktagen anmelden. Plant den Kauf also so, dass die Anmeldung gleich danach möglich ist.",
       ],
     },
     {
@@ -645,7 +674,7 @@ window.KINDLER = {
       todo: [
         "Die zwei Regelhefte vom Staat herunterladen und durchblättern (Link unten). Am einfachsten mit einem Übersetzungsprogramm wie DeepL. Dann auf dem Formular unterschreiben, dass ihr sie gelesen habt.",
         "Seite „Step 1“: eure Unterschrift. Dazu die Unterschrift vom Bauamt mit „YES“.",
-        "Falls nötig: die Erlaubnis des Eigentümers, beim Notar unterschrieben (Schritt „Wem gehört das Grundstück“).",
+        "Das Blatt „Landlord & Property Use Agreement“ ausfüllen. Darauf unterschreiben Grundstückseigentümer und Truck-Eigentümer, und ein Notar beglaubigt es. Wenn das Grundstück euch gehört, unterschreibt ihr beide Rollen selbst.",
         "Seite „Step 2“: unterschreiben und das Wasser ankreuzen. Bei Brunnen: das Testergebnis dazulegen.",
         "Seite „Step 3“: zwei Fotos der fertigen Abwasser-Stelle dazulegen.",
         "Seite „Step 4“: eine Kopie vom Altöl-Vertrag dazulegen (nur mit Fritteuse oder Grillplatte).",
@@ -655,20 +684,49 @@ window.KINDLER = {
       prepare: [
         "Das Datum schreibt man in den USA so: erst Monat, dann Tag, dann Jahr. Der 20. Oktober 2026 ist 10/20/2026.",
         "Felder für Beamte („Official“) lasst ihr leer.",
+        "Im Affidavit steht „Name in which property is listed (Qpublic)“. Gemeint ist der Name, unter dem das Grundstück im Online-Grundbuch qPublic steht. Dort nachschlagen und genau so eintragen.",
+        "Das Blatt für die Zoning-Freigabe hat drei Zeilen für geplante Verkaufsplätze. Schreibt hinein, wo ihr ungefähr verkaufen wollt.",
       ],
       forms: [
         {
-          title: "Vorab-Formular (Mobile Food Units Pre-Application)",
+          title: "Vorab-Formular, Seiten mit euren Angaben",
           note: "Das Formular habt ihr schon auf Papier.",
           fields: [
-            { label: "Signature / Date", value: "", hint: "Selbst unterschreiben. Datum so: 10/20/2026" },
-            { label: "Location Approved for Business? / Official", value: "", hint: "Füllt nur das Bauamt aus" },
+            { label: "Signature / Date (Checkliste, Step 1 bis 4)", value: "", hint: "Selbst unterschreiben. Datum so: 10/20/2026" },
             { label: "Which type of Water Supply will be used?", value: "{{baseWater}}", hint: "„Public Water“ oder „Private Well“ ankreuzen" },
-            { label: "Well test (nur bei Brunnen)", value: "Total well analysis: coliform and fecal coliform bacteria, and EPD test W-33" },
+            { label: "Location Approved for Business? / Zoning Official", value: "", hint: "Füllt nur das Bauamt aus" },
+          ],
+        },
+        {
+          title: "Blatt „Zoning & Base of Operation Approval“",
+          fields: [
+            { label: "Applicant Name / Phone", value: "{{owner1}} / {{phone}}" },
+            { label: "Name of Proposed Business", value: "{{businessName}}" },
+            { label: "Business Address", value: "{{baseStreet}}, {{baseCity}}, GA {{baseZip}}" },
+            { label: "Owner of Property Listed as Base of Operation", value: "{{baseOwner}}" },
+            { label: "Property Owner's Phone #", value: "{{phone}}", hint: "Wenn euch das Grundstück gehört, eure eigene Nummer" },
+            { label: "Proposed Set-Up Locations", value: "", hint: "Drei Zeilen für geplante Verkaufsplätze, zum Beispiel „Downtown Barnesville“ oder „Events in Lamar and Upson County“" },
+          ],
+        },
+        {
+          title: "Blatt „Landlord & Property Use Agreement“",
+          note: "Vor dem Notar unterschreiben, nicht vorher.",
+          fields: [
+            { label: "Property Owner Name / Phone", value: "{{baseOwner}} / {{phone}}" },
+            { label: "Address of Property Owner", value: "{{baseStreet}}, {{baseCity}}, GA {{baseZip}}" },
+            { label: "Property Owner's Email", value: "{{email}}" },
+            { label: "Address of Base of Operation", value: "{{baseStreet}}, {{baseCity}}, GA {{baseZip}}" },
+            { label: "Name of Mobile Unit", value: "{{unitName}}" },
+            { label: "Name of Mobile Unit Owner", value: "{{businessName}}" },
+            { label: "Mobile Unit Owner Address / Phone / Email", value: "{{baseStreet}}, {{baseCity}}, GA {{baseZip}} / {{phone}} / {{email}}" },
+            { label: "Name in which property is listed (Qpublic)", value: "{{baseOwner}}", hint: "Genau so schreiben, wie es bei qPublic steht" },
           ],
         },
       ],
-      sources: [{ title: "Regelhefte und Formulare vom Staat Georgia", url: "https://dph.georgia.gov/environmental-health/food-service" }],
+      sources: [
+        { title: "Regelhefte und Formulare vom Staat Georgia", url: "https://dph.georgia.gov/environmental-health/food-service" },
+        { title: "Grundstück nachschlagen (qPublic Lamar County)", url: "https://qpublic.schneidercorp.com/Application.aspx?App=LamarCountyGA&Layer=Parcels&PageType=Search" },
+      ],
     },
     {
       id: "notar-save",
@@ -695,14 +753,19 @@ window.KINDLER = {
           url: "https://dph.georgia.gov/sites/dph.georgia.gov/files/VerificationLawfulResidency061814.pdf",
           fields: [
             { label: "Status (ankreuzen)", value: "I am a qualified alien or non-immigrant", hint: "Die dritte Möglichkeit auf dem Formular" },
-            { label: "Alien number", value: "", hint: "Habt ihr nicht. Fragt das Amt, ob ihr die I-94-Nummer eintragen sollt." },
-            { label: "Secure and verifiable document", value: "Foreign passport with Form I-94" },
+            { label: "Alien number", value: "", hint: "Als E-2-Inhaber habt ihr keine. Üblicherweise trägt man die 11-stellige Nummer aus der I-94 ein. Kurz beim Amt nachfragen." },
+            { label: "Secure and verifiable document", value: "Unexpired German passport presented with Form I-94", hint: "Der Pass allein reicht nicht. Die I-94 muss dabei sein." },
             { label: "Printed name", value: "{{owner1}}" },
           ],
         },
       ],
+      prepare: [
+        "Unterschreiben muss immer eine Person, auch wenn die Genehmigung auf die Firma läuft. Das Gesetz spricht von der Person, die den Antrag für die Firma stellt. Sie erklärt ihren eigenen Aufenthalt.",
+        "Als Ausweis gilt euer Reisepass, aber nur zusammen mit dem Ausdruck der I-94. Legt beides zusammen vor und hängt die Kopien an.",
+        "Am einfachsten macht ihr die Erklärung nach dem Visum. Dann ist euer Status eindeutig, und ihr braucht sie nicht zweimal.",
+      ],
       cautions: [
-        "Das Formular fragt nach einer „Alien Number“. Die habt ihr nicht. Fragt beim Amt, was ihr stattdessen eintragt. Nach dem Visum müsst ihr die Erklärung eventuell noch einmal mit dem neuen Visum machen.",
+        "Das Formular fragt nach einer „Alien Number“. Die habt ihr als E-2-Inhaber nicht. Üblich ist, dort die Nummer aus der I-94 einzutragen. Sicher bestätigt ist das nicht, also fragt beim Amt kurz nach, bevor ihr unterschreibt.",
       ],
     },
     {
@@ -710,7 +773,7 @@ window.KINDLER = {
       phase: "jetzt",
       title: "Den Hauptantrag ausfüllen",
       cautions: [
-        "Der Antrag fragt nach dem Kennzeichen des Trucks. Das bekommt ihr erst nach dem Visum (Führerschein, dann Anmeldung). Fragt das Gesundheitsamt, ob ihr es nachreichen dürft (steht in den Sätzen im Schritt „Offene Fragen beim Gesundheitsamt“).",
+        "Der Antrag fragt nach Kennzeichen und Fahrgestellnummer. Das Kennzeichen bekommt ihr erst nach dem Visum. Auf dem Formular, das euer Gesundheitsamt (District 4) selbst benutzt, steht „Kennzeichen oder Fahrgestellnummer“. Die Fahrgestellnummer allein sollte also reichen. Sagt beim Abgeben trotzdem Bescheid, dass das Kennzeichen nachkommt.",
       ],
       online: [
         { title: "Hauptantrag herunterladen (PDF)", url: "https://dph.georgia.gov/document/document/dph-mobile-food-unit-permit-application-pdf/download" },
@@ -747,7 +810,7 @@ window.KINDLER = {
             { label: "Reason for application", value: "New Application" },
             { label: "Name of Unit", value: "{{unitName}}" },
             { label: "Unit Mailing Address", value: "{{street}}, {{city}}, {{state}} {{zip}}", hint: "Nach dem Umzug der Firma: die neue Adresse" },
-            { label: "Mobile Unit Vehicle License # and VIN", value: "{{unitPlate}} / {{unitVin}}", hint: "Noch kein Kennzeichen? Nur die VIN eintragen und mit dem Gesundheitsamt klären, wann ihr das Kennzeichen nachreicht." },
+            { label: "Mobile Unit Vehicle License # and VIN", value: "{{unitPlate}} / {{unitVin}}", hint: "Noch kein Kennzeichen? Nur die Fahrgestellnummer eintragen und „plate to follow“ danebenschreiben." },
             { label: "Name of Base of Operation", value: "{{baseName}}" },
             { label: "Base of Operation Owner", value: "{{baseOwner}}" },
             { label: "Base of Operation Permit #", value: "", hint: "Leer lassen" },
@@ -901,11 +964,11 @@ window.KINDLER = {
       where: [{ ref: "ssa" }],
       online: [
         { title: "Antrag online beginnen", url: "https://secure.ssa.gov/ossnap/public/landingOSsnap" },
-        { title: "Nächstes Social-Security-Büro finden", url: "https://secure.ssa.gov/ICON/main.jsp" },
+        { title: "Zuständiges Büro mit der Postleitzahl prüfen", url: "https://www.ssa.gov/locator" },
       ],
       todo: [
         "Den Antrag online beginnen (Link oben). Jede Person macht einen eigenen Antrag.",
-        "Danach mit Pass und I-94 zum nächsten Social-Security-Büro gehen. Dort werden die Originale geprüft.",
+        "Danach mit Pass und I-94 zum Social-Security-Büro in Griffin gehen (Adresse unten). Dort werden die Originale geprüft. Prüft vorher mit eurer Postleitzahl auf ssa.gov/locator, ob Griffin für euch zuständig ist.",
         "Nach der Genehmigung kommt die Karte in etwa 5 bis 10 Werktagen mit der Post an die Tom Bell Road.",
         "Falls der Online-Antrag nicht klappt: das Papierformular SS-5 ausfüllen (Ausfüllhilfe unten) und ins Büro mitnehmen.",
       ],
@@ -954,20 +1017,21 @@ window.KINDLER = {
       id: "fuehrerschein",
       phase: "ankunft",
       title: "Den Führerschein für Georgia machen",
-      summary: "Erst anrufen und fragen, ob euer deutscher Führerschein einfach umgeschrieben wird. Wenn nicht: Theorieprüfung (gibt es auf Deutsch), Sehtest und Fahrprüfung.",
+      summary: "Rechnet mit Sehtest, Theorieprüfung und praktischer Prüfung. Eine Umschreibung ohne Prüfung gibt es für deutsche Führerscheine nach allem, was wir finden konnten, nicht.",
       why: "Als Touristen dürft ihr mit dem deutschen Führerschein fahren. Sobald ihr mit dem Visum hier wohnt, habt ihr 30 Tage Zeit für einen Führerschein aus Georgia. Ohne ihn könnt ihr auch kein Auto anmelden. Die Umschreibung geht erst mit Visum und Sozialversicherungsnummer.",
-      where: [{ ref: "dds" }],
+      where: [{ ref: "ddsGriffin" }, { ref: "ddsThomaston" }],
       online: [
         { title: "Antragsformular vorab online ausfüllen", url: "https://dds.drives.ga.gov?link=CSCSkipAStep" },
         { title: "Fahrprüfung online buchen (falls nötig)", url: "https://dds.drives.ga.gov?link=RoadTest" },
         { title: "Was man für einen neuen Führerschein braucht", url: "https://dds.georgia.gov/georgia-licenses-ids-and-permits/new-license-id-or-permit" },
       ],
       todo: [
-        "Warten, bis die Sozialversicherungsnummer da ist. Die Führerscheinstelle braucht sie.",
-        "Bei der Führerscheinstelle anrufen und fragen, ob der deutsche Führerschein ohne Prüfung umgeschrieben wird (Sätze unten).",
-        "Das Antragsformular vorab online ausfüllen (Link oben). Das spart Zeit vor Ort.",
-        "Mit den Unterlagen zur Führerscheinstelle gehen.",
-        "Falls eine Fahrprüfung nötig ist: online buchen (Link oben) und ein angemeldetes, versichertes Auto mitbringen.",
+        "Warten, bis die Sozialversicherungsnummer da ist. Ohne sie geht es nicht, und das Online-Formular fragt danach.",
+        "Fahrerhandbuch lernen. Es gibt zwei Theorieteile: Verkehrsregeln und Verkehrsschilder, je 20 Fragen, 15 richtige zum Bestehen.",
+        "Das Antragsformular vorab online ausfüllen (Link oben). Das muss jeder machen, der zur Führerscheinstelle kommt.",
+        "Für die Theorieprüfung braucht ihr keinen Termin. Einfach hingehen.",
+        "Praktische Prüfung online buchen (Link oben). Dafür ist ein Termin Pflicht.",
+        "Zur praktischen Prüfung ein angemeldetes und versichertes Auto mitbringen. Zulassung und Versicherungsnachweis auf Papier dabeihaben.",
       ],
       bring: [
         "Reisepass mit Visum",
@@ -975,7 +1039,7 @@ window.KINDLER = {
         "Die Karte mit der Sozialversicherungsnummer",
         "Zwei Briefe oder Rechnungen mit eurem Namen und der Adresse an der Tom Bell Road (zum Beispiel Strom- oder Wasserrechnung, Kontoauszug). Tipp: Die Bank gleich nach dem Umzug auf die neue Adresse umstellen, dann habt ihr schnell einen Kontoauszug mit der neuen Adresse.",
         "Euren deutschen Führerschein",
-        "Eine englische Übersetzung des Führerscheins (am Telefon fragen, welche akzeptiert wird)",
+        "Eine englische Übersetzung des Führerscheins. Erlaubt sind ein professioneller Übersetzungsdienst, eine gemeinnützige Organisation oder das Konsulat. Das deutsche Generalkonsulat Atlanta führt eine Liste mit Übersetzern.",
         "Geld für die Gebühr (etwa 20 bis 32 Dollar)",
       ],
       scripts: [
@@ -985,7 +1049,8 @@ window.KINDLER = {
           to: "Telefonnummer auf dds.georgia.gov unter „Contact Us“",
           lines: [
             { en: "Hello, I recently moved to Georgia from Germany on an E-2 visa and have a valid German driver's license.", de: "Hallo, ich habe einen deutschen Führerschein. Ich wohne jetzt in Georgia und habe ein E-2-Visum." },
-            { en: "Can I exchange it for a Georgia license without taking the knowledge and road tests?", de: "Kann ich meinen deutschen Führerschein ohne Prüfung umschreiben lassen?" },
+            { en: "Does Georgia have a reciprocity agreement with Germany, or do I need to take all the tests?", de: "Hat Georgia ein Abkommen mit Deutschland, oder muss ich alle Prüfungen machen?" },
+            { en: "Do I need a learner's permit first, or can I take the road test right away?", de: "Brauche ich erst einen Lernführerschein, oder kann ich direkt die praktische Prüfung machen?" },
             { en: "Do I need a translation of my license, and if so, which translators do you accept?", de: "Brauche ich eine Übersetzung? Welche akzeptieren Sie?" },
             { en: "Will my German license be returned to me?", de: "Bekomme ich meinen deutschen Führerschein zurück?" },
             { en: "Which documents should I bring as an E-2 visa holder?", de: "Welche Unterlagen soll ich als E-2-Inhaber mitbringen?" },
@@ -999,22 +1064,35 @@ window.KINDLER = {
           ],
         },
       ],
+      prepare: [
+        "Georgia erlaubt eine Umschreibung ohne Prüfung nur bei Ländern mit einem Abkommen. Die Führerscheinstelle nennt dafür öffentlich nur Taiwan und Südkorea. Deutschland steht nirgends. Rechnet deshalb mit allen Prüfungen.",
+        "Den Theorieteil „Verkehrsregeln“ gibt es auf Deutsch. Den Teil „Verkehrsschilder“ und die praktische Prüfung gibt es nur auf Englisch.",
+        "Euer Führerschein bekommt den Vermerk „LIMITED-TERM“ und läuft mit eurem Aufenthalt ab, also mit dem Datum im Einreisestempel.",
+        "Als Besucher dürft ihr mit dem deutschen Führerschein fahren. Sobald ihr hier wohnt, habt ihr 30 Tage Zeit.",
+      ],
       cautions: [
-        "Wir konnten nicht sicher herausfinden, ob Georgia deutsche Führerscheine ohne Prüfung umschreibt. Deshalb bitte vorher anrufen.",
-        "Der Führerschein läuft meistens am selben Tag ab wie euer Einreisestempel. Rechtzeitig verlängern.",
+        "Alle Unterlagen müssen auf Englisch sein. Eine Übersetzung des Führerscheins muss von einem professionellen Übersetzungsdienst, einer gemeinnützigen Organisation oder dem Konsulat kommen. Ihr müsst Original und Übersetzung zusammen vorlegen.",
+        "Ob die Führerscheinstelle zusätzlich einen Lernführerschein („learner\u2019s permit“) verlangt, konnten wir nicht klären. Fragt das beim Anruf mit.",
       ],
       sources: [
         { title: "Führerscheinstelle: Infos für Nicht-Amerikaner", url: "https://dds.georgia.gov/node/146" },
         { title: "Führerscheinstelle: Prüfung auf Deutsch", url: "https://dds.georgia.gov/list-languages" },
-        { title: "Führerscheinstelle: Standorte", url: "https://dds.georgia.gov/locations" },
+        { title: "Führerscheinstelle: Regel zu Übersetzungen (375-3-1-.02)", url: "https://dds.georgia.gov/document/document/375-3-1-02-applications-and-supporting-documentation/download" },
+        { title: "Generalkonsulat Atlanta: Übersetzer und Anwälte", url: "https://www.germany.info/us-en/embassy-consulates/atlanta/legal-lists-s-944426" },
       ],
     },
     {
       id: "auto-anmelden",
       phase: "ankunft",
       title: "Autos versichern und anmelden",
-      summary: "Erst die Versicherung, dann die Anmeldung bei der Zulassungsstelle in Lamar County. Die ist im selben Gebäude wie das Bauamt.",
+      summary: "Erst die Versicherung, dann die Anmeldung bei der Zulassungsstelle in Lamar County. Die ist im selben Gebäude wie das Bauamt. Für den Truck auf die Firma ist kein Georgia-Führerschein nötig, für euer Privatauto schon.",
       where: [{ ref: "lamarTax" }],
+      prepare: [
+        "Wichtiger Unterschied: Für ein Fahrzeug, das der Firma gehört, verlangt Georgia keine Führerscheinnummer auf dem Antrag. Für euer Privatauto als neue Einwohner schon. Der Truck kann also früher angemeldet werden als euer Auto.",
+        "Beim Privatkauf müsst ihr das Fahrzeug innerhalb von 7 Werktagen nach dem Kauf anmelden. Beim Händler sind es 30 Tage, und der Händler gibt euch ein vorläufiges Kennzeichen mit.",
+        "Die Versicherung muss eine in Georgia zugelassene Gesellschaft sein. Sie meldet die Versicherung elektronisch an die Behörde. Eine Versicherungskarte allein reicht nicht.",
+        "Für ein frisch gekauftes Fahrzeug akzeptiert die Behörde eine vorläufige Versicherungsbestätigung („binder“) zusammen mit dem Kaufvertrag.",
+      ],
       todo: [
         "Eine Autoversicherung für euer Privatauto abschließen.",
         "Eine Versicherung für den Truck abschließen (Englisch: „commercial auto“). Manche Versicherer wollen einen US-Führerschein sehen. Sagt dazu, dass ihr den deutschen habt und der aus Georgia beantragt ist.",
@@ -1037,11 +1115,15 @@ window.KINDLER = {
             { en: "Hello, we recently moved to Lamar County and need to register two vehicles: a personal car and a food truck owned by our company.", de: "Hallo, wir sind neu hier. Wir möchten zwei Fahrzeuge anmelden: ein Auto und einen Food Truck für unsere Firma." },
             { en: "Which documents do we need to bring?", de: "Welche Unterlagen müssen wir mitbringen?" },
             { en: "Can the food truck be registered in the company's name?", de: "Kann der Food Truck auf unsere Firma angemeldet werden?" },
-            { en: "We don't have Georgia driver's licenses yet. Can a company-owned vehicle be registered with our passports and the company's EIN documents?", de: "Wir haben noch keinen Führerschein aus Georgia. Kann ein Fahrzeug der Firma mit unseren Pässen und den Firmenunterlagen (EIN) angemeldet werden?" },
+            { en: "The truck is owned by our LLC. We understand a Georgia license number is not required on the application for company-owned vehicles. Which ID do you need from the person signing for the company?", de: "Der Truck gehört unserer Firma. Soweit wir wissen, braucht man bei Firmenfahrzeugen keine Führerscheinnummer auf dem Antrag. Welchen Ausweis brauchen Sie von der Person, die für die Firma unterschreibt?" },
           ],
         },
       ],
-      sources: [{ title: "Zulassungsstelle Lamar County", url: "https://www.lamarcountyga.com/departments/tax-commissioner/" }],
+      sources: [
+        { title: "Zulassungsstelle Lamar County", url: "https://www.lamarcountyga.com/departments/tax-commissioner/" },
+        { title: "Georgia: wann und wo man ein Fahrzeug anmeldet (7 Tage bei Privatkauf)", url: "https://dor.georgia.gov/when-where-register-your-vehicle" },
+        { title: "Georgia: anerkannter Versicherungsnachweis", url: "https://dor.georgia.gov/acceptable-proof-insurance" },
+      ],
     },
     {
       id: "sales-tax",
