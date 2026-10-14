@@ -115,6 +115,8 @@ window.KINDLER = {
     { en: "VIN (Vehicle Identification Number)", de: "Fahrgestellnummer", text: "Die 17-stellige Nummer eines Fahrzeugs. Ihr findet sie unten in der Windschutzscheibe auf der Fahrerseite, von außen lesbar, und auf einem Aufkleber im Türrahmen der Fahrertür. Dieselbe Nummer steht im Fahrzeugbrief." },
     { en: "Spec Sheet", de: "Datenblatt", text: "Ein Blatt vom Hersteller mit den technischen Daten eines Geräts, zum Beispiel vom Kühlschrank." },
     { en: "Plumber", de: "Klempner", text: "Handwerker für Wasser und Abwasser." },
+    { en: "Business plan", de: "Businessplan", text: "Eine schriftliche Planung eurer Firma mit Zahlen für fünf Jahre. Das Konsulat führt ihn in seiner Unterlagenliste. Er soll zeigen, dass die Firma mehr abwirft als nur euren Lebensunterhalt." },
+    { en: "Marginal enterprise", de: "Firma, die nur zum Leben reicht", text: "So nennt das Konsulat eine Firma, die nur den Lebensunterhalt der Inhaber deckt. Dafür gibt es kein E-2-Visum. Der Businessplan soll zeigen, dass eure Firma mehr schafft." },
     { en: "Apostille", de: "Apostille", text: "Ein Stempel einer deutschen Behörde, der bestätigt, dass eine Urkunde echt ist. Für euer Visum und die Ämter in Georgia haben wir nirgends eine Apostille als Pflicht gefunden. Sie übersetzt auch nichts." },
     { en: "Certified translation", de: "beglaubigte Übersetzung", text: "Eine Übersetzung von einem anerkannten Übersetzungsdienst. Die Führerscheinstelle verlangt sie für euren deutschen Führerschein." },
   ],
@@ -236,10 +238,11 @@ window.KINDLER = {
             "3. The health department suggested we apply for the food service permit and the county business license in Lamar County now. Is that advisable before the interview?\n" +
             "4. After the interview, we will move ourselves and the business from Pike County to our property on Tom Bell Road in Lamar County. Does this change need to be reported, or does it affect the application?\n" +
             "5. Which original documents should we bring to the interview?\n" +
-            "6. Once the visa is approved, how long does the consulate typically keep the passports?\n\n" +
+            "6. Once the visa is approved, how long does the consulate typically keep the passports?\n" +
+            "7. Could you send us a copy of the business plan and the full package as submitted, so we can study the figures before the interview?\n\n" +
             "Thank you for your help.\n\nBest regards,\n{{owner1}}\n{{businessName}}\n{{phone}}",
           de:
-            "Auf Deutsch: Wir fragen, (1) was wir vor dem Visum schon dürfen (Termine bei Bauamt und Gesundheitsamt, Küche fertig machen, Truck kaufen, Hygiene-Kurs), (2) was wir auf keinen Fall tun dürfen, (3) ob wir die Genehmigung und den Gewerbeschein schon jetzt beantragen dürfen, wie das Gesundheitsamt es vorschlägt, (4) ob unser Umzug mit der Firma auf die Tom Bell Road gemeldet werden muss oder das Visum betrifft, (5) welche Originale wir mitbringen sollen, (6) wie lange das Konsulat die Pässe behält.",
+            "Auf Deutsch: Wir fragen, (1) was wir vor dem Visum schon dürfen (Termine bei Bauamt und Gesundheitsamt, Küche fertig machen, Truck kaufen, Hygiene-Kurs), (2) was wir auf keinen Fall tun dürfen, (3) ob wir die Genehmigung und den Gewerbeschein schon jetzt beantragen dürfen, wie das Gesundheitsamt es vorschlägt, (4) ob unser Umzug mit der Firma auf die Tom Bell Road gemeldet werden muss oder das Visum betrifft, (5) welche Originale wir mitbringen sollen, (6) wie lange das Konsulat die Pässe behält, (7) ob er uns den Businessplan und das eingereichte Paket als Kopie schickt.",
         },
       ],
       sources: [{ title: "Einreisestempel I-94 abrufen", url: "https://i94.cbp.dhs.gov/" }],
@@ -250,6 +253,13 @@ window.KINDLER = {
       title: "Die Unterlagen für Frankfurt in eine Mappe packen",
       summary: "Eine Mappe mit allem, was der Beamte sehen will. Originale vorne, Kopien hinten.",
       why: "Im Gespräch will der Beamte drei Dinge wissen: Ist die Firma echt? Habt ihr das Geld schon investiert? Woher kommt das Geld? Die Mappe beantwortet das.",
+      prepare: [
+        "Ja, ihr braucht einen Businessplan. Die Unterlagenliste des Konsulats führt ihn unter den Nachweisen, dass die Firma echt und in Betrieb ist. [[Unterlagenliste des Konsulats Frankfurt für E-Visa|https://www.amcham.de/fileadmin/user_upload/user_upload_alt/Visa/Kopie_von_E_visa_package_with_forms.pdf]]",
+        "Er gehört ins Paket, das euer Anwalt beim Konsulat einreicht, nicht erst ins Gespräch. Fragt ihn nach einer Kopie und lest sie durch, bevor ihr fliegt.",
+        "Wichtig ist darin vor allem eine Zahlenplanung für fünf Jahre. Das US-Außenministerium nennt als Maßstab „Finanzplanung für die nächsten fünf Jahre, gestützt auf einen gründlichen Businessplan“. [[Handbuch des US-Außenministeriums, 9 FAM 402.9|https://fam.state.gov/fam/09FAM/09FAM040209.html]]",
+        "Der Grund dahinter: Die Firma darf nicht nur zum Leben für euch reichen. Sie soll nach spätestens fünf Jahren deutlich mehr abwerfen oder Arbeitsplätze schaffen. Genau das soll der Plan zeigen.",
+        "Wenn der Truck noch nicht läuft, sind Schätzungen in Ordnung: erwarteter Umsatz, geplante Mitarbeiter, Verkaufsmenge.",
+      ],
       todo: [
         "Euren Anwalt fragen, ob er eine eigene Liste hat. Seine Liste ist wichtiger als diese.",
         "Alles in einen Ordner mit Trennblättern sortieren.",
@@ -261,15 +271,22 @@ window.KINDLER = {
         "Die Bestätigungsseite vom Online-Antrag (DS-160) für jede Person",
         "Die Quittung der Visumsgebühr",
         "Ein Passfoto 5 × 5 cm als Reserve",
-        "Eine Kopie von allem, was euer Anwalt beim Konsulat eingereicht hat (Businessplan und Nachweise)",
+        "Eine Kopie von allem, was euer Anwalt beim Konsulat eingereicht hat",
+        "Den Businessplan mit der Fünf-Jahres-Planung. Nehmt ihn auch dann mit, wenn er schon eingereicht wurde. Im Gespräch wollt ihr darin nachschlagen können.",
+        "Eine Liste der Leute, die ihr einstellen wollt, oder eine kurze Notiz dazu, wann ihr wen einstellt",
         "Die Gründungspapiere der Firma und den Brief mit der Steuernummer (EIN)",
         "Belege, dass ihr investiert habt: Kaufvertrag Truck, Rechnungen für Ausstattung und Küche, Nachweis zum Grundstück, Kontoauszüge der Firma",
         "Belege, woher das Geld kommt: Kontoauszüge, Verkaufsverträge, Steuerbescheide aus Deutschland",
         "Heiratsurkunde im Original. Am besten die internationale, mehrsprachige Fassung (siehe Schritt „Deutsche Urkunden besorgen“). Kopien, die nur ein Notar beglaubigt hat, werden nicht akzeptiert.",
       ],
       sources: [
+        { title: "Handbuch des US-Außenministeriums zu E-Visa (9 FAM 402.9)", url: "https://fam.state.gov/fam/09FAM/09FAM040209.html" },
+        { title: "Unterlagenliste des Konsulats Frankfurt für E-Visa", url: "https://www.amcham.de/fileadmin/user_upload/user_upload_alt/Visa/Kopie_von_E_visa_package_with_forms.pdf" },
         { title: "E-2-Visum aus Deutschland (allgemeine Übersicht einer Kanzlei)", url: "https://www.alazlaw.com/blog/e-2-visa-for-german-citizens-2026-how-to-apply-frankfurt/" },
         { title: "US-Botschaft in Deutschland", url: "https://de.usembassy.gov/" },
+      ],
+      cautions: [
+        "Die verlinkte Unterlagenliste ist eine ältere Fassung und nennt teils Formulare, die es so nicht mehr gibt. Was darin steht, deckt sich aber mit den heutigen Anforderungen. Was genau eingereicht wird, weiß euer Anwalt.",
       ],
     },
     {
@@ -312,7 +329,7 @@ window.KINDLER = {
       why: "Das Gespräch dauert oft nur ein paar Minuten. Wer seine Zahlen ohne Nachschauen kennt, wirkt sicher und glaubwürdig.",
       todo: [
         "Jede Frage laut beantworten. Zwei oder drei Sätze reichen.",
-        "Diese Zahlen auswendig lernen: wie viel ihr investiert habt, wie viel davon schon ausgegeben ist, wie viel Umsatz ihr erwartet, wie viele Leute ihr einstellen wollt.",
+        "Diese Zahlen auswendig lernen, und zwar genau so, wie sie im Businessplan stehen: wie viel ihr investiert habt, wie viel davon schon ausgegeben ist, welchen Umsatz ihr im ersten und im dritten Jahr erwartet, wie viele Leute ihr einstellen wollt und wann.",
         "Immer bei der Wahrheit und beim Businessplan bleiben. Lieber kurz nachschauen als raten.",
       ],
       scripts: [
