@@ -470,7 +470,7 @@
     const md = $("#missing-data");
     if (missing.size) {
       md.hidden = false;
-      md.innerHTML = `<span><strong>Es fehlen noch ${missing.size} Angaben</strong> (gelb markiert). Tragt sie einmal unter „Unsere Daten“ ein, dann stehen sie überall richtig drin.</span> <button class="btn btn-small" type="button" data-view-go="daten">Jetzt eintragen</button>`;
+      md.innerHTML = `<span><strong>Es fehlen noch ${missing.size} Angaben</strong> (rot umrandet). Tragt sie einmal unter „Unsere Daten“ ein, dann stehen sie überall richtig drin.</span> <button class="btn btn-small" type="button" data-view-go="daten">Jetzt eintragen</button>`;
     } else {
       md.hidden = true;
     }

@@ -1,7 +1,7 @@
 // Inhalt der Checkliste.
 //
 // Alles in {{doppelten Klammern}} wird aus „Unsere Daten“ ersetzt.
-// Fehlt ein Wert, erscheint ein gelber Platzhalter.
+// Fehlt ein Wert, erscheint ein rot umrandeter Platzhalter.
 //
 // Schreibregeln für diese Datei:
 // - Kurze Sätze. Ein Gedanke pro Satz.
@@ -16,7 +16,7 @@ window.KINDLER = {
   intro: [
     "Diese Seite führt euch Schritt für Schritt durch alles, was ihr für das Visum, das Leben in Georgia und den Food Truck braucht.",
     "Fangt einfach oben beim „Nächsten Schritt“ an. Jeder Schritt erklärt, worum es geht, was ihr tun müsst und was ihr sagen könnt.",
-    "Gelb markierte Stellen fehlen noch. Tragt sie einmal unter „Unsere Daten“ ein, dann stehen sie überall richtig drin.",
+    "Rot umrandete Stellen fehlen noch. Tragt sie einmal unter „Unsere Daten“ ein, dann stehen sie überall richtig drin.",
     "Englische Sätze könnt ihr vorlesen oder kopieren. Darunter steht immer, was sie auf Deutsch bedeuten.",
     "Wenn ihr einen Schritt erledigt habt, setzt den Haken. Alle sehen dann, dass er fertig ist.",
   ],
