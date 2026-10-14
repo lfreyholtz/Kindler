@@ -1,0 +1,611 @@
+(() => {
+  "use strict";
+
+  const K = window.KINDLER;
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+  let state = { progress: {}, profile: {}, notes: {}, updatedAt: null };
+  let openSteps = new Set();
+  let pollTimer = null;
+
+  // ---------- kleine Helfer ----------
+
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* egal */ } },
+  };
+
+  function esc(s) {
+    return String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  const fieldIndex = {};
+  for (const g of K.profileGroups) for (const f of g.fields) fieldIndex[f.key] = f;
+
+  function profileValue(key) {
+    const v = state.profile[key];
+    if (v !== undefined && String(v).trim() !== "") return String(v).trim();
+    const f = fieldIndex[key];
+    return f && f.default ? f.default : "";
+  }
+
+  // Platzhalter {{key}} ersetzen. mode "html" markiert fehlende Werte, mode "text" setzt [Label].
+  function fill(text, mode = "html") {
+    if (!text) return "";
+    const parts = String(text).split(/(\{\{\w+\}\})/g);
+    return parts
+      .map((p) => {
+        const m = p.match(/^\{\{(\w+)\}\}$/);
+        if (!m) return mode === "html" ? esc(p) : p;
+        const key = m[1];
+        const val = profileValue(key);
+        const label = fieldIndex[key] ? fieldIndex[key].label : key;
+        if (val) return mode === "html" ? `<span class="filled">${esc(val)}</span>` : val;
+        return mode === "html" ? `<mark class="missing" title="Fehlt in „Unsere Daten“">[${esc(label)}]</mark>` : `[${label}]`;
+      })
+      .join("");
+  }
+
+  function missingKeys(text) {
+    const out = [];
+    String(text || "").replace(/\{\{(\w+)\}\}/g, (_, k) => { if (!profileValue(k)) out.push(k); });
+    return out;
+  }
+
+  function toast(msg) {
+    const t = $("#toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => t.classList.remove("show"), 2200);
+  }
+
+  async function copy(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast("Kopiert");
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); toast("Kopiert"); } catch { toast("Kopieren nicht möglich"); }
+      ta.remove();
+    }
+  }
+
+  function telHref(phone) {
+    const digits = String(phone).replace(/[^\d+]/g, "");
+    if (!digits) return "";
+    return "tel:" + (digits.startsWith("+") ? digits : digits.length === 10 ? "+1" + digits : digits);
+  }
+
+  function mapsHref(address) {
+    return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
+  }
+
+  // ---------- API ----------
+
+  // Ohne Server (z. B. Datei direkt im Browser geöffnet): Testmodus mit Speicherung nur in diesem Browser.
+  let localMode = false;
+  function localApi(method, url, body) {
+    const s = store.get("kindler.localState", { progress: {}, profile: {}, notes: {}, updatedAt: null });
+    if (method === "PUT") {
+      const [, kind, id] = url.match(/^\/api\/(\w+)\/?(.*)$/) || [];
+      const key = decodeURIComponent(id || "");
+      if (kind === "progress") { if (body.done) s.progress[key] = { done: true, by: body.by, at: new Date().toISOString() }; else delete s.progress[key]; }
+      if (kind === "notes") { if (body.text.trim()) s.notes[key] = { text: body.text, at: new Date().toISOString() }; else delete s.notes[key]; }
+      if (kind === "profile") s.profile = { ...s.profile, ...body.profile };
+      s.updatedAt = new Date().toISOString();
+      store.set("kindler.localState", s);
+    }
+    return Promise.resolve(JSON.parse(JSON.stringify(s)));
+  }
+
+  async function api(method, url, body) {
+    if (localMode) return localApi(method, url, body);
+    const res = await fetch(url, {
+      method,
+      headers: body ? { "Content-Type": "application/json" } : {},
+      body: body ? JSON.stringify(body) : undefined,
+      credentials: "same-origin",
+    });
+    if (res.status === 401) { showLogin(); throw new Error("auth"); }
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    return res.json();
+  }
+
+  function setSync(text, isError) {
+    const el = $("#sync-status");
+    if (localMode && !isError) { text = "Testmodus ohne Server: Haken und Daten bleiben nur in diesem Browser."; isError = true; }
+    el.textContent = text;
+    el.classList.toggle("error", Boolean(isError));
+  }
+
+  async function loadState(silent) {
+    try {
+      const s = await api("GET", "/api/state");
+      const changed = s.updatedAt !== state.updatedAt;
+      state = s;
+      if (changed || !silent) render();
+      if (!localMode) setSync("gespeichert");
+    } catch (e) {
+      if (e.message !== "auth") setSync("Keine Verbindung. Änderungen werden nicht gespeichert.", true);
+    }
+  }
+
+  function startPolling() {
+    clearInterval(pollTimer);
+    pollTimer = setInterval(() => {
+      const active = document.activeElement;
+      const typing = active && (active.tagName === "TEXTAREA" || active.tagName === "INPUT");
+      if (!typing && document.visibilityState === "visible") loadState(true);
+    }, 15000);
+    document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") loadState(true); });
+  }
+
+  async function setDone(id, done) {
+    const prev = state.progress[id];
+    if (done) state.progress[id] = { done: true, by: whoAmI(), at: new Date().toISOString() };
+    else delete state.progress[id];
+    render();
+    try {
+      state = await api("PUT", "/api/progress/" + encodeURIComponent(id), { done, by: whoAmI() });
+      render();
+      setSync("gespeichert");
+    } catch {
+      if (prev) state.progress[id] = prev; else delete state.progress[id];
+      render();
+      setSync("Nicht gespeichert. Bitte erneut versuchen.", true);
+    }
+  }
+
+  // ---------- Login ----------
+
+  function showLogin() {
+    $("#app").hidden = true;
+    $("#login").hidden = false;
+    $("#code").focus();
+  }
+
+  $("#login-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    $("#login-error").textContent = "";
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: $("#code").value }),
+      });
+      if (!res.ok) throw new Error();
+      $("#login").hidden = true;
+      boot();
+    } catch {
+      $("#login-error").textContent = "Der Code stimmt nicht.";
+    }
+  });
+
+  // ---------- Wer bin ich ----------
+
+  function people() {
+    const list = [profileValue("owner1"), profileValue("owner2")].filter(Boolean).map((n) => n.split(" ")[0]);
+    list.push("Lew");
+    return Array.from(new Set(list));
+  }
+  function whoAmI() { return store.get("kindler.who", "") || ""; }
+  function renderWho() {
+    const sel = $("#who-select");
+    const current = whoAmI();
+    const opts = people();
+    sel.innerHTML = `<option value="">bitte wählen</option>` + opts.map((p) => `<option ${p === current ? "selected" : ""}>${esc(p)}</option>`).join("");
+  }
+  $("#who-select").addEventListener("change", (e) => store.set("kindler.who", e.target.value));
+
+  // ---------- Tabs ----------
+
+  function showView(name) {
+    for (const v of ["liste", "daten", "kontakte"]) $("#view-" + v).hidden = v !== name;
+    $$(".tab").forEach((b) => { if (b.dataset.view === name) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
+    store.set("kindler.view", name);
+    if (name === "daten") renderProfileForm();
+    if (name === "kontakte") renderContacts();
+    window.scrollTo({ top: 0 });
+  }
+  $$(".tab").forEach((b) => b.addEventListener("click", () => showView(b.dataset.view)));
+
+  // ---------- Rendering: Checkliste ----------
+
+  function subId(step, i) { return `${step.id}--t${i}`; }
+  function isDone(id) { return Boolean(state.progress[id] && state.progress[id].done); }
+
+  function stepAllText(step) {
+    const bits = [step.title, step.summary];
+    (step.todo || []).forEach((t) => bits.push(t));
+    (step.bring || []).forEach((t) => bits.push(t));
+    (step.scripts || []).forEach((s) => s.lines.forEach((l) => bits.push(l.en)));
+    (step.emails || []).forEach((m) => bits.push(m.to, m.subject, m.body));
+    (step.forms || []).forEach((f) => f.fields.forEach((x) => bits.push(x.value)));
+    return bits.join(" ");
+  }
+
+  function placeCard(ref) {
+    const p = K.places[ref];
+    if (!p) return "";
+    return `
+      <div class="place">
+        <div class="place-name">${esc(p.name)}</div>
+        ${p.address ? `<div>${p.address.startsWith("Nächstes") ? esc(p.address) : `<a href="${mapsHref(p.address)}" target="_blank" rel="noopener">${esc(p.address)}</a>`}</div>` : ""}
+        ${p.phone ? `<div><a href="${telHref(p.phone)}">${esc(p.phone)}</a>${p.ext ? ` (${esc(p.ext)})` : ""}</div>` : ""}
+        ${p.contact ? `<div>${esc(p.contact)}</div>` : ""}
+        ${p.email ? `<div><a href="mailto:${esc(p.email)}">${esc(p.email)}</a></div>` : ""}
+        ${p.hours ? `<div class="muted">${esc(p.hours)}</div>` : ""}
+        ${p.url ? `<div><a href="${esc(p.url)}" target="_blank" rel="noopener">Webseite</a></div>` : ""}
+      </div>`;
+  }
+
+  function renderScripts(step) {
+    return (step.scripts || [])
+      .map((s, si) => {
+        const icon = s.kind === "call" ? "Telefon" : "Vor Ort";
+        return `
+        <div class="script">
+          <div class="script-head">
+            <span class="pill">${icon}</span>
+            <strong>${esc(s.title)}</strong>
+            ${s.to ? `<span class="muted">${s.kind === "call" && /\d{3}-\d{3}-\d{4}/.test(s.to) ? `<a href="${telHref(s.to.match(/\d{3}-\d{3}-\d{4}/)[0])}">${esc(s.to)}</a>` : esc(s.to)}</span>` : ""}
+          </div>
+          <ol class="lines">
+            ${s.lines
+              .map(
+                (l) => `<li><div class="en" lang="en">${fill(l.en)}</div><div class="de">${esc(l.de)}</div></li>`
+              )
+              .join("")}
+          </ol>
+          <button class="btn btn-small" type="button" data-copy-script="${esc(step.id)}:${si}">Englischen Text kopieren</button>
+        </div>`;
+      })
+      .join("");
+  }
+
+  function mailtoHref(m) {
+    const to = fill(m.to, "text").replace(/^\[.*\]$/, "");
+    return `mailto:${encodeURIComponent(to).replace(/%40/g, "@")}?subject=${encodeURIComponent(fill(m.subject, "text"))}&body=${encodeURIComponent(fill(m.body, "text"))}`;
+  }
+
+  function renderEmails(step) {
+    return (step.emails || [])
+      .map(
+        (m, mi) => `
+        <div class="email">
+          <div class="email-head"><span class="pill">E-Mail</span><strong>${esc(m.title)}</strong></div>
+          <dl class="email-meta">
+            <dt>An</dt><dd>${m.to ? fill(m.to) : `<span class="muted">Adresse ergänzen</span>`}</dd>
+            <dt>Betreff</dt><dd lang="en">${fill(m.subject)}</dd>
+          </dl>
+          <pre class="email-body" lang="en">${fill(m.body)}</pre>
+          ${m.de ? `<p class="de">${esc(m.de)}</p>` : ""}
+          <div class="btn-row">
+            <a class="btn btn-primary btn-small" href="${esc(mailtoHref(m))}">Im Mailprogramm öffnen</a>
+            <button class="btn btn-small" type="button" data-copy-mail="${esc(step.id)}:${mi}">Text kopieren</button>
+          </div>
+        </div>`
+      )
+      .join("");
+  }
+
+  function renderForms(step) {
+    return (step.forms || [])
+      .map(
+        (f, fi) => `
+        <div class="formhelp">
+          <div class="email-head"><span class="pill">Formular</span><strong>${esc(f.title)}</strong></div>
+          ${f.url ? `<p><a href="${esc(f.url)}" target="_blank" rel="noopener">Offizielles Formular öffnen</a></p>` : ""}
+          ${f.note ? `<p class="muted">${esc(f.note)}</p>` : ""}
+          <table class="fields">
+            <thead><tr><th>Feld im Formular</th><th>Eintragen</th><th><span class="sr-only">Kopieren</span></th></tr></thead>
+            <tbody>
+              ${f.fields
+                .map(
+                  (x, xi) => `
+                <tr>
+                  <td lang="en">${esc(x.label)}${x.hint ? `<div class="hint">${esc(x.hint)}</div>` : ""}</td>
+                  <td lang="en">${x.value ? fill(x.value) : `<span class="muted">von Hand eintragen</span>`}</td>
+                  <td>${x.value ? `<button class="btn btn-small" type="button" data-copy-field="${esc(step.id)}:${fi}:${xi}" aria-label="Kopieren">Kopieren</button>` : ""}</td>
+                </tr>`
+                )
+                .join("")}
+            </tbody>
+          </table>
+        </div>`
+      )
+      .join("");
+  }
+
+  function renderStep(step, index) {
+    const done = isDone(step.id);
+    const subs = step.todo || [];
+    const subDone = subs.filter((_, i) => isDone(subId(step, i))).length;
+    const doneInfo = state.progress[step.id];
+    const missing = Array.from(new Set(missingKeys(stepAllText(step))));
+    const open = openSteps.has(step.id);
+    const note = state.notes[step.id] ? state.notes[step.id].text : "";
+
+    return `
+    <article class="step ${done ? "is-done" : ""}" id="step-${esc(step.id)}" data-step="${esc(step.id)}">
+      <div class="step-head">
+        <label class="check">
+          <input type="checkbox" data-done="${esc(step.id)}" ${done ? "checked" : ""} />
+          <span class="box" aria-hidden="true"></span>
+          <span class="sr-only">Erledigt</span>
+        </label>
+        <button class="step-toggle" type="button" aria-expanded="${open}" aria-controls="body-${esc(step.id)}" data-toggle="${esc(step.id)}">
+          <span class="step-num">${index}</span>
+          <span class="step-title">${esc(step.title)}</span>
+          <span class="step-meta">
+            ${subs.length ? `<span class="count">${subDone}/${subs.length}</span>` : ""}
+            ${missing.length ? `<span class="warn" title="Es fehlen Angaben in „Unsere Daten“">Daten fehlen</span>` : ""}
+            ${done && doneInfo ? `<span class="by">erledigt${doneInfo.by ? " von " + esc(doneInfo.by) : ""}</span>` : ""}
+          </span>
+          <span class="chev" aria-hidden="true"></span>
+        </button>
+      </div>
+      <p class="step-summary">${fill(step.summary)}</p>
+      <div class="step-body" id="body-${esc(step.id)}" ${open ? "" : "hidden"}>
+        ${step.why ? `<section><h4>Warum</h4><p>${esc(step.why)}</p></section>` : ""}
+        ${step.where && step.where.length ? `<section><h4>Wo</h4><div class="places">${step.where.map((w) => placeCard(w.ref)).join("")}</div></section>` : ""}
+        ${subs.length ? `<section><h4>Aufgaben</h4><ul class="subtasks">${subs
+          .map((t, i) => `<li><label><input type="checkbox" data-done="${esc(subId(step, i))}" ${isDone(subId(step, i)) ? "checked" : ""} /> <span>${fill(t)}</span></label></li>`)
+          .join("")}</ul></section>` : ""}
+        ${step.bring && step.bring.length ? `<section><h4>Mitbringen</h4><ul class="bring">${step.bring.map((b) => `<li>${fill(b)}</li>`).join("")}</ul></section>` : ""}
+        ${step.prepare && step.prepare.length ? `<section><h4>Vorbereiten</h4><ul>${step.prepare.map((b) => `<li>${fill(b)}</li>`).join("")}</ul></section>` : ""}
+        ${step.scripts && step.scripts.length ? `<section><h4>Was ihr sagen könnt</h4>${renderScripts(step)}</section>` : ""}
+        ${step.emails && step.emails.length ? `<section><h4>E-Mail-Entwürfe</h4>${renderEmails(step)}</section>` : ""}
+        ${step.forms && step.forms.length ? `<section><h4>Ausfüllhilfe</h4>${renderForms(step)}</section>` : ""}
+        ${step.cautions && step.cautions.length ? `<section class="cautions"><h4>Achtung</h4><ul>${step.cautions.map((c) => `<li>${esc(c)}</li>`).join("")}</ul></section>` : ""}
+        <section class="notes">
+          <h4><label for="note-${esc(step.id)}">Notizen (für alle sichtbar)</label></h4>
+          <textarea id="note-${esc(step.id)}" data-note="${esc(step.id)}" rows="3" placeholder="Z. B. Name der Sachbearbeiterin, Antworten, Termine">${esc(note)}</textarea>
+        </section>
+        ${step.sources && step.sources.length ? `<section class="sources"><h4>Quellen</h4><ul>${step.sources.map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a></li>`).join("")}</ul></section>` : ""}
+      </div>
+    </article>`;
+  }
+
+  function render() {
+    const hideDone = $("#hide-done").checked;
+    let n = 0;
+    const html = K.phases
+      .map((ph) => {
+        const steps = K.steps.filter((s) => s.phase === ph.id);
+        const doneCount = steps.filter((s) => isDone(s.id)).length;
+        const items = steps
+          .map((s) => {
+            n += 1;
+            if (hideDone && isDone(s.id)) return "";
+            return renderStep(s, n);
+          })
+          .join("");
+        return `
+        <section class="phase" id="phase-${ph.id}">
+          <div class="phase-head">
+            <div>
+              <h2>${esc(ph.title)}</h2>
+              <p>${esc(ph.subtitle)}</p>
+            </div>
+            <span class="phase-count">${doneCount}/${steps.length}</span>
+          </div>
+          ${items || `<p class="muted all-done">Alles in dieser Phase erledigt.</p>`}
+        </section>`;
+      })
+      .join("");
+
+    // Fokus und Scrollposition in Notizen bewahren
+    const active = document.activeElement;
+    const activeNote = active && active.dataset ? active.dataset.note : null;
+    const sel = activeNote ? [active.selectionStart, active.selectionEnd] : null;
+
+    $("#phases").innerHTML = html;
+
+    if (activeNote) {
+      const el = $(`[data-note="${activeNote}"]`);
+      if (el) { el.focus(); if (sel) el.setSelectionRange(sel[0], sel[1]); }
+    }
+
+    renderOverview();
+    renderWho();
+    $$("[data-tpl]").forEach((el) => { el.innerHTML = fill(el.dataset.tpl); });
+  }
+
+  function renderOverview() {
+    const total = K.steps.length;
+    const done = K.steps.filter((s) => isDone(s.id)).length;
+    $("#progress-text").textContent = `${done} von ${total} Schritten erledigt`;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    $("#progress-bar").setAttribute("aria-valuenow", pct);
+    $("#progress-bar span").style.width = pct + "%";
+
+    const next = K.steps.find((s) => !isDone(s.id));
+    const nextEl = $("#next-step");
+    if (next) {
+      const ph = K.phases.find((p) => p.id === next.phase);
+      nextEl.innerHTML = `
+        <div class="next-label">Nächster Schritt</div>
+        <div class="next-title">${esc(next.title)}</div>
+        <div class="next-phase">${esc(ph ? ph.title : "")}</div>
+        <button class="btn btn-primary" type="button" data-goto="${esc(next.id)}">Öffnen</button>`;
+    } else {
+      nextEl.innerHTML = `<div class="next-title">Alles erledigt. Glückwunsch!</div>`;
+    }
+
+    const missing = new Set();
+    K.steps.filter((s) => !isDone(s.id)).forEach((s) => missingKeys(stepAllText(s)).forEach((k) => missing.add(k)));
+    const md = $("#missing-data");
+    if (missing.size) {
+      md.hidden = false;
+      md.innerHTML = `<strong>${missing.size} Angaben fehlen noch</strong> in „Unsere Daten“. Sie werden in Skripten und Formularen gebraucht. <button class="btn btn-small" type="button" data-view-go="daten">Jetzt ergänzen</button>`;
+    } else {
+      md.hidden = true;
+    }
+  }
+
+  // ---------- Ereignisse in der Liste ----------
+
+  document.addEventListener("change", (e) => {
+    const t = e.target;
+    if (t.matches("[data-done]")) setDone(t.dataset.done, t.checked);
+  });
+
+  $("#hide-done").addEventListener("change", (e) => { store.set("kindler.hideDone", e.target.checked); render(); });
+
+  $("#expand-all").addEventListener("click", () => {
+    const allOpen = K.steps.every((s) => openSteps.has(s.id));
+    openSteps = allOpen ? new Set() : new Set(K.steps.map((s) => s.id));
+    $("#expand-all").textContent = allOpen ? "Alle aufklappen" : "Alle zuklappen";
+    store.set("kindler.open", Array.from(openSteps));
+    render();
+  });
+
+  $("#print-all").addEventListener("click", () => {
+    const prev = new Set(openSteps);
+    openSteps = new Set(K.steps.map((s) => s.id));
+    render();
+    window.print();
+    openSteps = prev;
+    render();
+  });
+
+  function findStep(id) { return K.steps.find((s) => s.id === id); }
+
+  document.addEventListener("click", (e) => {
+    const t = e.target.closest("button, a");
+    if (!t) return;
+
+    if (t.dataset.toggle) {
+      const id = t.dataset.toggle;
+      if (openSteps.has(id)) openSteps.delete(id); else openSteps.add(id);
+      store.set("kindler.open", Array.from(openSteps));
+      const body = document.getElementById("body-" + id);
+      if (body) { body.hidden = !openSteps.has(id); t.setAttribute("aria-expanded", openSteps.has(id)); }
+      return;
+    }
+    if (t.dataset.goto) {
+      openSteps.add(t.dataset.goto);
+      store.set("kindler.open", Array.from(openSteps));
+      render();
+      const el = document.getElementById("step-" + t.dataset.goto);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    if (t.dataset.viewGo) { showView(t.dataset.viewGo); return; }
+    if (t.dataset.copyScript) {
+      const [id, si] = t.dataset.copyScript.split(":");
+      const s = findStep(id).scripts[+si];
+      copy(s.lines.map((l) => fill(l.en, "text")).join("\n"));
+      return;
+    }
+    if (t.dataset.copyMail) {
+      const [id, mi] = t.dataset.copyMail.split(":");
+      const m = findStep(id).emails[+mi];
+      copy(`Subject: ${fill(m.subject, "text")}\n\n${fill(m.body, "text")}`);
+      return;
+    }
+    if (t.dataset.copyField) {
+      const [id, fi, xi] = t.dataset.copyField.split(":");
+      copy(fill(findStep(id).forms[+fi].fields[+xi].value, "text"));
+      return;
+    }
+  });
+
+  // Notizen: speichern, wenn man 1 Sekunde nicht tippt
+  const noteTimers = {};
+  document.addEventListener("input", (e) => {
+    const t = e.target;
+    if (!t.matches("[data-note]")) return;
+    const id = t.dataset.note;
+    setSync("speichert …");
+    clearTimeout(noteTimers[id]);
+    noteTimers[id] = setTimeout(async () => {
+      try {
+        const s = await api("PUT", "/api/notes/" + encodeURIComponent(id), { text: t.value });
+        state.notes = s.notes;
+        state.updatedAt = s.updatedAt;
+        setSync("gespeichert");
+      } catch {
+        setSync("Notiz nicht gespeichert.", true);
+      }
+    }, 1000);
+  });
+
+  // ---------- Unsere Daten ----------
+
+  function renderProfileForm() {
+    const form = $("#profile-form");
+    form.innerHTML = K.profileGroups
+      .map(
+        (g) => `
+      <fieldset>
+        <legend>${esc(g.title)}</legend>
+        ${g.fields
+          .map((f) => {
+            const v = state.profile[f.key] !== undefined ? state.profile[f.key] : f.default || "";
+            return `<label class="field"><span>${esc(f.label)}</span><input name="${esc(f.key)}" value="${esc(v)}" placeholder="${esc(f.placeholder || "")}" autocomplete="off" /></label>`;
+          })
+          .join("")}
+      </fieldset>`
+      )
+      .join("");
+  }
+
+  $("#save-profile").addEventListener("click", async () => {
+    const data = {};
+    $$("#profile-form input").forEach((i) => (data[i.name] = i.value.trim()));
+    $("#profile-status").textContent = "speichert …";
+    try {
+      state = await api("PUT", "/api/profile", { profile: data });
+      $("#profile-status").textContent = "Gespeichert";
+      render();
+      toast("Daten gespeichert");
+    } catch {
+      $("#profile-status").textContent = "Nicht gespeichert. Bitte erneut versuchen.";
+    }
+  });
+
+  // ---------- Kontakte ----------
+
+  function renderContacts() {
+    const extra = [];
+    if (profileValue("attorneyName") || profileValue("attorneyEmail")) {
+      extra.push(`<div class="place"><div class="place-name">Anwalt/Anwältin: ${esc(profileValue("attorneyName"))}</div>${profileValue("attorneyEmail") ? `<div><a href="mailto:${esc(profileValue("attorneyEmail"))}">${esc(profileValue("attorneyEmail"))}</a></div>` : ""}</div>`);
+    }
+    if (profileValue("baseOwner")) {
+      extra.push(`<div class="place"><div class="place-name">Grundstückseigentümer/in: ${esc(profileValue("baseOwner"))}</div>${profileValue("baseOwnerPhone") ? `<div><a href="${telHref(profileValue("baseOwnerPhone"))}">${esc(profileValue("baseOwnerPhone"))}</a></div>` : ""}${profileValue("baseOwnerEmail") ? `<div><a href="mailto:${esc(profileValue("baseOwnerEmail"))}">${esc(profileValue("baseOwnerEmail"))}</a></div>` : ""}</div>`);
+    }
+    $("#contacts").innerHTML = Object.keys(K.places).map(placeCard).join("") + extra.join("");
+  }
+
+  // ---------- Start ----------
+
+  async function boot() {
+    $("#app").hidden = false;
+    $("#last-reviewed").textContent = K.lastReviewed;
+    $("#hide-done").checked = store.get("kindler.hideDone", false);
+    openSteps = new Set(store.get("kindler.open", []));
+    render();
+    await loadState(false);
+    showView(store.get("kindler.view", "liste"));
+    startPolling();
+  }
+
+  (async function init() {
+    try {
+      if (location.protocol === "file:") throw new Error("file");
+      const s = await fetch("/api/session", { credentials: "same-origin" }).then((r) => r.json());
+      if (!s.authed) return showLogin();
+    } catch {
+      localMode = true;
+    }
+    await boot();
+    if (localMode) setSync("Testmodus ohne Server: Haken und Daten bleiben nur in diesem Browser.", true);
+  })();
+})();

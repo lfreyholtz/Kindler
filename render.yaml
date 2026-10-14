@@ -1,0 +1,28 @@
+# Render Blueprint: Web Service + PostgreSQL für den gemeinsamen Fortschritt.
+# In Render: "New" > "Blueprint" > dieses Repository auswählen.
+# Danach unter Environment den ACCESS_CODE setzen (wird beim ersten Deploy abgefragt).
+
+services:
+  - type: web
+    name: kindler-checkliste
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: ACCESS_CODE
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kindler-db
+          property: connectionString
+
+databases:
+  - name: kindler-db
+    plan: free
+    databaseName: kindler

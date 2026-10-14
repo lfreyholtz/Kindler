@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Kindler Checkliste</title>
+  <meta name="description" content="Schritt für Schritt: Visum, Alltag in Georgia und Genehmigung für den Food Truck." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23a4501f'/%3E%3Cpath d='M18 33l9 9 19-20' stroke='%23fff' stroke-width='7' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Zum Inhalt</a>
+
+  <div id="login" class="login" hidden>
+    <form id="login-form" class="login-card">
+      <h1>Kindler Checkliste</h1>
+      <p>Bitte Zugangscode eingeben.</p>
+      <label for="code" class="sr-only">Zugangscode</label>
+      <input id="code" name="code" type="password" autocomplete="current-password" required />
+      <button type="submit" class="btn btn-primary">Öffnen</button>
+      <p id="login-error" class="error" role="alert"></p>
+    </form>
+  </div>
+
+  <div id="app" hidden>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">K</span>
+          <div>
+            <div class="brand-name" data-tpl="{{businessName}}">Kindler German Cuisine</div>
+            <div class="brand-sub">Unsere Checkliste für Georgia</div>
+          </div>
+        </div>
+        <div class="who">
+          <label for="who-select">Ich bin</label>
+          <select id="who-select"></select>
+        </div>
+      </div>
+      <nav class="tabs" aria-label="Bereiche">
+        <button class="tab" data-view="liste" aria-current="page">Checkliste</button>
+        <button class="tab" data-view="daten">Unsere Daten</button>
+        <button class="tab" data-view="kontakte">Kontakte</button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section id="view-liste" class="view">
+        <div class="overview">
+          <div class="progress-block">
+            <div class="progress-label"><span id="progress-text">0 von 0 erledigt</span><span id="sync-status" class="sync"></span></div>
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="progress-bar"><span></span></div>
+          </div>
+          <div id="next-step" class="next-step"></div>
+          <div id="missing-data" class="missing-data" hidden></div>
+          <div class="view-options">
+            <label class="toggle"><input type="checkbox" id="hide-done" /> Erledigte ausblenden</label>
+            <button class="btn btn-ghost" id="expand-all" type="button">Alle aufklappen</button>
+            <button class="btn btn-ghost" id="print-all" type="button">Drucken</button>
+          </div>
+        </div>
+        <div id="phases"></div>
+        <p class="footnote">Stand der Recherche: <span id="last-reviewed"></span>. Regeln und Gebühren können sich ändern. Im Zweifel gilt, was das Amt sagt.</p>
+      </section>
+
+      <section id="view-daten" class="view" hidden>
+        <div class="panel">
+          <h2>Unsere Daten</h2>
+          <p class="lead">Einmal eintragen. Alle Skripte, E-Mails und Ausfüllhilfen werden damit automatisch ergänzt. Änderungen werden für alle gespeichert.</p>
+          <p class="note">Bitte keine Pass-, SSN- oder Geburtsdaten eintragen. Diese gehören nur auf die Formulare selbst.</p>
+          <form id="profile-form"></form>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="button" id="save-profile">Speichern</button>
+            <span id="profile-status" class="sync"></span>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-kontakte" class="view" hidden>
+        <div class="panel">
+          <h2>Kontakte</h2>
+          <p class="lead">Alle Ämter und Stellen auf einen Blick.</p>
+          <div id="contacts" class="contacts"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
