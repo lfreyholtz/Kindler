@@ -102,7 +102,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 300; margin: 0; 
 .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
 
 /* Login */
-.login { min-height: 100vh; display: grid; place-items: center; padding: 16px; background: var(--canvas); position: relative; overflow: hidden; }
+.login { min-height: 100vh; display: grid; place-items: center; padding: 16px; background: var(--canvas); position: relative; overflow: hidden; isolation: isolate; }
 .login::before {
   content: ""; position: absolute; width: 760px; height: 760px; border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, var(--mint), transparent 60%), radial-gradient(circle at 70% 60%, var(--peach), transparent 60%);
@@ -147,7 +147,8 @@ main { max-width: 880px; margin: 0 auto; padding: 32px 16px 96px; }
 
 /* Nächster Schritt: weiße Karte mit weichem Pastellschimmer */
 .next-step {
-  position: relative; overflow: hidden;
+  position: relative; overflow: hidden; isolation: isolate;
+  clip-path: inset(0 round var(--r-xxl));
   background: var(--surface); border-radius: var(--r-xxl); padding: 32px;
   display: grid; gap: 8px; justify-items: start;
 }
@@ -293,7 +294,7 @@ legend { font-family: var(--font-display); font-weight: 300; font-size: 24px; pa
 
 @media (max-width: 640px) {
   main { padding: 24px 16px 80px; }
-  .next-step { padding: 24px 20px; border-radius: var(--r-xl); }
+  .next-step { padding: 24px 20px; border-radius: var(--r-xl); clip-path: inset(0 round var(--r-xl)); }
   .next-title { font-size: 28px; }
   .phase-head h2 { font-size: 26px; }
   .panel h2 { font-size: 34px; letter-spacing: -0.36px; }
