@@ -318,3 +318,14 @@ legend { font-family: var(--font-display); font-weight: 300; font-size: 24px; pa
   a { color: #000; }
   .cite { font-size: 9pt; }
 }
+
+/* KI-Text */
+.promptcard { background: var(--canvas-soft); border-radius: var(--r-xl); padding: 24px; margin-bottom: 12px; }
+.promptcard .email-body { font-size: 14px; line-height: 1.55; max-height: 420px; overflow: auto; }
+
+/* Unterlagen-Übersicht */
+.papers { display: grid; gap: 10px; }
+.paper { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; background: var(--surface); border-radius: var(--r-lg); padding: 16px 18px; }
+.paper-main { flex: 1; min-width: 200px; }
+.paper-title { color: var(--ink); }
+.paper-actions { display: flex; gap: 8px; }

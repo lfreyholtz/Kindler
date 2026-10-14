@@ -248,6 +248,58 @@ window.KINDLER = {
       sources: [{ title: "Einreisestempel I-94 abrufen", url: "https://i94.cbp.dhs.gov/" }],
     },
     {
+      id: "businessplan",
+      phase: "jetzt",
+      title: "Businessplan schreiben oder prüfen",
+      summary: "Das Konsulat will einen Businessplan mit Zahlen für fünf Jahre. Entweder hat ihn euer Anwalt schon geschrieben, dann lest ihr ihn durch. Oder ihr schreibt ihn selbst.",
+      why: "Der Plan muss zeigen, dass die Firma mehr abwirft als nur euren Lebensunterhalt. Im Gespräch fragt der Beamte nach euren Zahlen. Wer sie nicht kennt, wirkt unsicher.",
+      deliverables: ["Businessplan mit Fünf-Jahres-Zahlen (PDF)"],
+      todo: [
+        "Beim Anwalt fragen, ob er den Businessplan schon geschrieben hat. Wenn ja: Kopie geben lassen und diesen Schritt nur zum Durchlesen nutzen.",
+        "Zahlen sammeln: Was habt ihr bisher ausgegeben? Was kostet der Truck, die Küche, die Ausstattung, die Genehmigungen?",
+        "Zahlen schätzen: Wie viele Essen verkauft ihr pro Tag? Zu welchem Preis? An wie vielen Tagen pro Woche?",
+        "Überlegen: Wen stellt ihr wann ein? Schon eine Aushilfe an Wochenenden zählt.",
+        "Mit dem Text unten einen Entwurf erstellen lassen.",
+        "Entwurf durchgehen und jede Zahl durch eure echte Zahl ersetzen. Nichts stehen lassen, was ihr nicht erklären könnt.",
+        "Fertigen Plan an den Anwalt schicken und hier hochladen.",
+      ],
+      prompts: [
+        {
+          title: "Businessplan für das E-2-Visum entwerfen lassen",
+          note: "Antwortet auf die Rückfragen mit euren echten Zahlen. Am Ende bittet ihr um eine deutsche Zusammenfassung, damit ihr alles versteht.",
+          text:
+            "You are helping me write a business plan for a U.S. E-2 treaty investor visa application. I am a German citizen opening a food truck in Georgia, USA.\n\n" +
+            "Business: {{businessName}}, a {{legalForm}} registered in Georgia.\n" +
+            "Concept: {{menuSummary}}\n" +
+            "Base of operation: a separate commercial kitchen building on our own property at {{baseStreet}}, {{baseCity}}, Georgia (Lamar County). The truck returns there every day.\n" +
+            "Owners: {{owner1}} and {{owner2}}.\n\n" +
+            "Before you write anything, ask me for the numbers you need: how much we have already invested and on what, our expected price per item, expected customers per day, days of operation per week, and when we plan to hire employees.\n\n" +
+            "Then write a business plan of about 10 to 15 pages with these sections:\n" +
+            "1. Executive summary\n" +
+            "2. The business and its concept\n" +
+            "3. Market and location analysis for Lamar, Upson and Pike County, Georgia\n" +
+            "4. Competition\n" +
+            "5. Marketing and sales plan, including events and regular pitches\n" +
+            "6. Operations: base of operation, daily routine, suppliers, permits\n" +
+            "7. Management and ownership\n" +
+            "8. Staffing plan with a hiring timeline for U.S. employees\n" +
+            "9. Financial plan: start-up costs already spent, monthly revenue and cost projections, and profit and loss projections for five years\n" +
+            "10. Source of investment funds\n\n" +
+            "Important requirements:\n" +
+            "- The plan must show that the business will generate significantly more than a minimal living for my family within five years, or that it will create jobs. This is the 'marginality' test for the E-2 visa.\n" +
+            "- Use only the numbers I give you. Where you need an assumption, mark it clearly as an assumption and explain it.\n" +
+            "- Write in plain, factual English for a consular officer.\n" +
+            "- Put the financial projections in tables.\n\n" +
+            "After the plan, give me a short summary in German explaining the key figures, so I can memorise them for my interview.",
+        },
+      ],
+      upload: "Ladet hier den fertigen Businessplan hoch (PDF).",
+      sources: [
+        { title: "Handbuch des US-Außenministeriums zu E-Visa (9 FAM 402.9)", url: "https://fam.state.gov/fam/09FAM/09FAM040209.html" },
+        { title: "Unterlagenliste des Konsulats Frankfurt für E-Visa", url: "https://www.amcham.de/fileadmin/user_upload/user_upload_alt/Visa/Kopie_von_E_visa_package_with_forms.pdf" },
+      ],
+    },
+    {
       id: "interview-unterlagen",
       phase: "jetzt",
       title: "Die Unterlagen für Frankfurt in eine Mappe packen",
@@ -313,6 +365,7 @@ window.KINDLER = {
         "Falls doch einmal jemand eine Apostille verlangt: Zuständig ist je nach Bundesland die Behörde über dem Standesamt, oft das Regierungspräsidium oder das Innenministerium. Für gerichtliche und notarielle Urkunden sowie für beglaubigte Übersetzungen ist es der Präsident des Landgerichts. Fragt beim Standesamt nach, wer es bei euch macht. [[Beglaubigung deutscher Urkunden für das Ausland|https://www.gerlingen.de/-/Dienstleistungen/beglaubigung-von-oeffentlichen-urkunden-fuer-das-ausland-beantragen/vbid469]]",
         "Zur Sicherheit: Die mehrsprachige Urkunde stammt aus einem Abkommen, dem die USA nicht beigetreten sind. Ein Amt dort muss sie also nicht zwingend akzeptieren. In der Praxis hilft sie, weil jeder Sachbearbeiter die englische Spalte lesen kann. Nehmt die deutsche Urkunde zusätzlich mit.",
       ],
+      deliverables: ["Internationale Heiratsurkunde", "Englische Übersetzung des Führerscheins"],
       upload: "Ladet hier Fotos oder Scans eurer Urkunden hoch, dann habt ihr sie auch unterwegs dabei.",
       sources: [
         { title: "Standesamt München: Eheurkunde und mehrsprachige Fassung", url: "https://stadt.muenchen.de/service/info/eheurkunde/10483569/" },
@@ -398,6 +451,7 @@ window.KINDLER = {
         "Sucht euch einen ruhigen Raum, in dem ihr während der Prüfung allein seid.",
         "Das Zertifikat gilt 5 Jahre.",
       ],
+      deliverables: ["Hygiene-Zertifikat (CFSM)"],
       upload: "Ladet hier das Zertifikat hoch, sobald ihr bestanden habt. Ihr braucht es für den Antrag beim Gesundheitsamt.",
       sources: [
         { title: "Georgia: Regel zum Hygiene-Zertifikat (511-6-1-.01)", url: "https://www.law.cornell.edu/regulations/georgia/Ga-Comp-R-Regs-R-511-6-1-.01" },
@@ -406,15 +460,51 @@ window.KINDLER = {
       ],
     },
     {
+      id: "speisekarte",
+      phase: "jetzt",
+      title: "Speisekarte schreiben",
+      summary: "Die Speisekarte ist Pflichtanlage beim Antrag. Das Gesundheitsamt liest daraus, welche Geräte und Becken ihr braucht.",
+      why: "Das Amt prüft anhand der Karte, ob euer Truck zu dem passt, was ihr kochen wollt. Steht rohes Fleisch darauf, braucht ihr mehr Ausstattung als bei fertig gekauften Brezeln.",
+      deliverables: ["Speisekarte auf Englisch (eine Seite, PDF)"],
+      todo: [
+        "Alle Gerichte aufschreiben, die ihr verkaufen wollt.",
+        "Zu jedem Gericht notieren: Wird es im Truck gekocht, nur warm gehalten, oder schon in der Küche am Stützpunkt vorbereitet?",
+        "Mit dem Text unten eine englische Fassung erstellen lassen.",
+        "Preise eintragen.",
+        "Als PDF speichern, ausdrucken und hier hochladen.",
+        "Wichtig: Später nur das verkaufen, was auf dieser Karte steht. Für neue Gerichte muss das Amt Bescheid wissen.",
+      ],
+      prompts: [
+        {
+          title: "Speisekarte auf Englisch erstellen lassen",
+          note: "Schreibt eure Gerichte auf Deutsch in den Text hinein, dort wo die eckigen Klammern stehen.",
+          text:
+            "I am opening a German food truck in Georgia, USA, called {{businessName}}. I need a one-page menu in English for my health department permit application.\n\n" +
+            "These are the dishes I want to sell, written in German: [HIER EURE GERICHTE AUF DEUTSCH EINTRAGEN]\n\n" +
+            "Please:\n" +
+            "1. Translate the dishes into English, keeping the German names where they are well known (for example Bratwurst, Schnitzel, Spätzle), with a short English description under each.\n" +
+            "2. Group them into sections such as Mains, Sides, Sweets and Drinks.\n" +
+            "3. For each dish, add a note in a separate list telling me whether it needs raw meat handling, cooking on the truck, hot holding, or only reheating. The health department uses this to judge what equipment we need.\n" +
+            "4. Tell me which dishes would require a separate vegetable or meat prep sink on the truck.\n" +
+            "5. Keep the menu to one page and leave a blank line for prices.\n\n" +
+            "Finally, give me a one-sentence summary of the menu in English that I can use on official forms, and a German translation of your notes.",
+        },
+      ],
+      upload: "Ladet hier die fertige Speisekarte hoch.",
+    },
+    {
       id: "gesundheitsamt-erstgespraech",
       phase: "jetzt",
       title: "Offene Fragen beim Gesundheitsamt klären",
-      summary: "Ihr habt schon mit dem Amt gesprochen. Jetzt klärt ihr noch ein paar Punkte, damit der Antrag später nicht hängen bleibt.",
-      why: "Lamar und Upson County teilen sich ein Gesundheitsamt. Darum gilt das Formular aus Thomaston, das ihr schon habt, auch für euch. Die Dame hat geraten, gleich alles für Lamar County zu beantragen. Das spart Zeit und Geld.",
+      summary: "Das meiste steht schon in eurem Vorab-Formular. Offen sind nur vier Punkte. Die klärt ihr in einem Anruf.",
+      why: "Lamar und Upson County teilen sich ein Gesundheitsamt. Darum gilt das Formular aus Thomaston, das ihr schon habt, auch für euch. Vieles müsst ihr gar nicht mehr fragen: Die Gebühr von 250 Dollar, die verlangten Wassertests und die nötigen Fotos stehen im Formular. Offen sind nur die vier Punkte unten.",
       where: [{ ref: "lamarEH" }, { ref: "upsonEH" }],
+      prepare: [
+        "Steht schon im Formular, also nicht mehr fragen: Gebühr 250 Dollar, nicht erstattbar. Abgabe bei Upson County Environmental Health, 314 E Lee St, Thomaston. Wassertests W-33 und Bakterien. Zwei Fotos der fertigen Abwasser-Stelle. Vertrag für Altöl bei Fritteuse oder Grillplatte.",
+      ],
       todo: [
         "Den Namen der Dame, mit der ihr gesprochen habt, in die Notizen schreiben.",
-        "Anrufen oder vorbeigehen. Die Sätze unten helfen euch.",
+        "Anrufen. Die vier Fragen unten stellen.",
         "Die Antworten in die Notizen schreiben.",
         "Danach die fertige E-Mail schicken, damit ihr die Antworten schriftlich habt.",
         "Die Antwort vom Amt unten hochladen.",
@@ -426,17 +516,12 @@ window.KINDLER = {
           kind: "call",
           to: "770-358-1483, dann die 2",
           lines: [
-            { en: "Hello, this is {{owner1}} from {{businessName}}. We spoke recently about our food truck permit, and I have a few follow-up questions.", de: "Hallo, hier ist … von … Wir haben kürzlich über die Genehmigung für unseren Food Truck gesprochen. Ich habe noch ein paar Fragen." },
-            { en: "Our kitchen is a separate building on our property, so it is detached from our living quarters. Is anything else needed for it to qualify as our base of operation?", de: "Unsere Küche ist ein eigenes Gebäude auf dem Grundstück, also getrennt vom Wohnbereich. Brauchen Sie sonst noch etwas, damit sie als Stützpunkt anerkannt wird?" },
-            { en: "Will we need any changes to the septic system for wastewater from the truck?", de: "Müssen wir an der Klärgrube etwas ändern, damit wir das Abwasser aus dem Truck ablassen dürfen?" },
-            { en: "Should we submit everything in Thomaston or in Barnesville?", de: "Wo geben wir die Unterlagen ab? Thomaston oder Barnesville?" },
-            { en: "Can we submit the application before our visa interview on November 12?", de: "Dürfen wir vor unserem Visumstermin am 12. November den Antrag stellen?" },
-            { en: "We can only register the truck once our visa is issued, so we won't have a license plate yet. Is the VIN enough for now?", de: "Wir können den Truck erst nach dem Visum anmelden und haben deshalb noch kein Kennzeichen. Reicht vorerst die Fahrgestellnummer?" },
-            { en: "What are the plan review and permit fees, and which payment methods do you accept?", de: "Wie hoch sind die Gebühren für Prüfung und Genehmigung, und wie können wir bezahlen?" },
-            { en: "Our water comes from a private well. Do you need the W-33 chemical test, the W-33C version, or also a bacteria test?", de: "Unser Wasser kommt aus einem eigenen Brunnen. Brauchen Sie den Chemie-Test W-33, die Version W-33C, oder auch einen Bakterien-Test?" },
-            { en: "Which food safety manager certifications do you accept?", de: "Welche Hygiene-Prüfung akzeptieren Sie?" },
-            { en: "Could you email me the application and any other forms we need? My address is {{email}}.", de: "Können Sie uns bitte alle Formulare per E-Mail schicken? Unsere E-Mail ist …" },
-            { en: "May I have your name, in case we have more questions?", de: "Wie ist Ihr Name, bitte? Falls wir noch Fragen haben." },
+            { en: "Hello, this is {{owner1}} from {{businessName}}. We spoke recently about our food truck permit, and I have four questions.", de: "Hallo, hier ist … von … Wir haben kürzlich über die Genehmigung für unseren Food Truck gesprochen. Ich habe vier Fragen." },
+            { en: "First: our kitchen is a separate building on our property, detached from our living quarters. Do you need anything else for it to qualify as our base of operation, for example changes to the septic system?", de: "Erstens: Unsere Küche ist ein eigenes Gebäude auf dem Grundstück, getrennt vom Wohnbereich. Brauchen Sie noch etwas, damit sie als Stützpunkt anerkannt wird, zum Beispiel Änderungen an der Klärgrube?" },
+            { en: "Second: our base is in Lamar County, but the form says Thomaston. Should we bring everything to Thomaston or to the Barnesville office?", de: "Zweitens: Unser Stützpunkt liegt in Lamar County, auf dem Formular steht aber Thomaston. Sollen wir alles nach Thomaston bringen oder ins Büro in Barnesville?" },
+            { en: "Third: we can only register the truck once our visa is issued, so we will not have a license plate yet. Is the VIN enough for now?", de: "Drittens: Wir können den Truck erst nach dem Visum anmelden und haben deshalb noch kein Kennzeichen. Reicht vorerst die Fahrgestellnummer?" },
+            { en: "Fourth: which food safety manager certifications do you accept? We are planning to take the ServSafe Manager exam.", de: "Viertens: Welche Hygiene-Zertifikate akzeptieren Sie? Wir wollen die ServSafe-Manager-Prüfung machen." },
+            { en: "May I have your name, in case we have more questions?", de: "Darf ich Ihren Namen haben, falls wir noch Fragen haben?" },
           ],
         },
       ],
@@ -447,12 +532,10 @@ window.KINDLER = {
           subject: "{{businessName}}: summary of our conversation about the mobile food unit permit",
           body:
             "Hello,\n\nThank you for taking the time to answer our questions. To make sure we have everything right, here is a short summary of what we discussed:\n\n" +
-            "- The separate kitchen building on our property at {{baseStreet}}, {{baseCity}}, GA {{baseZip}} (Lamar County) is acceptable as our base of operation.\n" +
+            "- The separate kitchen building on our property at {{baseStreet}}, {{baseCity}}, GA {{baseZip}} (Lamar County) is acceptable as our base of operation. [ANY CONDITIONS]\n" +
             "- We will submit the pre-application and the permit application at [OFFICE].\n" +
-            "- We may submit before our visa interview on November 12.\n" +
             "- The VIN is sufficient for now; we will provide the license plate number once the truck is registered.\n" +
-            "- The fees are [AMOUNT].\n" +
-            "- For our well, you require [TEST].\n\n" +
+            "- You accept [CERTIFICATION] as the food safety manager certification.\n\n" +
             "Please let us know if any of this is incorrect. We would also appreciate it if you could send us the application form and any other forms we will need.\n\n" +
             "Best regards,\n{{owner1}}\n{{businessName}}\n{{phone}}\n{{email}}",
           de: "Auf Deutsch: Danke für Ihre Hilfe. Haben wir richtig verstanden? Die Küche auf unserem Grundstück ist als Stützpunkt in Ordnung. Wir geben in [BÜRO] ab. Wir dürfen vor dem 12. November beantragen. Die Gebühr ist [BETRAG]. Bitte sagen Sie uns, wenn etwas nicht stimmt.\n\nWichtig: Vor dem Senden die Stellen in eckigen Klammern ausfüllen. Und alles streichen, was die Dame anders gesagt hat. Die E-Mail-Adresse bekommt ihr am Telefon.",
@@ -465,14 +548,21 @@ window.KINDLER = {
       phase: "jetzt",
       title: "Beim Bauamt fragen, ob ihr auf eurem Grundstück arbeiten dürft",
       summary: "Das Bauamt muss auf eurem Vorab-Formular unterschreiben, dass die Küche und der Truck auf eurem Grundstück erlaubt sind.",
-      why: "Ohne diese Unterschrift lehnt das Gesundheitsamt den Antrag ab. Weil ihr auf dem Grundstück auch wohnt, prüft das Bauamt, ob dort ein Gewerbe erlaubt ist.",
+      why: "Ohne diese Unterschrift lehnt das Gesundheitsamt den Antrag ab. Im Vorab-Formular steht dazu: Wird der Standort vom Bauamt nicht freigegeben, dürft ihr ihn nicht als Stützpunkt nutzen, ohne Ausnahme.",
+      prepare: [
+        "Aus dem Formular: Der Stützpunkt darf nicht mit einer anderen Firma geteilt werden.",
+        "Aus dem Formular: Gehört euch das Grundstück nicht, braucht ihr vor der Genehmigung die Erlaubnis des Eigentümers, notariell unterschrieben.",
+        "Der Zoning-Teil des Formulars wird von der Beamtin ausgefüllt. Ihr unterschreibt nur oben, dass ihr die Regeln gelesen habt.",
+      ],
       where: [{ ref: "lamarPlanning" }],
       todo: [
         "Klären, ob euer Grundstück zu einer Stadt gehört (zum Beispiel Milner oder Barnesville). Wenn ja, ist das Bauamt der Stadt zuständig. Wenn nein, das Bauamt vom County.",
         "Die fertige E-Mail unten an das Bauamt schicken.",
         "Mit dem Vorab-Formular hingehen. Die Seite „Step 1, Zoning & Base of Operation“ füllt die Beamtin aus und unterschreibt.",
         "Gleich auch den Antrag für den Gewerbeschein mitnehmen (nächster Schritt).",
+        "Die unterschriebene Seite hier hochladen.",
       ],
+      deliverables: ["Zoning-Freigabe mit Unterschrift des Bauamts"],
       bring: [
         "Das Vorab-Formular",
         "Den Kaufvertrag oder Grundsteuerbescheid für das Grundstück",
@@ -523,8 +613,11 @@ window.KINDLER = {
         "Das Antragsformular herunterladen (Link oben).",
         "Mit der Ausfüllhilfe unten ausfüllen.",
         "Zum Bauamt bringen, am besten gleich beim Termin für die Unterschrift auf dem Vorab-Formular.",
-        "Die Gebühr bezahlen. Vorher fragen, wie viel.",
+        "Die Gebühr bezahlen: 25 Dollar plus Jahresgebühr nach Mitarbeiterzahl.",
+        "Den fertigen Gewerbeschein hier hochladen.",
       ],
+      deliverables: ["Gewerbeschein (Occupation Tax Certificate)"],
+      upload: "Ladet hier den Gewerbeschein hoch, sobald ihr ihn habt.",
       bring: [
         "Den ausgefüllten Antrag",
         "Pass oder Ausweis mit Foto",
@@ -577,7 +670,10 @@ window.KINDLER = {
         "Den Namen unter „Unsere Daten“ eintragen.",
         "Das Blatt „Landlord & Property Use Agreement“ aus dem Vorab-Formular ausfüllen. Ihr unterschreibt beide Rollen: als Eigentümer und als Truck-Eigentümer.",
         "Mit dem Blatt zu einem Notar gehen und dort unterschreiben.",
+        "Eine Kopie hier hochladen.",
       ],
+      deliverables: ["Landlord & Property Use Agreement, notariell unterschrieben"],
+      upload: "Ladet hier eine Kopie des unterschriebenen Blatts hoch.",
       prepare: [
         "Das Blatt steckt schon in eurem Vorab-Formular. Es heißt dort „Mobile Food Service Unit Landlord & Property Use Agreement“.",
         "Ihr erklärt darin, dass eure Firma das Grundstück als Stützpunkt nutzen darf, dass die Adresse auf der Genehmigung stehen darf und dass das Amt jederzeit kontrollieren darf.",
@@ -589,7 +685,11 @@ window.KINDLER = {
       phase: "jetzt",
       title: "Das Wasser klären",
       summary: "Kommt euer Wasser aus der öffentlichen Leitung, ist alles einfach. Habt ihr einen eigenen Brunnen, muss das Wasser getestet werden.",
-      why: "Das Wasser im Truck muss sauber sein und von eurem Stützpunkt kommen. Das Amt will das sehen.",
+      why: "Im Vorab-Formular steht: Das Wasser muss aus einer zugelassenen Quelle kommen, und diese Quelle muss an eurem Stützpunkt sein. Zugelassen ist entweder die öffentliche Leitung oder ein vom Amt geprüfter Brunnen.",
+      prepare: [
+        "Aus dem Formular: Bei einem Brunnen müssen Wasserproben genommen werden, und das Ergebnis muss in Ordnung sein, wenn ihr den Antrag abgebt.",
+        "Ist das Ergebnis nicht in Ordnung, müsst ihr das Problem beheben und neu testen lassen. Das steht ausdrücklich so im Formular.",
+      ],
       where: [{ ref: "extensionLamar" }],
       online: [{ title: "Wassertests der Universität Georgia (Preise und Ablauf)", url: "https://aesl.ces.uga.edu/water.html" }],
       todo: [
@@ -606,6 +706,7 @@ window.KINDLER = {
         "Preise beim Labor der Universität: Bakterien-Test W-35 kostet 40 Dollar, W-33C etwa 125 bis 130 Dollar. [[Labor der Universität Georgia|https://aesl.ces.uga.edu/water.html]] Das Extension Office in Lamar County nennt für eine einfache Wasserprobe 25 Dollar, bar oder per Scheck.",
         "Für den Bakterien-Test braucht ihr eine spezielle Flasche vom Labor. Proben werden Montag bis Donnerstag angenommen.",
       ],
+      deliverables: ["Wassertest-Ergebnis, nur bei eigenem Brunnen"],
       upload: "Ladet hier das Testergebnis hoch, sobald es da ist (nur bei eigenem Brunnen).",
       scripts: [
         {
@@ -630,13 +731,22 @@ window.KINDLER = {
       phase: "jetzt",
       title: "Abwasser-Stelle und Wasserhahn einbauen",
       summary: "An eurem Stützpunkt braucht ihr mindestens eine Stelle, um das Abwasser aus dem Truck abzulassen, und einen Trinkwasserhahn.",
-      why: "Ohne das nimmt das Amt keinen Antrag an. Beides muss genau dort sein, wo der Truck steht.",
+      why: "Im Vorab-Formular steht in Großbuchstaben: Jeder Food Truck muss eine Abwasser-Stelle oder ein Ausgussbecken haben, ohne Ausnahme. Und: Die Anlage muss fertig sein, bevor die Genehmigung erteilt wird.",
+      prepare: [
+        "Aus dem Formular, Wort für Wort: Die Abwasser-Stelle muss am Stützpunkt sein. Abwasser darf nirgendwo anders entsorgt werden.",
+        "Die Anlage muss fertig gebaut sein, bevor das Amt die Genehmigung erteilt. Erst bauen, dann Antrag abgeben.",
+        "Mindestens zwei Fotos der fertigen Anlage müssen mit dem Antrag abgegeben werden.",
+        "Wie so eine Anlage aussehen muss, steht im Handbuch des Staates: „Food Establishment Manual for Design, Installation and Construction“.",
+      ],
       todo: [
         "Das Gesundheitsamt fragen, welche Bauart es akzeptiert. Erst dann bauen.",
         "Einen Klempner um ein Angebot bitten (Sätze unten).",
         "Einbauen lassen.",
-        "Zwei Fotos von der fertigen Abwasser-Stelle machen. Die braucht ihr für den Antrag.",
+        "Mindestens zwei Fotos von der fertigen Anlage machen: eins von Nahem, eins mit dem Truck daneben.",
+        "Fotos ausdrucken und hier hochladen.",
       ],
+      deliverables: ["Zwei Fotos der fertigen Abwasser-Stelle"],
+      upload: "Ladet hier die zwei Fotos hoch.",
       prepare: [
         "Kühlschränke und Regale an eurem Stützpunkt nur für den Truck benutzen. Keine privaten Lebensmittel.",
         "Die Spüle im Wohnhaus zählt nicht. Alles muss im Truck oder in der Küche sein.",
@@ -659,12 +769,15 @@ window.KINDLER = {
       id: "fettentsorgung",
       phase: "jetzt",
       title: "Altöl-Abholung organisieren",
-      summary: "Nur wenn ihr eine Fritteuse oder Grillplatte habt: Ihr braucht einen Vertrag mit einer Firma, die altes Öl abholt.",
+      summary: "Nur wenn ihr eine Fritteuse oder Grillplatte habt: Ihr braucht einen Behälter für Altöl und einen Vertrag mit einer Abholfirma.",
+      why: "Im Vorab-Formular steht: Ein Behälter für Altöl ist Pflicht, wenn ihr frittiert, grillt oder anders viel Fett verwendet, ohne Ausnahme. Der Behälter muss am Stützpunkt stehen. Eine Kopie des Vertrags muss mit dem Antrag abgegeben werden.",
       todo: [
         "Eine Firma in der Gegend suchen. Suchwort: „used cooking oil pickup“.",
         "Vertrag abschließen.",
-        "Eine Kopie für den Antrag machen.",
+        "Eine Kopie für den Antrag machen und hier hochladen.",
       ],
+      deliverables: ["Vertrag für die Altöl-Abholung"],
+      upload: "Ladet hier den Vertrag hoch (nur bei Fritteuse oder Grillplatte).",
       scripts: [
         {
           title: "Anruf bei der Altöl-Firma",
@@ -684,6 +797,12 @@ window.KINDLER = {
       title: "Den Truck prüfen, bevor ihr kauft",
       summary: "Der Truck muss bestimmte Dinge haben. Prüft das vor dem Kauf. Umbauen ist teuer.",
       why: "Das Gesundheitsamt schaut sich Becken, Wassertanks, Warmwasser und Kühlung genau an.",
+      deliverables: ["Fotos vom Truck, innen und außen", "Grundriss-Zeichnung mit Beschriftung", "Datenblätter aller Geräte"],
+      prepare: [
+        "Das Vorab-Formular nennt die Mindestausstattung und schreibt dazu „keine Ausnahmen“: Spüle mit drei Becken nur zum Spülen, Handwaschbecken nur zum Händewaschen, dazu ein Gemüsebecken und ein Fleischbecken, falls eure Speisekarte das verlangt.",
+        "Alle Becken müssen im Truck sein, außer sie stehen am zugelassenen Stützpunkt.",
+        "Ausdrücklich verboten: die Spülen im Wohnhaus als Ersatz für die Becken im Truck zu benutzen.",
+      ],
       todo: [
         "Spüle mit drei Becken (nur zum Geschirrspülen).",
         "Ein eigenes Handwaschbecken (nur zum Händewaschen).",
@@ -694,7 +813,8 @@ window.KINDLER = {
         "Vom Verkäufer die Datenblätter aller Geräte geben lassen (Kühlschrank, Herd, Fritteuse, Tanks, Pumpe, Boiler, Generator).",
         "Die Fahrgestellnummer (VIN) abschreiben und unter „Unsere Daten“ eintragen. Sie steht unten in der Windschutzscheibe auf der Fahrerseite, von außen lesbar, und zusätzlich im Türrahmen der Fahrertür. Vergleicht sie mit der Nummer im Fahrzeugbrief, die beiden müssen übereinstimmen.",
         "Fotos vom Truck machen, innen und außen.",
-        "Eine einfache Zeichnung vom Truck machen, auf der alle Geräte eingezeichnet sind.",
+        "Eine einfache Zeichnung vom Truck machen: Grundriss von oben, jedes Gerät als Kasten mit englischer Beschriftung. Von Hand auf kariertem Papier reicht, abfotografieren.",
+        "Auf der Zeichnung beschriften: 3-compartment sink, handwash sink, prep sink, refrigerator, freezer, grill, fryer, water heater, fresh water tank, waste water tank, generator.",
       ],
       scripts: [
         {
@@ -710,6 +830,7 @@ window.KINDLER = {
           ],
         },
       ],
+      upload: "Ladet hier die Fotos, die Zeichnung und die Datenblätter hoch. Dann habt ihr alles beisammen, wenn ihr den Antrag ausfüllt.",
       sources: [
         { title: "Gesundheitsamt Georgia: Antrag für Food Trucks (zeigt alle Anforderungen)", url: "https://dph.georgia.gov/document/document/dph-mobile-food-unit-permit-application-pdf/download" },
       ],
@@ -724,7 +845,17 @@ window.KINDLER = {
       title: "Das Vorab-Formular fertig machen",
       online: [{ title: "Regelhefte vom Staat Georgia herunterladen", url: "https://dph.georgia.gov/environmental-health/food-service" }],
       summary: "Das Formular aus Thomaston, das ihr schon habt. Erst wenn alles darauf erledigt und unterschrieben ist, dürft ihr den Hauptantrag abgeben.",
-      why: "Auf dem Formular steht: Wer einen Teil nicht erfüllt, bekommt keine Genehmigung. Ein halb fertiges Formular wird abgelehnt.",
+      why: "Auf dem Formular steht in Großbuchstaben: Wer einen Teil nicht erfüllt, bekommt keine Genehmigung. Alle Schritte müssen vor der Abgabe erledigt sein, sonst wird der Antrag abgelehnt.",
+      prepare: [
+        "Die Checkliste auf dem Formular verlangt genau diese sechs Dinge: die Regeln 511-6-1 gelesen, das Bau-Handbuch gelesen, Zoning-Formular vom Bauamt ausgefüllt, Wassertest bei Brunnen, zwei Fotos der fertigen Abwasser-Stelle, Kopie des Altöl-Vertrags. Dazu Unterschrift und Datum bei jedem Schritt.",
+        "Ebenfalls im Formular: Die Mindestausstattung im Truck ist eine Spüle mit drei Becken und ein eigenes Handwaschbecken, dazu Gemüse- und Fleischbecken je nach Speisekarte, ohne Ausnahme.",
+        "Und: Am Stützpunkt sind Abwasser-Stelle oder Ausgussbecken und ein Trinkwasserhahn das absolute Minimum, ohne Ausnahme.",
+        "Und: Lager und Kühlung am Stützpunkt nur für den Truck, keine privaten Lebensmittel. Die Spülen im Wohnhaus zählen nicht.",
+        "Das Datum schreibt man in den USA so: erst Monat, dann Tag, dann Jahr. Der 20. Oktober 2026 ist 10/20/2026.",
+        "Felder für Beamte („Official“) lasst ihr leer.",
+        "Im Affidavit steht „Name in which property is listed (Qpublic)“. Gemeint ist der Name, unter dem das Grundstück im Online-Grundbuch qPublic steht.",
+        "Das Blatt für die Zoning-Freigabe hat drei Zeilen für geplante Verkaufsplätze.",
+      ],
       where: [{ ref: "lamarEH" }, { ref: "upsonEH" }],
       todo: [
         "Die zwei Regelhefte vom Staat herunterladen und durchblättern (Link unten). Am einfachsten mit einem Übersetzungsprogramm wie DeepL. Dann auf dem Formular unterschreiben, dass ihr sie gelesen habt.",
@@ -734,14 +865,10 @@ window.KINDLER = {
         "Seite „Step 3“: zwei Fotos der fertigen Abwasser-Stelle dazulegen.",
         "Seite „Step 4“: eine Kopie vom Altöl-Vertrag dazulegen (nur mit Fritteuse oder Grillplatte).",
         "Jede Seite noch einmal prüfen: Steht überall Unterschrift und Datum?",
-        "Alles kopieren.",
+        "Alles kopieren und hier hochladen.",
       ],
-      prepare: [
-        "Das Datum schreibt man in den USA so: erst Monat, dann Tag, dann Jahr. Der 20. Oktober 2026 ist 10/20/2026.",
-        "Felder für Beamte („Official“) lasst ihr leer.",
-        "Im Affidavit steht „Name in which property is listed (Qpublic)“. Gemeint ist der Name, unter dem das Grundstück im Online-Grundbuch qPublic steht. Dort nachschlagen und genau so eintragen.",
-        "Das Blatt für die Zoning-Freigabe hat drei Zeilen für geplante Verkaufsplätze. Schreibt hinein, wo ihr ungefähr verkaufen wollt.",
-      ],
+      deliverables: ["Vollständig ausgefülltes Vorab-Formular"],
+      upload: "Ladet hier das fertige Vorab-Formular hoch, mit allen Unterschriften.",
       forms: [
         {
           title: "Vorab-Formular, Seiten mit euren Angaben",
@@ -796,7 +923,10 @@ window.KINDLER = {
         "Zum Notar gehen. Viele Banken und UPS-Läden haben einen. Erst dort unterschreiben.",
         "Die Kopie von Pass und I-94 an die Erklärung heften.",
         "Für jedes Amt ein unterschriebenes Original.",
+        "Eine Kopie hier hochladen.",
       ],
+      deliverables: ["Erklärung zum Aufenthalt, notariell unterschrieben"],
+      upload: "Ladet hier eine Kopie der unterschriebenen Erklärung hoch.",
       bring: [
         "Das Formular, noch nicht unterschrieben",
         "Euren Reisepass",
@@ -835,23 +965,35 @@ window.KINDLER = {
         { title: "Weitere Formulare: Verkaufsplatz, Toilette, Eigentümer", url: "https://dph.georgia.gov/environmental-health/food-service" },
       ],
       summary: "Der eigentliche Antrag für die Genehmigung. Mit der Ausfüllhilfe unten geht das schnell. Dazu kommt ein Stapel Anlagen.",
-      why: "Wenn eine Anlage fehlt, dauert alles länger. Darum alles zusammen abgeben.",
+      why: "Auf dem Antrag steht: Fehlende Unterlagen verzögern die Prüfung. Darum alles zusammen abgeben.",
+      prepare: [
+        "Der Antrag verlangt ausdrücklich: Speisekarte, mindestens zwei Fotos des Trucks (eins außen, eins innen), eine möglichst maßstabsgetreue Zeichnung mit beschrifteten Geräten, Datenblätter aller Geräte, eine notariell beglaubigte Erklärung zum Aufenthalt mit Kopie des Ausweisdokuments, Nachweise anderer Ämter wie Zoning und Feuerwehr, das Location Form, das Toilet Use Agreement und das Property Use Agreement.",
+        "Auf dem Antrag steht außerdem: Jeder Food-Verkäufer muss beim Gewerbeamt der Stadt oder des County angemeldet sein. Das ist euer Gewerbeschein.",
+        "Und: Wenn ihr einen Verkaufsplatz ändert, müsst ihr das Amt mindestens 7 Tage vorher informieren.",
+      ],
       todo: [
         "Das Vorab-Formular ist fertig (Schritt davor).",
         "Den Antrag vom Gesundheitsamt geben lassen oder herunterladen (Link unten).",
         "Mit der Ausfüllhilfe unten ausfüllen.",
-        "Anlage: eure Speisekarte",
-        "Anlage: zwei Fotos vom Truck, innen und außen",
-        "Anlage: Zeichnung vom Truck mit allen Geräten",
-        "Anlage: Datenblätter aller Geräte",
-        "Anlage: Erklärung zum Aufenthalt, beim Notar unterschrieben, mit Kopie von Pass und I-94",
-        "Anlage: die Unterschrift vom Bauamt (steht im Vorab-Formular)",
-        "Anlage: Formular „Mobile Food Unit Location Form“ (wo ihr verkaufen wollt)",
-        "Anlage: Formular „Toilet Use Agreement“ (eine Toilette in der Nähe eurer Verkaufsplätze)",
-        "Anlage: Erlaubnis des Eigentümers, falls das Amt sie will",
-        "Anlage: Kopie vom Hygiene-Zertifikat (ist im Schritt „Hygiene-Kurs“ hochgeladen)",
-        "Von allem eine Kopie für euch machen.",
+        "Formular „Mobile Food Unit Location Form“ herunterladen und ausfüllen (Ausfüllhilfe unten).",
+        "Formular „Toilet Use Agreement“ herunterladen. Den Teil für den Betreiber der Toilette unterschreiben lassen.",
+        "Anlage 1: Speisekarte (aus dem Schritt „Speisekarte schreiben“).",
+        "Anlage 2: zwei Fotos vom Truck, eins innen, eins außen.",
+        "Anlage 3: Zeichnung vom Truck mit allen Geräten.",
+        "Anlage 4: Datenblätter aller Geräte.",
+        "Anlage 5: Erklärung zum Aufenthalt, beim Notar unterschrieben, mit Kopie von Pass und I-94.",
+        "Anlage 6: Vorab-Formular mit der Unterschrift vom Bauamt.",
+        "Anlage 7: ausgefülltes „Mobile Food Unit Location Form“.",
+        "Anlage 8: unterschriebenes „Toilet Use Agreement“.",
+        "Anlage 9: Kopie vom Hygiene-Zertifikat.",
+        "Anlage 10: Wassertest-Ergebnis, nur bei eigenem Brunnen.",
+        "Anlage 11: zwei Fotos der fertigen Abwasser-Stelle.",
+        "Anlage 12: Kopie vom Altöl-Vertrag, nur bei Fritteuse oder Grillplatte.",
+        "Alles in der Reihenfolge der Liste zusammenheften.",
+        "Von allem eine Kopie für euch machen und hier hochladen.",
       ],
+      deliverables: ["Antragsmappe mit 12 Anlagen"],
+      upload: "Ladet hier ein Foto oder einen Scan der fertigen Antragsmappe hoch, bevor ihr sie abgebt.",
       prepare: [
         "Fragen zur Technik (Pumpe, Boiler, Tanks) beantwortet ihr mit den Datenblättern vom Truck.",
         "Die Formulare für Verkaufsplatz und Toilette findet ihr beim Staat Georgia (Link unten).",
@@ -886,6 +1028,28 @@ window.KINDLER = {
             { label: "Title", value: "{{owner1Title}}" },
             { label: "Address", value: "{{street}}, {{city}}, {{state}} {{zip}}" },
             { label: "Phone #", value: "{{phone}}" },
+          ],
+        },
+        {
+          title: "Mobile Food Unit Location Form (wo ihr verkauft)",
+          url: "https://dph.georgia.gov/environmental-health/food-service",
+          note: "Für jeden Platz eine Zeile. Ungefähre Angaben reichen, Änderungen meldet ihr später nach.",
+          fields: [
+            { label: "Mobile Unit Name", value: "{{unitName}}" },
+            { label: "Permit Holder", value: "{{businessName}}" },
+            { label: "Phone / Email", value: "{{phone}} / {{email}}" },
+            { label: "Location, dates and times", value: "", hint: "Zum Beispiel: Downtown Barnesville, Saturdays 11:00-19:00" },
+          ],
+        },
+        {
+          title: "Toilet Use Agreement (Toilette am Verkaufsplatz)",
+          url: "https://dph.georgia.gov/environmental-health/food-service",
+          note: "Unterschreibt der Betreiber der Toilette, zum Beispiel das Geschäft oder der Veranstalter. Die Toilette muss in der Nähe eures Verkaufsplatzes sein.",
+          fields: [
+            { label: "Mobile Unit Name", value: "{{unitName}}" },
+            { label: "Permit Holder", value: "{{businessName}}" },
+            { label: "Name and address of the business providing the restroom", value: "", hint: "Trägt der Betreiber ein" },
+            { label: "Signature of restroom provider", value: "", hint: "Unterschreibt der Betreiber" },
           ],
         },
       ],
@@ -1219,8 +1383,10 @@ window.KINDLER = {
         "Haftpflichtversicherung für die Firma (Englisch: „general liability“).",
         "Versicherung für den Truck (Englisch: „commercial auto“).",
         "Sobald ihr Mitarbeiter habt: Unfallversicherung für Mitarbeiter (Englisch: „workers' compensation“).",
-        "Die Versicherungsnachweise als PDF speichern. Veranstalter fragen danach.",
+        "Die Versicherungsnachweise („Certificate of Insurance“) als PDF speichern und hier hochladen. Veranstalter fragen danach.",
       ],
+      deliverables: ["Versicherungsnachweise als PDF"],
+      upload: "Ladet hier die Versicherungsnachweise hoch.",
       scripts: [
         {
           title: "Anruf bei einem Versicherungsmakler",
@@ -1270,7 +1436,10 @@ window.KINDLER = {
         "Genehmigung und Kontrollbericht gut sichtbar aufhängen.",
         "Das Amt fragen, was außen auf dem Truck stehen muss. Oft sind das Name, Adresse und die Nummer der Genehmigung, mindestens 5 cm groß.",
         "Die Nummer der Genehmigung in die Notizen schreiben.",
+        "Ein Foto der Genehmigung hier hochladen.",
       ],
+      deliverables: ["Genehmigung vom Gesundheitsamt"],
+      upload: "Ladet hier ein Foto der Genehmigung und des Kontrollberichts hoch.",
     },
 
     // ================= 5. BETRIEB =================

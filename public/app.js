@@ -212,12 +212,13 @@
   // ---------- Tabs ----------
 
   function showView(name) {
-    for (const v of ["liste", "daten", "kontakte", "woerter"]) $("#view-" + v).hidden = v !== name;
+    for (const v of ["liste", "daten", "kontakte", "woerter", "unterlagen"]) $("#view-" + v).hidden = v !== name;
     $$(".tab").forEach((b) => { if (b.dataset.view === name) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
     store.set("kindler.view", name);
     if (name === "daten") renderProfileForm();
     if (name === "kontakte") renderContacts();
     if (name === "woerter") renderGlossary();
+    if (name === "unterlagen") renderPapers();
     window.scrollTo({ top: 0 });
   }
   $$(".tab").forEach((b) => b.addEventListener("click", () => showView(b.dataset.view)));
@@ -280,6 +281,24 @@
   function mailtoHref(m) {
     const to = fill(m.to, "text").replace(/^\[.*\]$/, "");
     return `mailto:${encodeURIComponent(to).replace(/%40/g, "@")}?subject=${encodeURIComponent(fill(m.subject, "text"))}&body=${encodeURIComponent(fill(m.body, "text"))}`;
+  }
+
+  function renderPrompts(step) {
+    return (step.prompts || [])
+      .map(
+        (pr, pi) => `
+        <div class="promptcard">
+          <div class="email-head"><span class="pill">KI-Text</span><strong>${esc(pr.title)}</strong></div>
+          ${pr.note ? `<p class="muted small">${esc(pr.note)}</p>` : ""}
+          <pre class="email-body">${fill(pr.text)}</pre>
+          <div class="btn-row">
+            <button class="btn btn-primary btn-small" type="button" data-copy-prompt="${esc(step.id)}:${pi}">Text kopieren</button>
+            <a class="btn btn-small" href="https://claude.ai/new" target="_blank" rel="noopener">Claude öffnen</a>
+            <a class="btn btn-small" href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT öffnen</a>
+          </div>
+        </div>`
+      )
+      .join("");
   }
 
   function renderEmails(step) {
@@ -394,6 +413,7 @@
         ${step.prepare && step.prepare.length ? `<section><h4>Gut zu wissen</h4><ul>${step.prepare.map((b) => `<li>${fill(b)}</li>`).join("")}</ul></section>` : ""}
         ${step.scripts && step.scripts.length ? `<section><h4>Das könnt ihr sagen</h4><p class="muted small">Oben steht der englische Satz zum Vorlesen. Darunter, was er auf Deutsch heißt.</p>${renderScripts(step)}</section>` : ""}
         ${step.emails && step.emails.length ? `<section><h4>Fertige E-Mail</h4><p class="muted small">Auf „E-Mail öffnen“ tippen. Dann öffnet sich euer Mailprogramm mit dem fertigen Text.</p>${renderEmails(step)}</section>` : ""}
+        ${step.prompts && step.prompts.length ? `<section><h4>Hilfe von Claude oder ChatGPT</h4><p class="muted small">Text kopieren, bei Claude oder ChatGPT einfügen, Fragen beantworten. Das Ergebnis immer selbst prüfen: Es müssen eure echten Zahlen sein.</p>${renderPrompts(step)}</section>` : ""}
         ${step.forms && step.forms.length ? `<section><h4>Formular ausfüllen</h4><p class="muted small">Links steht, wie das Feld im Formular heißt. Rechts, was ihr eintragt. Mit „Kopieren“ könnt ihr es direkt einfügen.</p>${renderForms(step)}</section>` : ""}
         ${step.cautions && step.cautions.length ? `<section class="cautions"><h4>Wichtig</h4><ul>${step.cautions.map((c) => `<li>${esc(c)}</li>`).join("")}</ul></section>` : ""}
         ${renderUploads(step)}
@@ -556,6 +576,7 @@
       return;
     }
     if (t.dataset.goto) {
+      showView("liste");
       openSteps.add(t.dataset.goto);
       store.set("kindler.open", Array.from(openSteps));
       render();
@@ -573,6 +594,11 @@
       const [id, si] = t.dataset.copyScript.split(":");
       const s = findStep(id).scripts[+si];
       copy(s.lines.map((l) => fill(l.en, "text")).join("\n"));
+      return;
+    }
+    if (t.dataset.copyPrompt) {
+      const [id, pi] = t.dataset.copyPrompt.split(":");
+      copy(fill(findStep(id).prompts[+pi].text, "text"));
       return;
     }
     if (t.dataset.copyMail) {
@@ -650,6 +676,34 @@
       extra.push(`<div class="place"><div class="place-name">Anwalt/Anwältin: ${esc(profileValue("attorneyName"))}</div>${profileValue("attorneyEmail") ? `<div><a href="mailto:${esc(profileValue("attorneyEmail"))}">${esc(profileValue("attorneyEmail"))}</a></div>` : ""}</div>`);
     }
     $("#contacts").innerHTML = Object.keys(K.places).map(placeCard).join("") + extra.join("");
+  }
+
+  function renderPapers() {
+    const rows = [];
+    K.steps.forEach((step, i) => {
+      const phase = K.phases.find((p) => p.id === step.phase);
+      (step.forms || []).forEach((f) => rows.push({ kind: "Formular", title: f.title, url: f.url, step, phase }));
+      (step.deliverables || []).forEach((d) => rows.push({ kind: "Erstellen", title: d, step, phase, up: Boolean(step.upload) }));
+      if (step.upload && !(step.deliverables || []).length) rows.push({ kind: "Hochladen", title: step.title, step, phase, up: true });
+    });
+    $("#papers").innerHTML = rows.length
+      ? rows
+          .map(
+            (r) => `
+        <div class="paper">
+          <span class="pill">${esc(r.kind)}</span>
+          <div class="paper-main">
+            <div class="paper-title">${esc(r.title)}</div>
+            <div class="muted small">${esc(r.phase ? r.phase.title : "")} · ${esc(r.step.title)}${r.up ? " · zum Hochladen" : ""}</div>
+          </div>
+          <div class="paper-actions">
+            ${r.url ? `<a class="btn btn-small" href="${esc(r.url)}" target="_blank" rel="noopener">Öffnen</a>` : ""}
+            <button class="btn btn-small btn-ghost" type="button" data-goto="${esc(r.step.id)}">Zum Schritt</button>
+          </div>
+        </div>`
+          )
+          .join("")
+      : `<p class="muted">Keine Unterlagen gefunden.</p>`;
   }
 
   function renderGlossary() {
