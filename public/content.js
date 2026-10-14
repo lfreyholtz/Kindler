@@ -7,7 +7,7 @@
 // - Kurze Sätze. Ein Gedanke pro Satz.
 // - Englische Fachwörter nur, wenn sie auf Formularen stehen. Dann einmal erklären
 //   und in die Wortliste (glossary) aufnehmen.
-// - Englische Sätze zum Vorlesen: einfach, kurz, ohne Redewendungen.
+// - Englische Sätze und E-Mails: normales, höfliches Geschäftsenglisch. Nie auf mangelnde Sprachkenntnisse hinweisen.
 // - Die "id" eines Schritts nach dem Start nicht mehr ändern, sonst geht der Haken verloren.
 
 window.KINDLER = {
@@ -17,7 +17,7 @@ window.KINDLER = {
     "Diese Seite führt euch Schritt für Schritt durch alles, was ihr für das Visum, das Leben in Georgia und den Food Truck braucht.",
     "Fangt einfach oben beim „Nächsten Schritt“ an. Jeder Schritt erklärt, worum es geht, was ihr tun müsst und was ihr sagen könnt.",
     "Rot umrandete Stellen fehlen noch. Tragt sie einmal unter „Unsere Daten“ ein, dann stehen sie überall richtig drin.",
-    "Englische Sätze könnt ihr vorlesen oder kopieren. Darunter steht immer, was sie auf Deutsch bedeuten.",
+    "Die englischen Sätze und E-Mails könnt ihr so verwenden oder kopieren. Darunter steht jeweils, was sie auf Deutsch bedeuten.",
     "Wenn ihr einen Schritt erledigt habt, setzt den Haken. Alle sehen dann, dass er fertig ist.",
   ],
 
@@ -121,7 +121,7 @@ window.KINDLER = {
   phases: [
     { id: "jetzt", title: "1. Jetzt: vorbereiten und beantragen", subtitle: "Bis zum Flug nach Frankfurt. Ihr dürft vorbereiten und Anträge stellen, aber noch nichts verkaufen. Was bis dahin nicht fertig wird, macht ihr danach weiter." },
     { id: "visum", title: "2. Der Visumstermin in Frankfurt", subtitle: "Donnerstag, 12. November 2026" },
-    { id: "ankunft", title: "3. Zurück in den USA mit dem neuen Visum", subtitle: "Ab jetzt dürft ihr in eurer Firma arbeiten. Diese Dinge erledigt ihr in den ersten Wochen." },
+    { id: "ankunft", title: "3. Zurück in den USA mit dem neuen Visum", subtitle: "Ab jetzt dürft ihr in eurer Firma arbeiten. Die Reihenfolge ist hier wichtig, weil jeder Schritt den vorigen braucht: Umzug, dann Sozialversicherungsnummer, dann Führerschein, dann Autos anmelden." },
     { id: "genehmigung", title: "4. Kontrolle und Genehmigung für den Truck", subtitle: "Das Gesundheitsamt schaut sich alles an und gibt euch die Erlaubnis." },
     { id: "betrieb", title: "5. Wenn der Truck läuft", subtitle: "Was regelmäßig zu tun ist." },
   ],
@@ -189,6 +189,7 @@ window.KINDLER = {
       id: "anwalt-klaeren",
       phase: "jetzt",
       title: "Den Anwalt fragen, was ihr vor dem Visum schon dürft",
+      online: [{ title: "Einreisestempel (I-94) abrufen und ausdrucken", url: "https://i94.cbp.dhs.gov/" }],
       summary: "Ihr seid gerade als Touristen hier. Da ist nicht alles erlaubt. Euer Anwalt sagt euch genau, was geht.",
       why: "Wenn ihr als Tourist etwas tut, das als Arbeit zählt, kann das euer Visum gefährden. Deshalb lieber vorher fragen und die Antwort schriftlich haben.",
       todo: [
@@ -203,21 +204,20 @@ window.KINDLER = {
           subject: "{{businessName}}: questions before our visa interview on November 12",
           body:
             "Dear {{attorneyName}},\n\n" +
-            "Our E-2 visa interview in Frankfurt is on November 12, 2026. Right now we are in Georgia as visitors. We have some questions:\n\n" +
-            "1. Which of these things may we do as visitors?\n" +
-            "   - meet with the county zoning office and the health department\n" +
-            "   - finish the separate kitchen on our property\n" +
-            "   - buy the food truck and equipment\n" +
-            "   - take the food safety manager course and exam\n" +
-            "2. Is there anything we must NOT do before we have the visa?\n" +
-            "3. The health department told us to apply for the food permit and the county business license in Lamar County now. Is that OK before the visa?\n" +
-            "4. After the interview, we and our business will move from Pike County to our property on Tom Bell Road in Lamar County. Does this affect the visa?\n" +
-            "5. Can we do the interview in German?\n" +
-            "6. Which original documents should we bring to the interview?\n" +
-            "7. After approval, how long does the consulate keep our passports?\n\n" +
-            "Thank you very much,\n{{owner1}}\n{{businessName}}\n{{phone}}",
+            "Our E-2 interview at the Frankfurt consulate is scheduled for November 12, 2026. We are currently in Georgia on a visitor basis, and a few questions have come up as we prepare:\n\n" +
+            "1. Which of the following can we do before the visa is issued?\n" +
+            "   - Meet with the Lamar County zoning office and the health department\n" +
+            "   - Finish the separate kitchen on our property\n" +
+            "   - Purchase the food truck and equipment\n" +
+            "   - Complete the food safety manager course and exam\n" +
+            "2. Is there anything we should avoid entirely until the visa is issued?\n" +
+            "3. The health department suggested we apply for the food service permit and the county business license in Lamar County now. Is that advisable before the interview?\n" +
+            "4. After the interview, we will move ourselves and the business from Pike County to our property on Tom Bell Road in Lamar County. Does this change need to be reported, or does it affect the application?\n" +
+            "5. Which original documents should we bring to the interview?\n" +
+            "6. Once the visa is approved, how long does the consulate typically keep the passports?\n\n" +
+            "Thank you for your help.\n\nBest regards,\n{{owner1}}\n{{businessName}}\n{{phone}}",
           de:
-            "Auf Deutsch: Wir fragen, (1) was wir als Touristen schon dürfen (Termine bei Bauamt und Gesundheitsamt, Küche fertig machen, Truck kaufen, Hygiene-Kurs), (2) was wir auf keinen Fall tun dürfen, (3) ob wir die Genehmigung und den Gewerbeschein schon jetzt beantragen dürfen, wie das Gesundheitsamt es vorschlägt, (4) ob unser Umzug mit der Firma auf die Tom Bell Road das Visum betrifft, (5) ob das Gespräch auf Deutsch geht, (6) welche Originale wir mitbringen sollen, (7) wie lange das Konsulat die Pässe behält.",
+            "Auf Deutsch: Wir fragen, (1) was wir vor dem Visum schon dürfen (Termine bei Bauamt und Gesundheitsamt, Küche fertig machen, Truck kaufen, Hygiene-Kurs), (2) was wir auf keinen Fall tun dürfen, (3) ob wir die Genehmigung und den Gewerbeschein schon jetzt beantragen dürfen, wie das Gesundheitsamt es vorschlägt, (4) ob unser Umzug mit der Firma auf die Tom Bell Road gemeldet werden muss oder das Visum betrifft, (5) welche Originale wir mitbringen sollen, (6) wie lange das Konsulat die Pässe behält.",
         },
       ],
       sources: [{ title: "Einreisestempel I-94 abrufen", url: "https://i94.cbp.dhs.gov/" }],
@@ -267,23 +267,21 @@ window.KINDLER = {
           kind: "inperson",
           lines: [
             { en: "What does your company do?", de: "Was macht eure Firma? (Food Truck mit deutschem Essen, wo, für wen)" },
-            { en: "How much did you invest? What did you buy?", de: "Wie viel habt ihr investiert? Was habt ihr gekauft?" },
-            { en: "Where does the money come from?", de: "Woher kommt das Geld? (Ersparnisse, Verkauf, mit Belegen)" },
-            { en: "Why Georgia?", de: "Warum Georgia?" },
-            { en: "How many people will you hire?", de: "Wie viele Leute wollt ihr einstellen?" },
-            { en: "What is your job in the company?", de: "Was ist deine Aufgabe in der Firma?" },
-            { en: "Do you have experience with food?", de: "Habt ihr Erfahrung mit Essen und Gastronomie?" },
-            { en: "How much money do you expect to make in the first year?", de: "Wie viel Umsatz erwartet ihr im ersten Jahr?" },
+            { en: "How much have you invested, and what did you spend it on?", de: "Wie viel habt ihr investiert? Was habt ihr gekauft?" },
+            { en: "Where did the investment funds come from?", de: "Woher kommt das Geld? (Ersparnisse, Verkauf, mit Belegen)" },
+            { en: "Why did you choose Georgia?", de: "Warum Georgia?" },
+            { en: "How many employees do you plan to hire, and when?", de: "Wie viele Leute wollt ihr einstellen?" },
+            { en: "What is your role in the company?", de: "Was ist deine Aufgabe in der Firma?" },
+            { en: "What experience do you have in the food business?", de: "Habt ihr Erfahrung mit Essen und Gastronomie?" },
+            { en: "What revenue do you expect in the first year?", de: "Wie viel Umsatz erwartet ihr im ersten Jahr?" },
           ],
         },
         {
-          title: "Wenn ihr etwas nicht versteht",
+          title: "Wenn ihr kurz Zeit braucht",
           kind: "inperson",
           lines: [
-            { en: "Sorry, can you repeat that, please?", de: "Entschuldigung, können Sie das bitte wiederholen?" },
-            { en: "Can you speak more slowly, please?", de: "Können Sie bitte langsamer sprechen?" },
-            { en: "May I answer in German?", de: "Darf ich auf Deutsch antworten?" },
-            { en: "One moment, I will check our business plan.", de: "Einen Moment, ich schaue in unserem Businessplan nach." },
+            { en: "Sorry, could you repeat the question?", de: "Entschuldigung, könnten Sie die Frage wiederholen?" },
+            { en: "Let me check that figure in our business plan.", de: "Ich schaue die Zahl kurz in unserem Businessplan nach." },
           ],
         },
       ],
@@ -313,35 +311,27 @@ window.KINDLER = {
       title: "Den Hygiene-Kurs mit Prüfung machen",
       summary: "Eine Person in eurer Firma braucht ein Hygiene-Zertifikat. Ohne das gibt es keine Genehmigung.",
       why: "In Georgia muss jeder Betrieb mit Essen, auch ein Food Truck, einen „Certified Food Safety Manager“ haben. Das ist jemand, der einen Kurs gemacht und eine Prüfung bestanden hat.",
+      online: [
+        { title: "Online-Kurs mit Online-Prüfung kaufen (ServSafe Manager, 179 Dollar)", url: "https://www.servsafe.com/access/SS/Catalog/ProductDetail/SSMCT7XONLPROC" },
+      ],
       todo: [
-        "Entscheiden, wer die Prüfung macht ({{cfsmName}}).",
-        "Kurs buchen, zum Beispiel „ServSafe Manager“ auf servsafe.com.",
-        "Lernen. Das Lernbuch gibt es auch gedruckt.",
-        "Die Prüfung machen, online oder in einem Prüfungszentrum.",
-        "Das Zertifikat ausdrucken und zwei Kopien machen.",
+        "Entscheiden, wer den Kurs macht ({{cfsmName}}).",
+        "Das Paket „ServSafe Manager Online Course & Exam (Online Proctored)“ kaufen (Link oben). Darin sind Kurs und Prüfung zusammen.",
+        "Den Online-Kurs durcharbeiten. Er dauert etwa 8 Stunden und lässt sich in Etappen machen.",
+        "Die Prüfung online von zu Hause machen. Eine Aufsichtsperson schaut per Webcam zu. Die Prüfung hat 90 Fragen und dauert bis zu 2 Stunden.",
+        "Das Zertifikat herunterladen, ausdrucken und hier hochladen.",
       ],
       prepare: [
-        "Die Prüfung gibt es leider nicht auf Deutsch. Ihr müsst sie auf Englisch machen.",
-        "Fragt vorher, ob ihr ein Wörterbuch benutzen dürft (fertige E-Mail unten).",
-        "Fragt das Gesundheitsamt, welche Prüfungen es akzeptiert. Manche Anbieter haben andere Sprachen.",
+        "Als Ausweis für die Prüfung reicht euer Reisepass. Einen amerikanischen Führerschein braucht ihr dafür nicht. Deshalb könnt ihr das schon jetzt machen.",
+        "Für die Online-Prüfung braucht ihr einen Computer (PC oder Mac) mit Webcam und Mikrofon. Handy, Tablet und Chromebook gehen nicht.",
+        "Sucht euch einen ruhigen Raum, in dem ihr während der Prüfung allein seid.",
+        "Das Zertifikat gilt 5 Jahre.",
       ],
-      emails: [
-        {
-          title: "Frage an ServSafe: Wörterbuch und Sprache",
-          to: "",
-          subject: "ServSafe Manager exam: question from a German speaker",
-          body:
-            "Hello,\n\nI want to take the ServSafe Manager exam. My first language is German. My English is not very good.\n\n" +
-            "1. Is there a German version of the exam?\n" +
-            "2. May I use a printed German-English dictionary during the exam?\n" +
-            "3. Can I get more time because English is not my first language?\n\n" +
-            "Thank you,\n{{cfsmName}}\n{{businessName}}, Georgia\n{{email}}",
-          de: "Auf Deutsch: Ich frage, ob es die Prüfung auf Deutsch gibt, ob ich ein Wörterbuch benutzen darf und ob ich mehr Zeit bekommen kann. Am einfachsten über das Kontaktformular auf servsafe.com schicken.",
-        },
-      ],
+      upload: "Ladet hier das Zertifikat hoch, sobald ihr bestanden habt. Ihr braucht es für den Antrag beim Gesundheitsamt.",
       sources: [
         { title: "Georgia: Regel zum Hygiene-Zertifikat", url: "https://www.law.cornell.edu/regulations/georgia/Ga-Comp-R-Regs-R-511-6-1-.01" },
-        { title: "ServSafe: in welchen Sprachen es die Prüfung gibt", url: "https://www.servsafe.com/ServSafe-Manager/FAQs/What-languages-is-the-ServSafe-exam-available-in" },
+        { title: "ServSafe: Online-Kurs und Online-Prüfung", url: "https://www.servsafe.com/access/SS/Catalog/ProductDetail/SSMCT7XONLPROC" },
+        { title: "ServSafe: welcher Ausweis für die Online-Prüfung gilt", url: "https://knowledgecenter.servsafe.com/kb/guide/en/what-identification-is-needed-to-take-my-proctoru-exam-VPYBgYV2YI/Steps/4006072" },
       ],
     },
     {
@@ -365,15 +355,15 @@ window.KINDLER = {
           kind: "call",
           to: "770-358-1483, dann die 2",
           lines: [
-            { en: "Hello, my name is {{owner1}}. We talked before about our food truck, {{businessName}}.", de: "Hallo, mein Name ist … Wir haben schon über unseren Food Truck gesprochen." },
-            { en: "My English is not perfect. Please speak slowly. Thank you.", de: "Mein Englisch ist nicht perfekt. Bitte sprechen Sie langsam. Danke." },
-            { en: "Our kitchen is a separate building on our property. We also live on this property. Is that OK?", de: "Unsere Küche ist ein eigenes Gebäude auf unserem Grundstück. Wir wohnen auch auf dem Grundstück. Ist das in Ordnung?" },
-            { en: "Where do we bring the papers? Thomaston or Barnesville?", de: "Wo geben wir die Unterlagen ab? Thomaston oder Barnesville?" },
-            { en: "Can we apply before our visa interview on November 12?", de: "Dürfen wir vor unserem Visumstermin am 12. November den Antrag stellen?" },
-            { en: "Is the fee still 250 dollars? How can we pay?", de: "Ist die Gebühr noch 250 Dollar? Wie können wir bezahlen?" },
-            { en: "Which food safety exam do you accept?", de: "Welche Hygiene-Prüfung akzeptieren Sie?" },
-            { en: "Can you send us all the forms by email, please? Our email is {{email}}.", de: "Können Sie uns bitte alle Formulare per E-Mail schicken? Unsere E-Mail ist …" },
-            { en: "What is your name, please? In case we have more questions.", de: "Wie ist Ihr Name, bitte? Falls wir noch Fragen haben." },
+            { en: "Hello, this is {{owner1}} from {{businessName}}. We spoke recently about our food truck permit, and I have a few follow-up questions.", de: "Hallo, hier ist … von … Wir haben kürzlich über die Genehmigung für unseren Food Truck gesprochen. Ich habe noch ein paar Fragen." },
+            { en: "Our kitchen is a separate building on our property, and we also live on the property. Is that acceptable as our base of operation?", de: "Unsere Küche ist ein eigenes Gebäude auf unserem Grundstück, und wir wohnen auch dort. Ist das als Stützpunkt in Ordnung?" },
+            { en: "Should we submit everything in Thomaston or in Barnesville?", de: "Wo geben wir die Unterlagen ab? Thomaston oder Barnesville?" },
+            { en: "Can we submit the application before our visa interview on November 12?", de: "Dürfen wir vor unserem Visumstermin am 12. November den Antrag stellen?" },
+            { en: "We can only register the truck after our visa is issued, so we won't have a license plate yet. Can we submit the application with the VIN and add the plate number later?", de: "Wir können den Truck erst nach dem Visum anmelden und haben deshalb noch kein Kennzeichen. Können wir den Antrag mit der Fahrgestellnummer einreichen und das Kennzeichen nachreichen?" },
+            { en: "Is the plan review fee still $250, and which payment methods do you accept?", de: "Ist die Gebühr noch 250 Dollar? Wie können wir bezahlen?" },
+            { en: "Which food safety manager certifications do you accept?", de: "Welche Hygiene-Prüfung akzeptieren Sie?" },
+            { en: "Could you email me the application and any other forms we need? My address is {{email}}.", de: "Können Sie uns bitte alle Formulare per E-Mail schicken? Unsere E-Mail ist …" },
+            { en: "May I have your name, in case we have more questions?", de: "Wie ist Ihr Name, bitte? Falls wir noch Fragen haben." },
           ],
         },
       ],
@@ -381,15 +371,15 @@ window.KINDLER = {
         {
           title: "Die Antworten schriftlich bestätigen lassen",
           to: "",
-          subject: "{{businessName}}: our food truck permit, thank you",
+          subject: "{{businessName}}: summary of our conversation about the mobile food unit permit",
           body:
-            "Hello,\n\nThank you for your help. We want to make sure we understood everything correctly:\n\n" +
-            "- Our kitchen is a separate building on our property at {{baseStreet}}, {{baseCity}}, GA {{baseZip}} (Lamar County). It is OK as our base of operation.\n" +
-            "- We bring all papers to [OFFICE].\n" +
-            "- We can apply before our visa interview on November 12.\n" +
-            "- The fee is [AMOUNT].\n\n" +
-            "Please tell us if something is not correct. Can you also send us the application form and the other forms?\n\n" +
-            "Thank you very much,\n{{owner1}}, {{businessName}}\n{{phone}}\n{{email}}",
+            "Hello,\n\nThank you for taking the time to answer our questions. To make sure we have everything right, here is a short summary of what we discussed:\n\n" +
+            "- The separate kitchen building on our property at {{baseStreet}}, {{baseCity}}, GA {{baseZip}} (Lamar County) is acceptable as our base of operation.\n" +
+            "- We will submit the pre-application and the permit application at [OFFICE].\n" +
+            "- We may submit before our visa interview on November 12.\n" +
+            "- The plan review fee is [AMOUNT].\n\n" +
+            "Please let us know if any of this is incorrect. We would also appreciate it if you could send us the application form and any other forms we will need.\n\n" +
+            "Best regards,\n{{owner1}}\n{{businessName}}\n{{phone}}\n{{email}}",
           de: "Auf Deutsch: Danke für Ihre Hilfe. Haben wir richtig verstanden? Die Küche auf unserem Grundstück ist als Stützpunkt in Ordnung. Wir geben in [BÜRO] ab. Wir dürfen vor dem 12. November beantragen. Die Gebühr ist [BETRAG]. Bitte sagen Sie uns, wenn etwas nicht stimmt.\n\nWichtig: Vor dem Senden die Stellen in eckigen Klammern ausfüllen. Und alles streichen, was die Dame anders gesagt hat. Die E-Mail-Adresse bekommt ihr am Telefon.",
         },
       ],
@@ -417,15 +407,15 @@ window.KINDLER = {
         {
           title: "Anfrage an das Bauamt",
           to: "abuice@lamarcountyga.com",
-          subject: "Question about our property at {{baseStreet}}: food truck kitchen",
+          subject: "Zoning approval for a food truck base of operation at {{baseStreet}}",
           body:
-            "Dear Ms. Buice,\n\nWe are starting a food truck business called {{businessName}}. We own the property at {{baseStreet}}, {{baseCity}}, GA {{baseZip}} (parcel {{baseParcel}}).\n\n" +
-            "On the property there is a separate kitchen building. It is not part of our home. We want to use it to prepare food for our truck. We also want to park the truck there, fill water, empty wastewater, clean the truck and store supplies. We will not sell food or have customers there.\n\n" +
-            "The health department needs your approval on their form.\n\n" +
-            "1. Is this allowed on our property?\n" +
-            "2. Can you sign the zoning part of the health department form? When can we come?\n" +
-            "3. Do we need a business license or another permit from you?\n\n" +
-            "Our English is not very good, so email is easiest for us. Thank you very much.\n\n{{owner1}}\n{{businessName}}\n{{phone}}\n{{email}}",
+            "Dear Ms. Buice,\n\nWe are starting a food truck business, {{businessName}}, and own the property at {{baseStreet}}, {{baseCity}}, GA {{baseZip}} (parcel {{baseParcel}}).\n\n" +
+            "The property includes a separate kitchen building, apart from our home, which we plan to use as the base of operation for the truck: preparing food, parking the truck, filling fresh water, emptying wastewater, cleaning, and storing supplies. There will be no food sales or customer traffic on site.\n\n" +
+            "The health department requires the local zoning office to approve the location on their mobile food unit pre-application. Could you help us with the following?\n\n" +
+            "1. Is this use permitted under the current zoning of our property?\n" +
+            "2. Could you complete the zoning section of the health department form? Please let us know when we can stop by.\n" +
+            "3. Do we need an occupation tax certificate or any other permit from your office for this location?\n\n" +
+            "Thank you very much for your help.\n\nBest regards,\n{{owner1}}\n{{businessName}}\n{{phone}}\n{{email}}",
           de: "Auf Deutsch: Uns gehört das Grundstück. Darauf steht eine eigene Küche, getrennt vom Wohnhaus. Dort wollen wir für den Truck vorbereiten, den Truck abstellen, Wasser auffüllen, Abwasser ablassen, putzen und lagern. Verkauf und Kunden gibt es dort nicht. Wir fragen: (1) Ist das erlaubt? (2) Können Sie das Formular vom Gesundheitsamt unterschreiben, und wann können wir kommen? (3) Brauchen wir einen Gewerbeschein oder eine andere Genehmigung?",
         },
       ],
@@ -439,11 +429,12 @@ window.KINDLER = {
       id: "gewerbeschein-lamar",
       phase: "jetzt",
       title: "Den Gewerbeschein beantragen",
+      online: [{ title: "Antragsformular „LC Business License“ herunterladen", url: "https://www.lamarcountyga.com/?p=918" }],
       summary: "Eure Firma braucht einen Gewerbeschein vom County, in dem eure Küche steht. Das ist Lamar County.",
       why: "Das Vorab-Formular verlangt, dass ihr den Gewerbeschein beim Bauamt beantragt. Er muss jedes Jahr bis zum 31. März erneuert werden.",
       where: [{ ref: "lamarPlanning" }],
       todo: [
-        "Das Antragsformular „LC Business License“ auf lamarcountyga.com herunterladen.",
+        "Das Antragsformular herunterladen (Link oben).",
         "Mit der Ausfüllhilfe unten ausfüllen.",
         "Zum Bauamt bringen, am besten gleich beim Termin für die Unterschrift auf dem Vorab-Formular.",
         "Die Gebühr bezahlen. Vorher fragen, wie viel.",
@@ -459,9 +450,9 @@ window.KINDLER = {
           title: "Am Schalter",
           kind: "inperson",
           lines: [
-            { en: "Hello, we want to apply for a business license. Our kitchen for the food truck is at {{baseStreet}}.", de: "Hallo, wir möchten einen Gewerbeschein beantragen. Unsere Küche für den Food Truck ist an der …" },
-            { en: "We are German. We are here as visitors now. Our visa interview is on November 12. Can we apply now?", de: "Wir sind Deutsche und gerade als Besucher hier. Unser Visumstermin ist am 12. November. Dürfen wir jetzt schon beantragen?" },
-            { en: "How much is the fee? Can we pay by check?", de: "Wie hoch ist die Gebühr? Können wir mit Scheck bezahlen?" },
+            { en: "Hello, we would like to apply for an occupation tax certificate for our food truck kitchen at {{baseStreet}}.", de: "Hallo, wir möchten einen Gewerbeschein beantragen. Unsere Küche für den Food Truck ist an der …" },
+            { en: "We are German citizens and currently here as visitors; our E-2 visa interview is on November 12. Can we apply now, or should we wait until the visa is issued?", de: "Wir sind deutsche Staatsbürger und gerade als Besucher hier; unser E-2-Visumstermin ist am 12. November. Können wir jetzt schon beantragen, oder sollen wir warten, bis wir das Visum haben?" },
+            { en: "What is the fee, and can we pay by check?", de: "Wie hoch ist die Gebühr? Können wir mit Scheck bezahlen?" },
           ],
         },
       ],
@@ -503,9 +494,9 @@ window.KINDLER = {
           kind: "call",
           to: "770-358-1483, dann die 2",
           lines: [
-            { en: "The property belongs to us personally. The permit will be for our company, {{businessName}}.", de: "Das Grundstück gehört uns privat. Die Genehmigung ist für unsere Firma." },
-            { en: "Do we need to sign the property owner form for our own company?", de: "Müssen wir das Eigentümer-Formular für unsere eigene Firma unterschreiben?" },
-            { en: "Does a notary need to sign it too?", de: "Muss es auch ein Notar unterschreiben?" },
+            { en: "The property is in our personal names, but the permit will be issued to our company, {{businessName}}.", de: "Das Grundstück gehört uns privat. Die Genehmigung ist für unsere Firma." },
+            { en: "Do we still need to sign the property owner affidavit for our own company?", de: "Müssen wir das Eigentümer-Formular für unsere eigene Firma unterschreiben?" },
+            { en: "Does it need to be notarized?", de: "Muss es auch ein Notar unterschreiben?" },
           ],
         },
       ],
@@ -544,10 +535,10 @@ window.KINDLER = {
           kind: "call",
           to: "Extension Office, 706-647-8989 (Nummer aus dem Vorab-Formular)",
           lines: [
-            { en: "Hello, I need a full well water test for the health department.", de: "Hallo, ich brauche einen kompletten Brunnenwasser-Test für das Gesundheitsamt." },
-            { en: "I need the bacteria test and the EPD W-33 test.", de: "Ich brauche den Bakterien-Test und den EPD-W-33-Test." },
-            { en: "How do I get the bottles? How much does it cost?", de: "Wie bekomme ich die Flaschen? Was kostet es?" },
-            { en: "How long does it take?", de: "Wie lange dauert es?" },
+            { en: "Hello, I need a complete well water analysis for a health department food service permit.", de: "Hallo, ich brauche einen kompletten Brunnenwasser-Test für das Gesundheitsamt." },
+            { en: "The health department requires the coliform and fecal coliform bacteria test and the full EPD W-33 analysis.", de: "Ich brauche den Bakterien-Test und den EPD-W-33-Test." },
+            { en: "How do I get the sample kit, and what does it cost?", de: "Wie bekomme ich die Flaschen? Was kostet es?" },
+            { en: "How long does it usually take to get the results?", de: "Wie lange dauert es normalerweise bis zum Ergebnis?" },
           ],
         },
       ],
@@ -574,10 +565,10 @@ window.KINDLER = {
           kind: "call",
           to: "Ein Klempner aus der Gegend (Englisch: „plumber“)",
           lines: [
-            { en: "Hello, I need a price for a dump station and a water tap for a food truck.", de: "Hallo, ich brauche ein Angebot für eine Abwasser-Stelle und einen Wasserhahn für einen Food Truck." },
-            { en: "It must pass the health department inspection.", de: "Es muss die Kontrolle vom Gesundheitsamt bestehen." },
-            { en: "The address is {{baseStreet}}, {{baseCity}}. When can you come?", de: "Die Adresse ist … Wann können Sie kommen?" },
-            { en: "Do we need a permit from the county for this work?", de: "Brauchen wir für diese Arbeit eine Genehmigung vom County?" },
+            { en: "Hello, I need a quote for installing a dump station and a potable water tap for a food truck base.", de: "Hallo, ich brauche ein Angebot für eine Abwasser-Stelle und einen Wasserhahn für einen Food Truck." },
+            { en: "It needs to meet Georgia health department requirements and pass their inspection.", de: "Es muss die Kontrolle vom Gesundheitsamt bestehen." },
+            { en: "The property is at {{baseStreet}}, {{baseCity}}. When could you come out to take a look?", de: "Die Adresse ist … Wann können Sie kommen?" },
+            { en: "Will this work require a permit from the county?", de: "Brauchen wir für diese Arbeit eine Genehmigung vom County?" },
           ],
         },
       ],
@@ -598,9 +589,9 @@ window.KINDLER = {
           kind: "call",
           to: "Firma für Altöl-Abholung",
           lines: [
-            { en: "Hello, we have a food truck with a fryer. We are in {{baseCity}}, Lamar County.", de: "Hallo, wir haben einen Food Truck mit Fritteuse. Wir sind in …, Lamar County." },
-            { en: "Do you pick up used oil here? Do you give us a container?", de: "Holen Sie hier Altöl ab? Bekommen wir einen Behälter?" },
-            { en: "We need a written agreement for the health department. Can you send it?", de: "Wir brauchen einen schriftlichen Vertrag für das Gesundheitsamt. Können Sie ihn schicken?" },
+            { en: "Hello, we are opening a food truck with a fryer, based in {{baseCity}}, Lamar County.", de: "Hallo, wir haben einen Food Truck mit Fritteuse. Wir sind in …, Lamar County." },
+            { en: "Do you offer used cooking oil pickup in our area, and do you provide a container?", de: "Holen Sie hier Altöl ab? Bekommen wir einen Behälter?" },
+            { en: "The health department requires a copy of our service agreement. Could you send one over?", de: "Wir brauchen einen schriftlichen Vertrag für das Gesundheitsamt. Können Sie ihn schicken?" },
           ],
         },
       ],
@@ -627,22 +618,27 @@ window.KINDLER = {
           title: "Fragen an den Verkäufer",
           kind: "inperson",
           lines: [
-            { en: "Did this truck have a health permit in Georgia before?", de: "Hatte dieser Truck schon eine Genehmigung vom Gesundheitsamt in Georgia?" },
-            { en: "How big are the water tanks, in gallons?", de: "Wie groß sind die Wassertanks, in Gallonen?" },
-            { en: "Is there hot and cold water at every sink?", de: "Gibt es an jedem Becken warmes und kaltes Wasser?" },
-            { en: "Can you give me the spec sheets for all equipment?", de: "Können Sie mir die Datenblätter für alle Geräte geben?" },
-            { en: "Do I get the title when I pay?", de: "Bekomme ich den Fahrzeugbrief, wenn ich bezahle?" },
+            { en: "Has this truck been permitted by a Georgia health department before?", de: "Hatte dieser Truck schon eine Genehmigung vom Gesundheitsamt in Georgia?" },
+            { en: "What are the capacities of the fresh water and wastewater tanks?", de: "Wie groß sind die Wassertanks, in Gallonen?" },
+            { en: "Does every sink have hot and cold running water under pressure?", de: "Gibt es an jedem Becken warmes und kaltes Wasser?" },
+            { en: "Could you provide the spec sheets for all of the equipment?", de: "Können Sie mir die Datenblätter für alle Geräte geben?" },
+            { en: "Will I receive the title at closing?", de: "Bekomme ich den Fahrzeugbrief, wenn ich bezahle?" },
           ],
         },
       ],
       sources: [
         { title: "Gesundheitsamt Georgia: Antrag für Food Trucks (zeigt alle Anforderungen)", url: "https://dph.georgia.gov/document/document/dph-mobile-food-unit-permit-application-pdf/download" },
       ],
+      cautions: [
+        "Kaufen könnt ihr den Truck jetzt schon. Anmelden (Kennzeichen) geht in Georgia aber meist erst mit einem Georgia-Führerschein, und den bekommt ihr erst nach dem Visum. Fahrt den Truck bis dahin nur, wenn er noch eine gültige Zulassung hat, oder lasst ihn liefern.",
+        "Fragt die Zulassungsstelle, ob der Truck schon jetzt auf die Firma angemeldet werden kann (Sätze im Schritt „Autos versichern und anmelden“).",
+      ],
     },
     {
       id: "vorab-antrag",
       phase: "jetzt",
       title: "Das Vorab-Formular fertig machen",
+      online: [{ title: "Regelhefte vom Staat Georgia herunterladen", url: "https://dph.georgia.gov/environmental-health/food-service" }],
       summary: "Das Formular aus Thomaston, das ihr schon habt. Erst wenn alles darauf erledigt und unterschrieben ist, dürft ihr den Hauptantrag abgeben.",
       why: "Auf dem Formular steht: Wer einen Teil nicht erfüllt, bekommt keine Genehmigung. Ein halb fertiges Formular wird abgelehnt.",
       where: [{ ref: "lamarEH" }, { ref: "upsonEH" }],
@@ -678,6 +674,7 @@ window.KINDLER = {
       id: "notar-save",
       phase: "jetzt",
       title: "Die Erklärung zum Aufenthalt beim Notar unterschreiben",
+      online: [{ title: "Formular herunterladen (Gesundheitsamt Georgia)", url: "https://dph.georgia.gov/sites/dph.georgia.gov/files/VerificationLawfulResidency061814.pdf" }],
       summary: "Georgia will schriftlich, dass ihr legal im Land seid. Ihr unterschreibt dafür eine Erklärung vor einem Notar.",
       why: "Ohne diese Erklärung gibt es in Georgia keine Genehmigung und keinen Gewerbeschein. Der Antrag des Gesundheitsamts verlangt sie ausdrücklich.",
       todo: [
@@ -712,6 +709,13 @@ window.KINDLER = {
       id: "antrag-dph",
       phase: "jetzt",
       title: "Den Hauptantrag ausfüllen",
+      cautions: [
+        "Der Antrag fragt nach dem Kennzeichen des Trucks. Das bekommt ihr erst nach dem Visum (Führerschein, dann Anmeldung). Fragt das Gesundheitsamt, ob ihr es nachreichen dürft (steht in den Sätzen im Schritt „Offene Fragen beim Gesundheitsamt“).",
+      ],
+      online: [
+        { title: "Hauptantrag herunterladen (PDF)", url: "https://dph.georgia.gov/document/document/dph-mobile-food-unit-permit-application-pdf/download" },
+        { title: "Weitere Formulare: Verkaufsplatz, Toilette, Eigentümer", url: "https://dph.georgia.gov/environmental-health/food-service" },
+      ],
       summary: "Der eigentliche Antrag für die Genehmigung. Mit der Ausfüllhilfe unten geht das schnell. Dazu kommt ein Stapel Anlagen.",
       why: "Wenn eine Anlage fehlt, dauert alles länger. Darum alles zusammen abgeben.",
       todo: [
@@ -727,7 +731,7 @@ window.KINDLER = {
         "Anlage: Formular „Mobile Food Unit Location Form“ (wo ihr verkaufen wollt)",
         "Anlage: Formular „Toilet Use Agreement“ (eine Toilette in der Nähe eurer Verkaufsplätze)",
         "Anlage: Erlaubnis des Eigentümers, falls das Amt sie will",
-        "Anlage: Kopie vom Hygiene-Zertifikat",
+        "Anlage: Kopie vom Hygiene-Zertifikat (ist im Schritt „Hygiene-Kurs“ hochgeladen)",
         "Von allem eine Kopie für euch machen.",
       ],
       prepare: [
@@ -743,7 +747,7 @@ window.KINDLER = {
             { label: "Reason for application", value: "New Application" },
             { label: "Name of Unit", value: "{{unitName}}" },
             { label: "Unit Mailing Address", value: "{{street}}, {{city}}, {{state}} {{zip}}", hint: "Nach dem Umzug der Firma: die neue Adresse" },
-            { label: "Mobile Unit Vehicle License # and VIN", value: "{{unitPlate}} / {{unitVin}}" },
+            { label: "Mobile Unit Vehicle License # and VIN", value: "{{unitPlate}} / {{unitVin}}", hint: "Noch kein Kennzeichen? Nur die VIN eintragen und mit dem Gesundheitsamt klären, wann ihr das Kennzeichen nachreicht." },
             { label: "Name of Base of Operation", value: "{{baseName}}" },
             { label: "Base of Operation Owner", value: "{{baseOwner}}" },
             { label: "Base of Operation Permit #", value: "", hint: "Leer lassen" },
@@ -788,10 +792,10 @@ window.KINDLER = {
           title: "Am Schalter",
           kind: "inperson",
           lines: [
-            { en: "Hello, we want to hand in our application for a food truck permit.", de: "Hallo, wir möchten unseren Antrag für die Food-Truck-Genehmigung abgeben." },
-            { en: "Can you check that everything is complete, please?", de: "Können Sie bitte prüfen, ob alles vollständig ist?" },
-            { en: "How long does it take?", de: "Wie lange dauert es?" },
-            { en: "What happens next? When can you look at the truck?", de: "Wie geht es weiter? Wann können Sie sich den Truck ansehen?" },
+            { en: "Hello, we would like to submit our mobile food unit permit application.", de: "Hallo, wir möchten unseren Antrag für die Food-Truck-Genehmigung abgeben." },
+            { en: "Could you check that everything is complete before we leave?", de: "Können Sie bitte prüfen, ob alles vollständig ist?" },
+            { en: "How long does the plan review usually take?", de: "Wie lange dauert die Prüfung normalerweise?" },
+            { en: "What are the next steps, and when can the inspection be scheduled?", de: "Wie geht es weiter? Wann können Sie sich den Truck ansehen?" },
           ],
         },
       ],
@@ -814,9 +818,9 @@ window.KINDLER = {
           title: "Am Schalter",
           kind: "inperson",
           lines: [
-            { en: "Good morning. We have an appointment for an E-2 visa.", de: "Guten Morgen. Wir haben einen Termin für ein E-2-Visum." },
-            { en: "Here are our passports and our papers.", de: "Hier sind unsere Pässe und unsere Unterlagen." },
-            { en: "When do we get our passports back?", de: "Wann bekommen wir unsere Pässe zurück?" },
+            { en: "Good morning. We have an appointment for an E-2 treaty investor visa.", de: "Guten Morgen. Wir haben einen Termin für ein E-2-Visum." },
+            { en: "Here are our passports and supporting documents.", de: "Hier sind unsere Pässe und unsere Unterlagen." },
+            { en: "When and how will our passports be returned?", de: "Wann bekommen wir unsere Pässe zurück?" },
           ],
         },
       ],
@@ -825,6 +829,7 @@ window.KINDLER = {
       id: "einreise-i94",
       phase: "visum",
       title: "Visum und Einreisestempel prüfen",
+      online: [{ title: "Einreisestempel (I-94) abrufen und ausdrucken", url: "https://i94.cbp.dhs.gov/" }],
       summary: "Wenn die Pässe zurück sind: das Visum prüfen. Nach der Einreise in die USA: den Einreisestempel (I-94) ausdrucken und prüfen.",
       why: "Der Einreisestempel ist euer wichtigster Nachweis. Ihr braucht ihn für die Sozialversicherungsnummer, den Führerschein und die Ämter. Fehler sind später schwer zu korrigieren.",
       todo: [
@@ -847,6 +852,12 @@ window.KINDLER = {
       id: "adresse-aendern",
       phase: "ankunft",
       title: "Umzug auf die Tom Bell Road: neue Adresse überall melden",
+      online: [
+        { title: "Nachsendeauftrag bei der Post (USPS)", url: "https://moversguide.usps.com/" },
+        { title: "Firmenadresse beim Staat Georgia ändern (eCorp)", url: "https://ecorp.sos.ga.gov/" },
+        { title: "Adresse im Steuerkonto Georgia ändern (Georgia Tax Center)", url: "https://gtc.dor.ga.gov/" },
+        { title: "Formular 8822-B für das Finanzamt (zum Ausdrucken und Verschicken)", url: "https://www.irs.gov/forms-pubs/about-form-8822-b" },
+      ],
       summary: "Nach dem Visum zieht ihr und eure Firma von Pike County auf euer Grundstück in Lamar County. Die neue Adresse müsst ihr an mehreren Stellen melden.",
       why: "Ämter schicken Briefe an die Adresse, die sie kennen. Wenn die Adressen nicht überall gleich sind, gibt es Rückfragen und Verzögerungen.",
       todo: [
@@ -856,7 +867,7 @@ window.KINDLER = {
         "Im Steuerkonto von Georgia ändern (gtc.dor.ga.gov).",
         "Bank, Versicherungen und Steuerberater die neue Adresse sagen.",
         "Dem Gesundheitsamt und dem Bauamt die neue Postadresse sagen.",
-        "Bei der Post einen Nachsendeauftrag stellen (auf usps.com, „Change of Address“).",
+        "Bei der Post online einen Nachsendeauftrag stellen (Link oben).",
         "Strom, Wasser und Internet an der Tom Bell Road auf eure Namen anmelden. Diese Rechnungen braucht ihr später als Adressnachweis für den Führerschein.",
         "Unter „Unsere Daten“ die jetzige Firmenadresse durch die neue ersetzen.",
       ],
@@ -886,18 +897,22 @@ window.KINDLER = {
       phase: "ankunft",
       title: "Die Sozialversicherungsnummer beantragen",
       summary: "Ihr geht beide zum Social-Security-Büro. Die Nummer braucht ihr für Führerschein, Bank und Steuern.",
-      why: "Mit dem neuen Visum dürft ihr arbeiten. Deshalb bekommt ihr jetzt eine Sozialversicherungsnummer (SSN).",
+      why: "Mit dem neuen Visum dürft ihr arbeiten. Deshalb bekommt ihr jetzt eine Sozialversicherungsnummer (SSN). Ohne sie gibt es keinen Führerschein, und ohne Führerschein keine Autoanmeldung. Darum gleich in der ersten Woche nach der Rückkehr beantragen.",
       where: [{ ref: "ssa" }],
+      online: [
+        { title: "Antrag online beginnen", url: "https://secure.ssa.gov/ossnap/public/landingOSsnap" },
+        { title: "Nächstes Social-Security-Büro finden", url: "https://secure.ssa.gov/ICON/main.jsp" },
+      ],
       todo: [
-        "Das Formular SS-5 herunterladen und zu Hause ausfüllen (Ausfüllhilfe unten).",
-        "Das nächste Büro auf der Webseite suchen. Einen Termin unter 1-800-772-1213 machen oder morgens früh hingehen.",
-        "Hingehen und den Antrag abgeben. Die Quittung aufheben.",
-        "Die Karte kommt nach etwa 2 bis 4 Wochen mit der Post an die Tom Bell Road.",
+        "Den Antrag online beginnen (Link oben). Jede Person macht einen eigenen Antrag.",
+        "Danach mit Pass und I-94 zum nächsten Social-Security-Büro gehen. Dort werden die Originale geprüft.",
+        "Nach der Genehmigung kommt die Karte in etwa 5 bis 10 Werktagen mit der Post an die Tom Bell Road.",
+        "Falls der Online-Antrag nicht klappt: das Papierformular SS-5 ausfüllen (Ausfüllhilfe unten) und ins Büro mitnehmen.",
       ],
       bring: [
         "Reisepass mit dem neuen Visum",
         "Den ausgedruckten Einreisestempel (I-94)",
-        "Das ausgefüllte Formular SS-5",
+        "Die Bestätigung vom Online-Antrag (oder das ausgefüllte Formular SS-5)",
         "Für den Ehepartner: die Heiratsurkunde, falls danach gefragt wird",
       ],
       scripts: [
@@ -905,16 +920,16 @@ window.KINDLER = {
           title: "Im Büro",
           kind: "inperson",
           lines: [
-            { en: "Hello, we want to apply for Social Security numbers. We are from Germany. We have E-2 visas.", de: "Hallo, wir möchten Sozialversicherungsnummern beantragen. Wir kommen aus Deutschland und haben E-2-Visa." },
-            { en: "Here are our passports, our I-94 and the forms.", de: "Hier sind unsere Pässe, unsere Einreisestempel und die Formulare." },
-            { en: "My wife (husband) has E-2S on the I-94. That means she (he) may work.", de: "Bei meiner Frau (meinem Mann) steht E-2S im Einreisestempel. Das heißt, sie (er) darf arbeiten." },
-            { en: "Can I have a receipt, please?", de: "Kann ich bitte eine Quittung bekommen?" },
+            { en: "Hello, we would like to apply for Social Security numbers. We are German citizens in E-2 status.", de: "Hallo, wir möchten Sozialversicherungsnummern beantragen. Wir kommen aus Deutschland und haben E-2-Visa." },
+            { en: "We started our applications online. Here are our passports and I-94 records.", de: "Wir haben den Antrag online begonnen. Hier sind unsere Pässe und Einreisestempel." },
+            { en: "My spouse's I-94 shows the E-2S classification, which serves as evidence of employment authorization.", de: "Im Einreisestempel meines Ehepartners steht E-2S. Das ist der Nachweis, dass er oder sie arbeiten darf." },
+            { en: "Could I get a receipt showing that we applied?", de: "Kann ich bitte eine Quittung bekommen?" },
           ],
         },
       ],
       forms: [
         {
-          title: "Antrag auf Sozialversicherungsnummer (SS-5)",
+          title: "Papierformular SS-5 (nur falls der Online-Antrag nicht klappt)",
           url: "https://www.ssa.gov/forms/ss-5.pdf",
           note: "Geburtsdatum, Geburtsort und die Namen eurer Eltern schreibt ihr direkt auf das Formular. Diese Seite speichert solche Daten absichtlich nicht.",
           fields: [
@@ -932,7 +947,7 @@ window.KINDLER = {
       ],
       sources: [
         { title: "Social Security: Nummern für Nicht-Amerikaner", url: "https://www.ssa.gov/pubs/EN-05-10096.pdf" },
-        { title: "Social Security: Büro finden", url: "https://secure.ssa.gov/ICON/main.jsp" },
+        { title: "Social Security: Nummer zum ersten Mal beantragen", url: "https://www.ssa.gov/number-card/request-number-first-time" },
       ],
     },
     {
@@ -940,20 +955,25 @@ window.KINDLER = {
       phase: "ankunft",
       title: "Den Führerschein für Georgia machen",
       summary: "Erst anrufen und fragen, ob euer deutscher Führerschein einfach umgeschrieben wird. Wenn nicht: Theorieprüfung (gibt es auf Deutsch), Sehtest und Fahrprüfung.",
-      why: "Wer in Georgia wohnt, braucht nach 30 Tagen einen Führerschein aus Georgia. Ohne ihn könnt ihr auch kein Auto anmelden.",
+      why: "Als Touristen dürft ihr mit dem deutschen Führerschein fahren. Sobald ihr mit dem Visum hier wohnt, habt ihr 30 Tage Zeit für einen Führerschein aus Georgia. Ohne ihn könnt ihr auch kein Auto anmelden. Die Umschreibung geht erst mit Visum und Sozialversicherungsnummer.",
       where: [{ ref: "dds" }],
+      online: [
+        { title: "Antragsformular vorab online ausfüllen", url: "https://dds.drives.ga.gov?link=CSCSkipAStep" },
+        { title: "Fahrprüfung online buchen (falls nötig)", url: "https://dds.drives.ga.gov?link=RoadTest" },
+        { title: "Was man für einen neuen Führerschein braucht", url: "https://dds.georgia.gov/georgia-licenses-ids-and-permits/new-license-id-or-permit" },
+      ],
       todo: [
         "Warten, bis die Sozialversicherungsnummer da ist. Die Führerscheinstelle braucht sie.",
-        "Bei der Führerscheinstelle anrufen (Sätze unten).",
-        "Online einen Termin buchen.",
-        "Falls eine Prüfung nötig ist: das Fahrerhandbuch lernen. Die Theorieprüfung auf Deutsch wählen.",
-        "Falls eine Fahrprüfung nötig ist: ein eigenes Auto mitbringen, das angemeldet und versichert ist.",
+        "Bei der Führerscheinstelle anrufen und fragen, ob der deutsche Führerschein ohne Prüfung umgeschrieben wird (Sätze unten).",
+        "Das Antragsformular vorab online ausfüllen (Link oben). Das spart Zeit vor Ort.",
+        "Mit den Unterlagen zur Führerscheinstelle gehen.",
+        "Falls eine Fahrprüfung nötig ist: online buchen (Link oben) und ein angemeldetes, versichertes Auto mitbringen.",
       ],
       bring: [
         "Reisepass mit Visum",
         "Den ausgedruckten Einreisestempel (I-94)",
         "Die Karte mit der Sozialversicherungsnummer",
-        "Zwei Briefe oder Rechnungen mit eurem Namen und der Adresse an der Tom Bell Road (zum Beispiel Strom- oder Wasserrechnung, Kontoauszug)",
+        "Zwei Briefe oder Rechnungen mit eurem Namen und der Adresse an der Tom Bell Road (zum Beispiel Strom- oder Wasserrechnung, Kontoauszug). Tipp: Die Bank gleich nach dem Umzug auf die neue Adresse umstellen, dann habt ihr schnell einen Kontoauszug mit der neuen Adresse.",
         "Euren deutschen Führerschein",
         "Eine englische Übersetzung des Führerscheins (am Telefon fragen, welche akzeptiert wird)",
         "Geld für die Gebühr (etwa 20 bis 32 Dollar)",
@@ -964,19 +984,18 @@ window.KINDLER = {
           kind: "call",
           to: "Telefonnummer auf dds.georgia.gov unter „Contact Us“",
           lines: [
-            { en: "Hello, I have a German driver's license. I live in Georgia now. I have an E-2 visa.", de: "Hallo, ich habe einen deutschen Führerschein. Ich wohne jetzt in Georgia und habe ein E-2-Visum." },
-            { en: "Can I change my German license to a Georgia license without a test?", de: "Kann ich meinen deutschen Führerschein ohne Prüfung umschreiben lassen?" },
-            { en: "Do I need a translation? Which translation do you accept?", de: "Brauche ich eine Übersetzung? Welche akzeptieren Sie?" },
-            { en: "Do I get my German license back?", de: "Bekomme ich meinen deutschen Führerschein zurück?" },
-            { en: "What papers do I need to bring?", de: "Welche Unterlagen muss ich mitbringen?" },
+            { en: "Hello, I recently moved to Georgia from Germany on an E-2 visa and have a valid German driver's license.", de: "Hallo, ich habe einen deutschen Führerschein. Ich wohne jetzt in Georgia und habe ein E-2-Visum." },
+            { en: "Can I exchange it for a Georgia license without taking the knowledge and road tests?", de: "Kann ich meinen deutschen Führerschein ohne Prüfung umschreiben lassen?" },
+            { en: "Do I need a translation of my license, and if so, which translators do you accept?", de: "Brauche ich eine Übersetzung? Welche akzeptieren Sie?" },
+            { en: "Will my German license be returned to me?", de: "Bekomme ich meinen deutschen Führerschein zurück?" },
+            { en: "Which documents should I bring as an E-2 visa holder?", de: "Welche Unterlagen soll ich als E-2-Inhaber mitbringen?" },
           ],
         },
         {
           title: "Bei der Führerscheinstelle",
           kind: "inperson",
           lines: [
-            { en: "Hello, I want a Georgia driver's license. I am new here. I am from Germany.", de: "Hallo, ich möchte einen Führerschein für Georgia. Ich bin neu hier und komme aus Deutschland." },
-            { en: "I want to take the test in German, please.", de: "Ich möchte die Prüfung bitte auf Deutsch machen." },
+            { en: "Hello, I'm a new Georgia resident and would like to apply for a Class C driver's license.", de: "Hallo, ich wohne neu in Georgia und möchte einen Führerschein der Klasse C beantragen." },
           ],
         },
       ],
@@ -998,7 +1017,7 @@ window.KINDLER = {
       where: [{ ref: "lamarTax" }],
       todo: [
         "Eine Autoversicherung für euer Privatauto abschließen.",
-        "Eine Versicherung für den Truck abschließen (Englisch: „commercial auto“).",
+        "Eine Versicherung für den Truck abschließen (Englisch: „commercial auto“). Manche Versicherer wollen einen US-Führerschein sehen. Sagt dazu, dass ihr den deutschen habt und der aus Georgia beantragt ist.",
         "Bei der Zulassungsstelle anrufen und fragen, was ihr mitbringen müsst (Sätze unten).",
         "Hingehen und anmelden. Ihr bekommt die Kennzeichen gleich mit.",
         "Das Kennzeichen vom Truck unter „Unsere Daten“ eintragen.",
@@ -1015,9 +1034,10 @@ window.KINDLER = {
           kind: "call",
           to: "770-358-5162",
           lines: [
-            { en: "Hello, we are new here. We want to register two vehicles: a car and a food truck for our company.", de: "Hallo, wir sind neu hier. Wir möchten zwei Fahrzeuge anmelden: ein Auto und einen Food Truck für unsere Firma." },
-            { en: "What papers do we need to bring?", de: "Welche Unterlagen müssen wir mitbringen?" },
-            { en: "Can the food truck be in the name of our company?", de: "Kann der Food Truck auf unsere Firma angemeldet werden?" },
+            { en: "Hello, we recently moved to Lamar County and need to register two vehicles: a personal car and a food truck owned by our company.", de: "Hallo, wir sind neu hier. Wir möchten zwei Fahrzeuge anmelden: ein Auto und einen Food Truck für unsere Firma." },
+            { en: "Which documents do we need to bring?", de: "Welche Unterlagen müssen wir mitbringen?" },
+            { en: "Can the food truck be registered in the company's name?", de: "Kann der Food Truck auf unsere Firma angemeldet werden?" },
+            { en: "We don't have Georgia driver's licenses yet. Can a company-owned vehicle be registered with our passports and the company's EIN documents?", de: "Wir haben noch keinen Führerschein aus Georgia. Kann ein Fahrzeug der Firma mit unseren Pässen und den Firmenunterlagen (EIN) angemeldet werden?" },
           ],
         },
       ],
@@ -1027,10 +1047,11 @@ window.KINDLER = {
       id: "sales-tax",
       phase: "ankunft",
       title: "Für die Umsatzsteuer anmelden",
+      online: [{ title: "Online anmelden im Georgia Tax Center", url: "https://gtc.dor.ga.gov/" }],
       summary: "Auf zubereitetes Essen zahlt man in Georgia Umsatzsteuer. Dafür meldet ihr eure Firma online an.",
       todo: [
         "Euren Anwalt oder Steuerberater fragen, ob die Firma schon angemeldet ist.",
-        "Wenn nicht: auf gtc.dor.ga.gov ein Konto anlegen und „Sales and Use Tax“ wählen.",
+        "Wenn nicht: im Georgia Tax Center (Link oben) ein Konto anlegen und „Sales and Use Tax“ wählen.",
         "Die Steuernummer, die ihr bekommt, in die Notizen schreiben.",
         "Einen Steuerberater suchen (Englisch: „CPA“), der die Steuermeldungen für euch macht.",
       ],
@@ -1069,9 +1090,9 @@ window.KINDLER = {
           kind: "call",
           to: "Ein unabhängiger Versicherungsmakler (Englisch: „independent insurance agent“)",
           lines: [
-            { en: "Hello, we are starting a food truck in Georgia. We need insurance for the business and for the truck.", de: "Hallo, wir eröffnen einen Food Truck in Georgia. Wir brauchen Versicherungen für die Firma und den Truck." },
-            { en: "We are new in the US. We have no insurance history here. Is that a problem?", de: "Wir sind neu in den USA und hatten hier noch keine Versicherung. Ist das ein Problem?" },
-            { en: "Can you send us a price by email?", de: "Können Sie uns ein Angebot per E-Mail schicken?" },
+            { en: "Hello, we are opening a food truck business in Georgia and need general liability and commercial auto coverage.", de: "Hallo, wir eröffnen einen Food Truck in Georgia. Wir brauchen Versicherungen für die Firma und den Truck." },
+            { en: "We recently moved from Germany, so we have no US insurance history. Will that affect our options?", de: "Wir sind neu in den USA und hatten hier noch keine Versicherung. Ist das ein Problem?" },
+            { en: "Could you send us a quote by email?", de: "Können Sie uns ein Angebot per E-Mail schicken?" },
           ],
         },
       ],
@@ -1096,9 +1117,9 @@ window.KINDLER = {
           title: "Während der Kontrolle",
           kind: "inperson",
           lines: [
-            { en: "Thank you for coming. Please tell me if we need to fix something.", de: "Danke, dass Sie gekommen sind. Bitte sagen Sie mir, wenn wir etwas verbessern müssen." },
-            { en: "Can you write it down for us, please?", de: "Können Sie es uns bitte aufschreiben?" },
-            { en: "When can you come back to check again?", de: "Wann können Sie wiederkommen und noch einmal prüfen?" },
+            { en: "Thank you for coming out. Please let us know if anything needs to be corrected.", de: "Danke, dass Sie gekommen sind. Bitte sagen Sie mir, wenn wir etwas verbessern müssen." },
+            { en: "Could you note the items in your report so we can take care of them right away?", de: "Können Sie es uns bitte aufschreiben?" },
+            { en: "When could you come back for a follow-up inspection?", de: "Wann können Sie wiederkommen und noch einmal prüfen?" },
           ],
         },
       ],
@@ -1133,10 +1154,10 @@ window.KINDLER = {
         {
           title: "Anfrage an eine Stadt",
           to: "",
-          subject: "Food truck: do we need a permit? ({{businessName}})",
+          subject: "Mobile food vending permit inquiry: {{businessName}}",
           body:
-            "Hello,\n\nWe have a food truck called {{unitName}}. We have a health permit from Lamar County.\n\n" +
-            "We want to sell food at [PLACE] on [DATE]. Do we need a permit from the city? If yes, can you send us the form and tell us the fee?\n\n" +
+            "Hello,\n\nWe operate {{unitName}}, a food truck permitted by the Lamar County health department.\n\n" +
+            "We would like to sell food at [PLACE] on [DATE]. Does the city require a vending permit for this? If so, could you send us the application and let us know the fee?\n\n" +
             "Thank you,\n{{owner1}}\n{{businessName}}\n{{phone}}\n{{email}}",
           de: "Auf Deutsch: Wir haben einen Food Truck mit Genehmigung aus Lamar County und möchten am [DATUM] in [ORT] verkaufen. Brauchen wir eine Erlaubnis der Stadt? Wenn ja, bitte Formular und Gebühr schicken.\n\nVor dem Senden Ort und Datum eintragen.",
         },

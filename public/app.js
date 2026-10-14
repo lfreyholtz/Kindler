@@ -378,6 +378,7 @@
       <p class="step-summary">${fill(step.summary)}</p>
       <div class="step-body" id="body-${esc(step.id)}" ${open ? "" : "hidden"}>
         ${step.why ? `<section><h4>Warum ist das wichtig?</h4><p>${fill(step.why)}</p></section>` : ""}
+        ${step.online && step.online.length ? `<section class="online"><h4>Online erledigen</h4><div class="online-links">${step.online.map((o) => `<a class="btn btn-primary btn-small" href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.title)} <span aria-hidden="true">↗</span></a>`).join("")}</div></section>` : ""}
         ${step.where && step.where.length ? `<section><h4>Wohin?</h4><div class="places">${step.where.map((w) => placeCard(w.ref)).join("")}</div></section>` : ""}
         ${subs.length ? `<section><h4>So geht's</h4><ul class="subtasks">${subs
           .map((t, i) => `<li><label><input type="checkbox" data-done="${esc(subId(step, i))}" ${isDone(subId(step, i)) ? "checked" : ""} /> <span>${fill(t)}</span></label></li>`)
