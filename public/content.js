@@ -114,6 +114,8 @@ window.KINDLER = {
     { en: "Parcel ID", de: "Flurstücknummer", text: "Die Nummer eures Grundstücks. Steht auf dem Grundsteuerbescheid." },
     { en: "Spec Sheet", de: "Datenblatt", text: "Ein Blatt vom Hersteller mit den technischen Daten eines Geräts, zum Beispiel vom Kühlschrank." },
     { en: "Plumber", de: "Klempner", text: "Handwerker für Wasser und Abwasser." },
+    { en: "Apostille", de: "Apostille", text: "Ein Stempel einer deutschen Behörde, der bestätigt, dass eine Urkunde echt ist. Für euer Visum und die Ämter in Georgia haben wir nirgends eine Apostille als Pflicht gefunden. Sie übersetzt auch nichts." },
+    { en: "Certified translation", de: "beglaubigte Übersetzung", text: "Eine Übersetzung von einem anerkannten Übersetzungsdienst. Die Führerscheinstelle verlangt sie für euren deutschen Führerschein." },
   ],
 
   // ------------------------------------------------------------------
@@ -262,11 +264,43 @@ window.KINDLER = {
         "Die Gründungspapiere der Firma und den Brief mit der Steuernummer (EIN)",
         "Belege, dass ihr investiert habt: Kaufvertrag Truck, Rechnungen für Ausstattung und Küche, Nachweis zum Grundstück, Kontoauszüge der Firma",
         "Belege, woher das Geld kommt: Kontoauszüge, Verkaufsverträge, Steuerbescheide aus Deutschland",
-        "Heiratsurkunde, wenn ihr verheiratet seid",
+        "Heiratsurkunde im Original. Am besten die internationale, mehrsprachige Fassung (siehe Schritt „Deutsche Urkunden besorgen“). Kopien, die nur ein Notar beglaubigt hat, werden nicht akzeptiert.",
       ],
       sources: [
         { title: "E-2-Visum aus Deutschland (allgemeine Übersicht einer Kanzlei)", url: "https://www.alazlaw.com/blog/e-2-visa-for-german-citizens-2026-how-to-apply-frankfurt/" },
         { title: "US-Botschaft in Deutschland", url: "https://de.usembassy.gov/" },
+      ],
+    },
+    {
+      id: "urkunden-besorgen",
+      phase: "jetzt",
+      title: "Deutsche Urkunden besorgen: international statt übersetzt",
+      summary: "Bestellt beim Standesamt die internationale Heiratsurkunde. Die ist mehrsprachig, kostet dasselbe wie die normale und erspart euch eine Übersetzung.",
+      why: "Amerikanische Ämter wollen Unterlagen auf Englisch. Für Urkunden vom Standesamt gibt es eine mehrsprachige Fassung. Sie enthält eine englische Spalte, kostet gleich viel und kommt vom selben Amt. [[Standesamt München: Eheurkunde|https://stadt.muenchen.de/service/info/eheurkunde/10483569/]]",
+      online: [
+        { title: "Internationale Eheurkunde beim Standesamt bestellen", url: "https://stadt.muenchen.de/service/info/eheurkunde/10483569/" },
+        { title: "Generalkonsulat Atlanta: Übersetzer und Anwälte", url: "https://www.germany.info/us-en/embassy-consulates/atlanta/legal-lists-s-944426" },
+      ],
+      todo: [
+        "Beim Standesamt eurer Eheschließung die internationale Eheurkunde bestellen. Online geht das bei den meisten Städten.",
+        "Kosten: etwa 12 Euro, also genauso viel wie die normale Urkunde. Dauer: ungefähr zwei Wochen plus Postweg.",
+        "Lieferadresse überlegen: entweder an eure Adresse in Georgia oder an eine Adresse in Deutschland, wo ihr sie im November abholen könnt.",
+        "Wenn ihr Kinder habt: die internationale Geburtsurkunde gleich mitbestellen.",
+        "Eine englische Übersetzung eures Führerscheins besorgen. Dafür braucht ihr einen professionellen Übersetzungsdienst oder das Konsulat. Das Generalkonsulat Atlanta führt eine Liste.",
+      ],
+      prepare: [
+        "Apostille braucht ihr für das Visum nicht. Das Konsulat in Frankfurt nimmt Unterlagen auf Englisch oder Deutsch an. [[Konsulat Frankfurt: Hinweise für Antragsteller|https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/FRN-Frankfurt.html]]",
+        "Auch bei Social Security, Führerscheinstelle und den Ämtern in Georgia haben wir in keiner offiziellen Quelle eine Apostille gefunden. Verlangt wird dort nur: Original und Englisch.",
+        "Eine Apostille bestätigt außerdem nur, dass die Urkunde echt ist. Sie übersetzt nichts. Die mehrsprachige Urkunde löst euer eigentliches Problem besser.",
+        "Falls doch einmal jemand eine Apostille verlangt: Zuständig ist je nach Bundesland die Behörde über dem Standesamt, oft das Regierungspräsidium oder das Innenministerium. Für gerichtliche und notarielle Urkunden sowie für beglaubigte Übersetzungen ist es der Präsident des Landgerichts. Fragt beim Standesamt nach, wer es bei euch macht. [[Beglaubigung deutscher Urkunden für das Ausland|https://www.gerlingen.de/-/Dienstleistungen/beglaubigung-von-oeffentlichen-urkunden-fuer-das-ausland-beantragen/vbid469]]",
+        "Zur Sicherheit: Die mehrsprachige Urkunde stammt aus einem Abkommen, dem die USA nicht beigetreten sind. Ein Amt dort muss sie also nicht zwingend akzeptieren. In der Praxis hilft sie, weil jeder Sachbearbeiter die englische Spalte lesen kann. Nehmt die deutsche Urkunde zusätzlich mit.",
+      ],
+      upload: "Ladet hier Fotos oder Scans eurer Urkunden hoch, dann habt ihr sie auch unterwegs dabei.",
+      sources: [
+        { title: "Standesamt München: Eheurkunde und mehrsprachige Fassung", url: "https://stadt.muenchen.de/service/info/eheurkunde/10483569/" },
+        { title: "Konsulat Frankfurt: Unterlagen auf Englisch oder Deutsch", url: "https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/FRN-Frankfurt.html" },
+        { title: "Führerscheinstelle Georgia: Regel zu Übersetzungen (375-3-1-.02)", url: "https://dds.georgia.gov/document/document/375-3-1-02-applications-and-supporting-documentation/download" },
+        { title: "Beglaubigung deutscher Urkunden für das Ausland (Apostille)", url: "https://www.gerlingen.de/-/Dienstleistungen/beglaubigung-von-oeffentlichen-urkunden-fuer-das-ausland-beantragen/vbid469" },
       ],
     },
     {
@@ -977,7 +1011,7 @@ window.KINDLER = {
         "Reisepass mit dem neuen Visum",
         "Den ausgedruckten Einreisestempel (I-94)",
         "Die Bestätigung vom Online-Antrag (oder das ausgefüllte Formular SS-5)",
-        "Für den Ehepartner: die Heiratsurkunde, falls danach gefragt wird",
+        "Für den Ehepartner: die internationale Heiratsurkunde, falls danach gefragt wird",
       ],
       scripts: [
         {
@@ -1040,7 +1074,7 @@ window.KINDLER = {
         "Die Karte mit der Sozialversicherungsnummer",
         "Zwei Briefe oder Rechnungen mit eurem Namen und der Adresse an der Tom Bell Road (zum Beispiel Strom- oder Wasserrechnung, Kontoauszug). Tipp: Die Bank gleich nach dem Umzug auf die neue Adresse umstellen, dann habt ihr schnell einen Kontoauszug mit der neuen Adresse.",
         "Euren deutschen Führerschein",
-        "Eine englische Übersetzung des Führerscheins. Erlaubt sind ein professioneller Übersetzungsdienst, eine gemeinnützige Organisation oder das Konsulat. Das deutsche Generalkonsulat Atlanta führt eine Liste mit Übersetzern.",
+        "Die englische Übersetzung eures Führerscheins (siehe Schritt „Deutsche Urkunden besorgen“).",
         "Geld für die Gebühr (etwa 20 bis 32 Dollar)",
       ],
       scripts: [
