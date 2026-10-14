@@ -30,19 +30,26 @@
     return f && f.default ? f.default : "";
   }
 
-  // Platzhalter {{key}} ersetzen. mode "html" markiert fehlende Werte, mode "text" setzt [Label].
+  // Platzhalter {{key}} und Quellen [[Titel|URL]] ersetzen.
+  // mode "html" markiert fehlende Werte und macht Quellen zu Links,
+  // mode "text" setzt [Label] ein und lässt Quellen weg (für E-Mails und Kopieren).
   function fill(text, mode = "html") {
     if (!text) return "";
-    const parts = String(text).split(/(\{\{\w+\}\})/g);
+    const parts = String(text).split(/(\{\{\w+\}\}|\[\[[^\]]+\]\])/g);
     return parts
       .map((p) => {
+        const cite = p.match(/^\[\[([^|\]]+)\|([^\]]+)\]\]$/);
+        if (cite) {
+          if (mode !== "html") return "";
+          return ` <a class="cite" href="${esc(cite[2])}" target="_blank" rel="noopener">Quelle: ${esc(cite[1])}</a>`;
+        }
         const m = p.match(/^\{\{(\w+)\}\}$/);
         if (!m) return mode === "html" ? esc(p) : p;
         const key = m[1];
         const val = profileValue(key);
         const label = fieldIndex[key] ? fieldIndex[key].label : key;
         if (val) return mode === "html" ? `<span class="filled">${esc(val)}</span>` : val;
-        return mode === "html" ? `<mark class="missing" title="Fehlt in „Unsere Daten“">[${esc(label)}]</mark>` : `[${label}]`;
+        return mode === "html" ? `<mark class="missing" title="Bitte unter „Unsere Daten“ ergänzen">[${esc(label)}]</mark>` : `[${label}]`;
       })
       .join("");
   }
@@ -394,7 +401,7 @@
           <h4><label for="note-${esc(step.id)}">Eure Notizen</label></h4>
           <textarea id="note-${esc(step.id)}" data-note="${esc(step.id)}" rows="3" placeholder="Zum Beispiel: Name der Sachbearbeiterin, Antworten, Termine. Wird automatisch gespeichert.">${esc(note)}</textarea>
         </section>
-        ${step.sources && step.sources.length ? `<details class="sources"><summary>Woher wir das wissen</summary><ul>${step.sources.map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a></li>`).join("")}</ul></details>` : ""}
+        ${step.sources && step.sources.length ? `<section class="sources"><h4>Quellen zum Nachlesen</h4><p class="muted small">Wenn jemand etwas anderes behauptet, könnt ihr hier nachschlagen und es zeigen.</p><ul>${step.sources.map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a></li>`).join("")}</ul></section>` : ""}
       </div>
     </article>`;
   }

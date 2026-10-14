@@ -19,6 +19,7 @@ window.KINDLER = {
     "Rot umrandete Stellen fehlen noch. Tragt sie einmal unter „Unsere Daten“ ein, dann stehen sie überall richtig drin.",
     "Die englischen Sätze und E-Mails könnt ihr so verwenden oder kopieren. Darunter steht jeweils, was sie auf Deutsch bedeuten.",
     "Wenn ihr einen Schritt erledigt habt, setzt den Haken. Alle sehen dann, dass er fertig ist.",
+    "Hinter wichtigen Aussagen steht ein Link „Quelle“. Darauf tippen zeigt die amtliche Seite, auf der es steht. Praktisch, falls jemand etwas anderes behauptet.",
   ],
 
   // ------------------------------------------------------------------
@@ -340,14 +341,14 @@ window.KINDLER = {
         "Das Zertifikat herunterladen, ausdrucken und hier hochladen.",
       ],
       prepare: [
-        "Als Ausweis für die Prüfung reicht euer Reisepass. Einen amerikanischen Führerschein braucht ihr dafür nicht. Deshalb könnt ihr das schon jetzt machen.",
+        "Als Ausweis für die Prüfung reicht euer Reisepass. Einen amerikanischen Führerschein braucht ihr dafür nicht. Deshalb könnt ihr das schon jetzt machen. [[ServSafe: Ausweis für die Prüfung|https://knowledgecenter.servsafe.com/kb/guide/en/what-identification-is-needed-to-take-my-proctoru-exam-VPYBgYV2YI/Steps/4006072]]",
         "Für die Online-Prüfung braucht ihr einen Computer (PC oder Mac) mit Webcam und Mikrofon. Handy, Tablet und Chromebook gehen nicht.",
         "Sucht euch einen ruhigen Raum, in dem ihr während der Prüfung allein seid.",
         "Das Zertifikat gilt 5 Jahre.",
       ],
       upload: "Ladet hier das Zertifikat hoch, sobald ihr bestanden habt. Ihr braucht es für den Antrag beim Gesundheitsamt.",
       sources: [
-        { title: "Georgia: Regel zum Hygiene-Zertifikat", url: "https://www.law.cornell.edu/regulations/georgia/Ga-Comp-R-Regs-R-511-6-1-.01" },
+        { title: "Georgia: Regel zum Hygiene-Zertifikat (511-6-1-.01)", url: "https://www.law.cornell.edu/regulations/georgia/Ga-Comp-R-Regs-R-511-6-1-.01" },
         { title: "ServSafe: Online-Kurs und Online-Prüfung", url: "https://www.servsafe.com/access/SS/Catalog/ProductDetail/SSMCT7XONLPROC" },
         { title: "ServSafe: welcher Ausweis für die Online-Prüfung gilt", url: "https://knowledgecenter.servsafe.com/kb/guide/en/what-identification-is-needed-to-take-my-proctoru-exam-VPYBgYV2YI/Steps/4006072" },
       ],
@@ -443,8 +444,8 @@ window.KINDLER = {
         },
       ],
       prepare: [
-        "Gute Nachricht: Das Gesundheitsamt von Georgia erlaubt einen Stützpunkt auf dem eigenen Wohngrundstück ausdrücklich, wenn er vom Wohnbereich getrennt ist. In den häufigen Fragen steht als Beispiel wörtlich „ein Nebengebäude in eurem Garten“. Genau das habt ihr. Bedingungen: Das Bauamt muss es erlauben, das Abwasser muss geregelt sein, und bei eigenem Brunnen muss das Wasser getestet sein.",
-        "Nur in der Wohnung selbst ist es verboten. Das Nebengebäude ist der erlaubte Weg.",
+        "Gute Nachricht: Das Gesundheitsamt von Georgia erlaubt einen Stützpunkt auf dem eigenen Wohngrundstück ausdrücklich, wenn er vom Wohnbereich getrennt ist. In den häufigen Fragen steht als Beispiel wörtlich „ein Nebengebäude in eurem Garten“. Genau das habt ihr. [[Gesundheitsamt Georgia, häufige Fragen|https://dph.georgia.gov/document/document/mobile-food-frequency-asked-questions/download]] Bedingungen: Das Bauamt muss es erlauben, das Abwasser muss geregelt sein, und bei eigenem Brunnen muss das Wasser getestet sein.",
+        "Nur in der Wohnung selbst ist es verboten, und in Räumen, in denen jemand wohnt oder schläft. Das Nebengebäude ist der erlaubte Weg. [[Regel 511-6-1 des Staates Georgia|https://dph.georgia.gov/document/document/envhealthfoodfoodservice-rulespdf/download]]",
       ],
       upload: "Bitte ladet hier die Antwort vom Bauamt hoch: die E-Mail (als PDF oder Bildschirmfoto), einen Brief oder ein Foto vom unterschriebenen Formular. Dann ist schriftlich festgehalten, dass die Küche auf eurem Grundstück erlaubt ist.",
       sources: [
@@ -461,7 +462,7 @@ window.KINDLER = {
       summary: "Eure Firma braucht einen Gewerbeschein vom County, in dem eure Küche steht. Das ist Lamar County.",
       why: "Das Vorab-Formular verlangt, dass ihr den Gewerbeschein beim Bauamt beantragt. Er muss jedes Jahr bis zum 31. März erneuert werden.",
       prepare: [
-        "Gebühren laut Satzung von Lamar County: 25 Dollar Bearbeitungsgebühr plus die Jahresgebühr nach Mitarbeiterzahl. Bei einem Mitarbeiter 100 Dollar, bei 2 bis 9 Mitarbeitern 125 Dollar. Wer erst ab 1. Juli anfängt, zahlt die halbe Jahresgebühr.",
+        "Gebühren laut Satzung von Lamar County: 25 Dollar Bearbeitungsgebühr plus die Jahresgebühr nach Mitarbeiterzahl. Bei einem Mitarbeiter 100 Dollar, bei 2 bis 9 Mitarbeitern 125 Dollar. Wer erst ab 1. Juli anfängt, zahlt die halbe Jahresgebühr. [[Satzung Lamar County|https://www.lamarcountyga.com/wp-content/uploads/2019/10/Occupational-tax-ordinance-final-02326098xA0B3B.pdf]]",
         "Wer zu spät erneuert, zahlt 10 Prozent Strafe. Ohne Gewerbeschein zu arbeiten kann bis zu 500 Dollar kosten.",
         "Das Amt prüft dabei auch, ob die Nutzung baurechtlich in Ordnung ist und ob ihr die Gesundheitsgenehmigung habt. Darum passt der Termin gut mit der Zoning-Unterschrift zusammen.",
       ],
@@ -550,7 +551,7 @@ window.KINDLER = {
       ],
       prepare: [
         "Es geht um zwei Tests: die Chemie-Analyse „W-33“ (die größere Version heißt „W-33C“) und den Bakterien-Test „W-35“ auf Coliforme und E. coli.",
-        "Preise beim Labor der Universität: Bakterien-Test W-35 kostet 40 Dollar, W-33C etwa 125 bis 130 Dollar. Das Extension Office in Lamar County nennt für eine einfache Wasserprobe 25 Dollar, bar oder per Scheck.",
+        "Preise beim Labor der Universität: Bakterien-Test W-35 kostet 40 Dollar, W-33C etwa 125 bis 130 Dollar. [[Labor der Universität Georgia|https://aesl.ces.uga.edu/water.html]] Das Extension Office in Lamar County nennt für eine einfache Wasserprobe 25 Dollar, bar oder per Scheck.",
         "Für den Bakterien-Test braucht ihr eine spezielle Flasche vom Labor. Proben werden Montag bis Donnerstag angenommen.",
       ],
       upload: "Ladet hier das Testergebnis hoch, sobald es da ist (nur bei eigenem Brunnen).",
@@ -659,8 +660,8 @@ window.KINDLER = {
         { title: "Gesundheitsamt Georgia: Antrag für Food Trucks (zeigt alle Anforderungen)", url: "https://dph.georgia.gov/document/document/dph-mobile-food-unit-permit-application-pdf/download" },
       ],
       cautions: [
-        "Kaufen könnt ihr den Truck jetzt schon. Für ein Fahrzeug, das der Firma gehört, verlangt Georgia keine Führerscheinnummer auf dem Antrag. Die Anmeldung auf die Firma sollte also auch ohne Georgia-Führerschein gehen. Klärt am Schalter nur, welchen Ausweis die Person braucht, die für die Firma unterschreibt.",
-        "Beim Privatkauf müsst ihr das Fahrzeug in Georgia innerhalb von 7 Werktagen anmelden. Plant den Kauf also so, dass die Anmeldung gleich danach möglich ist.",
+        "Kaufen könnt ihr den Truck jetzt schon. Für ein Fahrzeug, das der Firma gehört, verlangt Georgia keine Führerscheinnummer auf dem Antrag. Die Anmeldung auf die Firma sollte also auch ohne Georgia-Führerschein gehen. [[Handbuch der Fahrzeugbehörde, Abschnitt A|https://dor.georgia.gov/document/publication/motor-vehicle-online-manualpdf/download]] Klärt am Schalter nur, welchen Ausweis die Person braucht, die für die Firma unterschreibt.",
+        "Beim Privatkauf müsst ihr das Fahrzeug in Georgia innerhalb von 7 Werktagen anmelden. Plant den Kauf also so, dass die Anmeldung gleich danach möglich ist. [[Fahrzeugbehörde Georgia: Anmeldung|https://dor.georgia.gov/when-where-register-your-vehicle]]",
       ],
     },
     {
@@ -761,7 +762,7 @@ window.KINDLER = {
       ],
       prepare: [
         "Unterschreiben muss immer eine Person, auch wenn die Genehmigung auf die Firma läuft. Das Gesetz spricht von der Person, die den Antrag für die Firma stellt. Sie erklärt ihren eigenen Aufenthalt.",
-        "Als Ausweis gilt euer Reisepass, aber nur zusammen mit dem Ausdruck der I-94. Legt beides zusammen vor und hängt die Kopien an.",
+        "Als Ausweis gilt euer Reisepass, aber nur zusammen mit dem Ausdruck der I-94. Legt beides zusammen vor und hängt die Kopien an. [[Gesetz O.C.G.A. 50-36-2|https://agr.ga.gov/sites/default/files/documents/assets/legal/ocga/title-50-36.PDF]]",
         "Am einfachsten macht ihr die Erklärung nach dem Visum. Dann ist euer Status eindeutig, und ihr braucht sie nicht zweimal.",
       ],
       cautions: [
@@ -773,7 +774,7 @@ window.KINDLER = {
       phase: "jetzt",
       title: "Den Hauptantrag ausfüllen",
       cautions: [
-        "Der Antrag fragt nach Kennzeichen und Fahrgestellnummer. Das Kennzeichen bekommt ihr erst nach dem Visum. Auf dem Formular, das euer Gesundheitsamt (District 4) selbst benutzt, steht „Kennzeichen oder Fahrgestellnummer“. Die Fahrgestellnummer allein sollte also reichen. Sagt beim Abgeben trotzdem Bescheid, dass das Kennzeichen nachkommt.",
+        "Der Antrag fragt nach Kennzeichen und Fahrgestellnummer. Das Kennzeichen bekommt ihr erst nach dem Visum. Auf dem Formular, das euer Gesundheitsamt (District 4) selbst benutzt, steht „Kennzeichen oder Fahrgestellnummer“. Die Fahrgestellnummer allein sollte also reichen. [[Antragsformular District 4|https://www.district4health.org/wp-content/uploads/2023/09/2020-02-14-Mobile-Food-Service-Unit-Permit-Application-Fillable.pdf]] Sagt beim Abgeben trotzdem Bescheid, dass das Kennzeichen nachkommt.",
       ],
       online: [
         { title: "Hauptantrag herunterladen (PDF)", url: "https://dph.georgia.gov/document/document/dph-mobile-food-unit-permit-application-pdf/download" },
@@ -1065,9 +1066,9 @@ window.KINDLER = {
         },
       ],
       prepare: [
-        "Georgia erlaubt eine Umschreibung ohne Prüfung nur bei Ländern mit einem Abkommen. Die Führerscheinstelle nennt dafür öffentlich nur Taiwan und Südkorea. Deutschland steht nirgends. Rechnet deshalb mit allen Prüfungen.",
-        "Den Theorieteil „Verkehrsregeln“ gibt es auf Deutsch. Den Teil „Verkehrsschilder“ und die praktische Prüfung gibt es nur auf Englisch.",
-        "Euer Führerschein bekommt den Vermerk „LIMITED-TERM“ und läuft mit eurem Aufenthalt ab, also mit dem Datum im Einreisestempel.",
+        "Georgia erlaubt eine Umschreibung ohne Prüfung nur bei Ländern mit einem Abkommen. Die Führerscheinstelle nennt dafür öffentlich nur Taiwan und Südkorea. Deutschland steht nirgends. Rechnet deshalb mit allen Prüfungen. [[Führerscheinstelle Georgia|https://dds.georgia.gov/georgia-licenseid/new-licenseid/drivers-other-nations]]",
+        "Den Theorieteil „Verkehrsregeln“ gibt es auf Deutsch. Den Teil „Verkehrsschilder“ und die praktische Prüfung gibt es nur auf Englisch. [[Führerscheinstelle: Sprachen|https://dds.georgia.gov/list-languages]]",
+        "Euer Führerschein bekommt den Vermerk „LIMITED-TERM“ und läuft mit eurem Aufenthalt ab, also mit dem Datum im Einreisestempel. [[Führerscheinstelle: Limited-Term|https://dds.georgia.gov/partners/limited-term-dlids]]",
         "Als Besucher dürft ihr mit dem deutschen Führerschein fahren. Sobald ihr hier wohnt, habt ihr 30 Tage Zeit.",
       ],
       cautions: [
@@ -1088,9 +1089,9 @@ window.KINDLER = {
       summary: "Erst die Versicherung, dann die Anmeldung bei der Zulassungsstelle in Lamar County. Die ist im selben Gebäude wie das Bauamt. Für den Truck auf die Firma ist kein Georgia-Führerschein nötig, für euer Privatauto schon.",
       where: [{ ref: "lamarTax" }],
       prepare: [
-        "Wichtiger Unterschied: Für ein Fahrzeug, das der Firma gehört, verlangt Georgia keine Führerscheinnummer auf dem Antrag. Für euer Privatauto als neue Einwohner schon. Der Truck kann also früher angemeldet werden als euer Auto.",
-        "Beim Privatkauf müsst ihr das Fahrzeug innerhalb von 7 Werktagen nach dem Kauf anmelden. Beim Händler sind es 30 Tage, und der Händler gibt euch ein vorläufiges Kennzeichen mit.",
-        "Die Versicherung muss eine in Georgia zugelassene Gesellschaft sein. Sie meldet die Versicherung elektronisch an die Behörde. Eine Versicherungskarte allein reicht nicht.",
+        "Wichtiger Unterschied: Für ein Fahrzeug, das der Firma gehört, verlangt Georgia keine Führerscheinnummer auf dem Antrag. Für euer Privatauto als neue Einwohner schon. Der Truck kann also früher angemeldet werden als euer Auto. [[Handbuch der Fahrzeugbehörde, Abschnitt A|https://dor.georgia.gov/document/publication/motor-vehicle-online-manualpdf/download]]",
+        "Beim Privatkauf müsst ihr das Fahrzeug innerhalb von 7 Werktagen nach dem Kauf anmelden. Beim Händler sind es 30 Tage, und der Händler gibt euch ein vorläufiges Kennzeichen mit. [[Fahrzeugbehörde Georgia: Anmeldung|https://dor.georgia.gov/when-where-register-your-vehicle]]",
+        "Die Versicherung muss eine in Georgia zugelassene Gesellschaft sein. Sie meldet die Versicherung elektronisch an die Behörde. Eine Versicherungskarte allein reicht nicht. [[Fahrzeugbehörde: Versicherungsnachweis|https://dor.georgia.gov/acceptable-proof-insurance]]",
         "Für ein frisch gekauftes Fahrzeug akzeptiert die Behörde eine vorläufige Versicherungsbestätigung („binder“) zusammen mit dem Kaufvertrag.",
       ],
       todo: [
