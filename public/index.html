@@ -41,13 +41,18 @@
       <nav class="tabs" aria-label="Bereiche">
         <button class="tab" data-view="liste" aria-current="page">Checkliste</button>
         <button class="tab" data-view="daten">Unsere Daten</button>
-        <button class="tab" data-view="kontakte">Kontakte</button>
+        <button class="tab" data-view="kontakte">Adressen</button>
+        <button class="tab" data-view="woerter">Wörter</button>
       </nav>
     </header>
 
     <main id="main">
       <section id="view-liste" class="view">
         <div class="overview">
+          <details id="intro" class="intro">
+            <summary>So benutzt ihr diese Seite</summary>
+            <ul id="intro-list"></ul>
+          </details>
           <div class="progress-block">
             <div class="progress-label"><span id="progress-text">0 von 0 erledigt</span><span id="sync-status" class="sync"></span></div>
             <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="progress-bar"><span></span></div>
@@ -79,9 +84,18 @@
 
       <section id="view-kontakte" class="view" hidden>
         <div class="panel">
-          <h2>Kontakte</h2>
-          <p class="lead">Alle Ämter und Stellen auf einen Blick.</p>
+          <h2>Adressen</h2>
+          <p class="lead">Alle Ämter und Stellen auf einen Blick. Auf die Telefonnummer tippen, um anzurufen. Auf die Adresse tippen, um die Karte zu öffnen.</p>
           <div id="contacts" class="contacts"></div>
+        </div>
+      </section>
+
+      <section id="view-woerter" class="view" hidden>
+        <div class="panel">
+          <h2>Wörter, die euch begegnen</h2>
+          <p class="lead">Diese englischen Begriffe stehen auf Formularen oder fallen am Telefon. Hier steht, was sie bedeuten.</p>
+          <label class="search"><span class="sr-only">Suchen</span><input id="glossary-search" type="search" placeholder="Wort suchen, z. B. Permit" /></label>
+          <dl id="glossary" class="glossary"></dl>
         </div>
       </section>
     </main>

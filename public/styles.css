@@ -226,3 +226,27 @@ legend { font-family: var(--font-head); font-weight: 700; font-size: 18px; paddi
   .step-summary { padding-left: 16px; }
   a { color: #000; }
 }
+
+/* Einfache Bedienung */
+.small { font-size: 14px; }
+.intro { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 16px; }
+.intro summary { cursor: pointer; font-weight: 700; padding: 10px 0; color: var(--brand); }
+.intro ul { margin: 0 0 12px; padding-left: 22px; }
+.intro li { margin-bottom: 6px; }
+.next-summary { font-size: 16px; color: var(--ink); margin: 2px 0; }
+.uploads { border-radius: 10px; }
+.uploads.is-asked { background: var(--brand-soft); padding: 12px 14px !important; margin-top: 10px; }
+.uploads.is-asked h4 { color: var(--brand); }
+.filelist { list-style: none; padding: 0 !important; margin: 6px 0 10px !important; display: grid; gap: 6px; }
+.filelist li { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 6px 10px; }
+.filelist a { font-weight: 600; overflow-wrap: anywhere; }
+.upload-btn { cursor: pointer; margin-right: 8px; }
+details.sources { margin-top: 12px; font-size: 14px; }
+details.sources summary { cursor: pointer; color: var(--muted); }
+.search input { font: inherit; width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); margin: 6px 0 14px; }
+.glossary { margin: 0; display: grid; gap: 10px; }
+.gloss { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.gloss dt { font-weight: 700; }
+.gloss-de { color: var(--brand); font-weight: 600; margin-left: 6px; }
+.gloss-de::before { content: "= "; color: var(--muted); }
+.gloss dd { margin: 4px 0 0; color: var(--ink-2); }

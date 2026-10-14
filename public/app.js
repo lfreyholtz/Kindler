@@ -5,7 +5,7 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-  let state = { progress: {}, profile: {}, notes: {}, updatedAt: null };
+  let state = { progress: {}, profile: {}, notes: {}, files: {}, updatedAt: null };
   let openSteps = new Set();
   let pollTimer = null;
 
@@ -90,7 +90,7 @@
   // Ohne Server (z. B. Datei direkt im Browser geöffnet): Testmodus mit Speicherung nur in diesem Browser.
   let localMode = false;
   function localApi(method, url, body) {
-    const s = store.get("kindler.localState", { progress: {}, profile: {}, notes: {}, updatedAt: null });
+    const s = store.get("kindler.localState", { progress: {}, profile: {}, notes: {}, files: {}, updatedAt: null });
     if (method === "PUT") {
       const [, kind, id] = url.match(/^\/api\/(\w+)\/?(.*)$/) || [];
       const key = decodeURIComponent(id || "");
@@ -205,11 +205,12 @@
   // ---------- Tabs ----------
 
   function showView(name) {
-    for (const v of ["liste", "daten", "kontakte"]) $("#view-" + v).hidden = v !== name;
+    for (const v of ["liste", "daten", "kontakte", "woerter"]) $("#view-" + v).hidden = v !== name;
     $$(".tab").forEach((b) => { if (b.dataset.view === name) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
     store.set("kindler.view", name);
     if (name === "daten") renderProfileForm();
     if (name === "kontakte") renderContacts();
+    if (name === "woerter") renderGlossary();
     window.scrollTo({ top: 0 });
   }
   $$(".tab").forEach((b) => b.addEventListener("click", () => showView(b.dataset.view)));
@@ -235,19 +236,20 @@
     return `
       <div class="place">
         <div class="place-name">${esc(p.name)}</div>
-        ${p.address ? `<div>${p.address.startsWith("Nächstes") ? esc(p.address) : `<a href="${mapsHref(p.address)}" target="_blank" rel="noopener">${esc(p.address)}</a>`}</div>` : ""}
+        ${p.address ? `<div><a href="${mapsHref(p.address)}" target="_blank" rel="noopener">${esc(p.address)}</a></div>` : ""}
         ${p.phone ? `<div><a href="${telHref(p.phone)}">${esc(p.phone)}</a>${p.ext ? ` (${esc(p.ext)})` : ""}</div>` : ""}
         ${p.contact ? `<div>${esc(p.contact)}</div>` : ""}
         ${p.email ? `<div><a href="mailto:${esc(p.email)}">${esc(p.email)}</a></div>` : ""}
         ${p.hours ? `<div class="muted">${esc(p.hours)}</div>` : ""}
-        ${p.url ? `<div><a href="${esc(p.url)}" target="_blank" rel="noopener">Webseite</a></div>` : ""}
+        ${p.note ? `<div class="muted">${esc(p.note)}</div>` : ""}
+        ${p.url ? `<div><a href="${esc(p.url)}" target="_blank" rel="noopener">Webseite öffnen</a></div>` : ""}
       </div>`;
   }
 
   function renderScripts(step) {
     return (step.scripts || [])
       .map((s, si) => {
-        const icon = s.kind === "call" ? "Telefon" : "Vor Ort";
+        const icon = s.kind === "call" ? "Anruf" : "Vor Ort";
         return `
         <div class="script">
           <div class="script-head">
@@ -262,7 +264,7 @@
               )
               .join("")}
           </ol>
-          <button class="btn btn-small" type="button" data-copy-script="${esc(step.id)}:${si}">Englischen Text kopieren</button>
+          <button class="btn btn-small" type="button" data-copy-script="${esc(step.id)}:${si}">Englische Sätze kopieren</button>
         </div>`;
       })
       .join("");
@@ -280,13 +282,13 @@
         <div class="email">
           <div class="email-head"><span class="pill">E-Mail</span><strong>${esc(m.title)}</strong></div>
           <dl class="email-meta">
-            <dt>An</dt><dd>${m.to ? fill(m.to) : `<span class="muted">Adresse ergänzen</span>`}</dd>
+            <dt>An</dt><dd>${m.to ? fill(m.to) : `<span class="muted">Adresse selbst eintragen</span>`}</dd>
             <dt>Betreff</dt><dd lang="en">${fill(m.subject)}</dd>
           </dl>
           <pre class="email-body" lang="en">${fill(m.body)}</pre>
           ${m.de ? `<p class="de">${esc(m.de)}</p>` : ""}
           <div class="btn-row">
-            <a class="btn btn-primary btn-small" href="${esc(mailtoHref(m))}">Im Mailprogramm öffnen</a>
+            <a class="btn btn-primary btn-small" href="${esc(mailtoHref(m))}">E-Mail öffnen und senden</a>
             <button class="btn btn-small" type="button" data-copy-mail="${esc(step.id)}:${mi}">Text kopieren</button>
           </div>
         </div>`
@@ -300,17 +302,17 @@
         (f, fi) => `
         <div class="formhelp">
           <div class="email-head"><span class="pill">Formular</span><strong>${esc(f.title)}</strong></div>
-          ${f.url ? `<p><a href="${esc(f.url)}" target="_blank" rel="noopener">Offizielles Formular öffnen</a></p>` : ""}
+          ${f.url ? `<p><a href="${esc(f.url)}" target="_blank" rel="noopener">Das Formular öffnen</a></p>` : ""}
           ${f.note ? `<p class="muted">${esc(f.note)}</p>` : ""}
           <table class="fields">
-            <thead><tr><th>Feld im Formular</th><th>Eintragen</th><th><span class="sr-only">Kopieren</span></th></tr></thead>
+            <thead><tr><th>So heißt das Feld</th><th>Das tragt ihr ein</th><th><span class="sr-only">Kopieren</span></th></tr></thead>
             <tbody>
               ${f.fields
                 .map(
                   (x, xi) => `
                 <tr>
                   <td lang="en">${esc(x.label)}${x.hint ? `<div class="hint">${esc(x.hint)}</div>` : ""}</td>
-                  <td lang="en">${x.value ? fill(x.value) : `<span class="muted">von Hand eintragen</span>`}</td>
+                  <td lang="en">${x.value ? fill(x.value) : `<span class="muted">selbst eintragen</span>`}</td>
                   <td>${x.value ? `<button class="btn btn-small" type="button" data-copy-field="${esc(step.id)}:${fi}:${xi}" aria-label="Kopieren">Kopieren</button>` : ""}</td>
                 </tr>`
                 )
@@ -320,6 +322,29 @@
         </div>`
       )
       .join("");
+  }
+
+  function fmtSize(n) { return n > 1024 * 1024 ? (n / 1024 / 1024).toFixed(1) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB"; }
+  function fmtDate(iso) { try { return new Date(iso).toLocaleDateString("de-DE"); } catch { return ""; } }
+
+  function renderUploads(step) {
+    const files = (state.files && state.files[step.id]) || [];
+    const prompt = step.upload;
+    return `
+      <section class="uploads ${prompt ? "is-asked" : ""}">
+        <h4>${prompt ? "Bitte hochladen" : "Dokumente"}</h4>
+        ${prompt ? `<p>${fill(prompt)}</p>` : `<p class="muted small">Hier könnt ihr Briefe, E-Mails oder Fotos zu diesem Schritt ablegen. Alle sehen sie.</p>`}
+        ${files.length ? `<ul class="filelist">${files.map((f) => `
+          <li>
+            <a href="/api/files/${esc(f.id)}" target="_blank" rel="noopener">${esc(f.name)}</a>
+            <span class="muted small">${fmtSize(f.size)}, ${fmtDate(f.at)}${f.by ? ", von " + esc(f.by) : ""}</span>
+            <button class="btn btn-small btn-ghost" type="button" data-del-file="${esc(f.id)}" aria-label="${esc(f.name)} löschen">Löschen</button>
+          </li>`).join("")}</ul>` : ""}
+        ${localMode
+          ? `<p class="muted small">Hochladen geht nur, wenn die Seite über den Server läuft.</p>`
+          : `<label class="btn btn-small upload-btn">Datei auswählen<input type="file" data-upload="${esc(step.id)}" accept="application/pdf,image/*,.eml,.msg,.txt,.doc,.docx" hidden /></label>
+             <span class="muted small">PDF, Foto oder E-Mail-Datei, bis 10 MB.</span>`}
+      </section>`;
   }
 
   function renderStep(step, index) {
@@ -344,7 +369,7 @@
           <span class="step-title">${esc(step.title)}</span>
           <span class="step-meta">
             ${subs.length ? `<span class="count">${subDone}/${subs.length}</span>` : ""}
-            ${missing.length ? `<span class="warn" title="Es fehlen Angaben in „Unsere Daten“">Daten fehlen</span>` : ""}
+            ${missing.length ? `<span class="warn" title="Bitte unter „Unsere Daten“ ergänzen">Angaben fehlen</span>` : ""}
             ${done && doneInfo ? `<span class="by">erledigt${doneInfo.by ? " von " + esc(doneInfo.by) : ""}</span>` : ""}
           </span>
           <span class="chev" aria-hidden="true"></span>
@@ -352,22 +377,23 @@
       </div>
       <p class="step-summary">${fill(step.summary)}</p>
       <div class="step-body" id="body-${esc(step.id)}" ${open ? "" : "hidden"}>
-        ${step.why ? `<section><h4>Warum</h4><p>${esc(step.why)}</p></section>` : ""}
-        ${step.where && step.where.length ? `<section><h4>Wo</h4><div class="places">${step.where.map((w) => placeCard(w.ref)).join("")}</div></section>` : ""}
-        ${subs.length ? `<section><h4>Aufgaben</h4><ul class="subtasks">${subs
+        ${step.why ? `<section><h4>Warum ist das wichtig?</h4><p>${fill(step.why)}</p></section>` : ""}
+        ${step.where && step.where.length ? `<section><h4>Wohin?</h4><div class="places">${step.where.map((w) => placeCard(w.ref)).join("")}</div></section>` : ""}
+        ${subs.length ? `<section><h4>So geht's</h4><ul class="subtasks">${subs
           .map((t, i) => `<li><label><input type="checkbox" data-done="${esc(subId(step, i))}" ${isDone(subId(step, i)) ? "checked" : ""} /> <span>${fill(t)}</span></label></li>`)
           .join("")}</ul></section>` : ""}
-        ${step.bring && step.bring.length ? `<section><h4>Mitbringen</h4><ul class="bring">${step.bring.map((b) => `<li>${fill(b)}</li>`).join("")}</ul></section>` : ""}
-        ${step.prepare && step.prepare.length ? `<section><h4>Vorbereiten</h4><ul>${step.prepare.map((b) => `<li>${fill(b)}</li>`).join("")}</ul></section>` : ""}
-        ${step.scripts && step.scripts.length ? `<section><h4>Was ihr sagen könnt</h4>${renderScripts(step)}</section>` : ""}
-        ${step.emails && step.emails.length ? `<section><h4>E-Mail-Entwürfe</h4>${renderEmails(step)}</section>` : ""}
-        ${step.forms && step.forms.length ? `<section><h4>Ausfüllhilfe</h4>${renderForms(step)}</section>` : ""}
-        ${step.cautions && step.cautions.length ? `<section class="cautions"><h4>Achtung</h4><ul>${step.cautions.map((c) => `<li>${esc(c)}</li>`).join("")}</ul></section>` : ""}
+        ${step.bring && step.bring.length ? `<section><h4>Das nehmt ihr mit</h4><ul class="bring">${step.bring.map((b) => `<li>${fill(b)}</li>`).join("")}</ul></section>` : ""}
+        ${step.prepare && step.prepare.length ? `<section><h4>Gut zu wissen</h4><ul>${step.prepare.map((b) => `<li>${fill(b)}</li>`).join("")}</ul></section>` : ""}
+        ${step.scripts && step.scripts.length ? `<section><h4>Das könnt ihr sagen</h4><p class="muted small">Oben steht der englische Satz zum Vorlesen. Darunter, was er auf Deutsch heißt.</p>${renderScripts(step)}</section>` : ""}
+        ${step.emails && step.emails.length ? `<section><h4>Fertige E-Mail</h4><p class="muted small">Auf „E-Mail öffnen“ tippen. Dann öffnet sich euer Mailprogramm mit dem fertigen Text.</p>${renderEmails(step)}</section>` : ""}
+        ${step.forms && step.forms.length ? `<section><h4>Formular ausfüllen</h4><p class="muted small">Links steht, wie das Feld im Formular heißt. Rechts, was ihr eintragt. Mit „Kopieren“ könnt ihr es direkt einfügen.</p>${renderForms(step)}</section>` : ""}
+        ${step.cautions && step.cautions.length ? `<section class="cautions"><h4>Wichtig</h4><ul>${step.cautions.map((c) => `<li>${esc(c)}</li>`).join("")}</ul></section>` : ""}
+        ${renderUploads(step)}
         <section class="notes">
-          <h4><label for="note-${esc(step.id)}">Notizen (für alle sichtbar)</label></h4>
-          <textarea id="note-${esc(step.id)}" data-note="${esc(step.id)}" rows="3" placeholder="Z. B. Name der Sachbearbeiterin, Antworten, Termine">${esc(note)}</textarea>
+          <h4><label for="note-${esc(step.id)}">Eure Notizen</label></h4>
+          <textarea id="note-${esc(step.id)}" data-note="${esc(step.id)}" rows="3" placeholder="Zum Beispiel: Name der Sachbearbeiterin, Antworten, Termine. Wird automatisch gespeichert.">${esc(note)}</textarea>
         </section>
-        ${step.sources && step.sources.length ? `<section class="sources"><h4>Quellen</h4><ul>${step.sources.map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a></li>`).join("")}</ul></section>` : ""}
+        ${step.sources && step.sources.length ? `<details class="sources"><summary>Woher wir das wissen</summary><ul>${step.sources.map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a></li>`).join("")}</ul></details>` : ""}
       </div>
     </article>`;
   }
@@ -432,8 +458,9 @@
       nextEl.innerHTML = `
         <div class="next-label">Nächster Schritt</div>
         <div class="next-title">${esc(next.title)}</div>
+        <div class="next-summary">${fill(next.summary)}</div>
         <div class="next-phase">${esc(ph ? ph.title : "")}</div>
-        <button class="btn btn-primary" type="button" data-goto="${esc(next.id)}">Öffnen</button>`;
+        <button class="btn btn-primary" type="button" data-goto="${esc(next.id)}">Los geht's</button>`;
     } else {
       nextEl.innerHTML = `<div class="next-title">Alles erledigt. Glückwunsch!</div>`;
     }
@@ -443,7 +470,7 @@
     const md = $("#missing-data");
     if (missing.size) {
       md.hidden = false;
-      md.innerHTML = `<strong>${missing.size} Angaben fehlen noch</strong> in „Unsere Daten“. Sie werden in Skripten und Formularen gebraucht. <button class="btn btn-small" type="button" data-view-go="daten">Jetzt ergänzen</button>`;
+      md.innerHTML = `<span><strong>Es fehlen noch ${missing.size} Angaben</strong> (gelb markiert). Tragt sie einmal unter „Unsere Daten“ ein, dann stehen sie überall richtig drin.</span> <button class="btn btn-small" type="button" data-view-go="daten">Jetzt eintragen</button>`;
     } else {
       md.hidden = true;
     }
@@ -454,6 +481,7 @@
   document.addEventListener("change", (e) => {
     const t = e.target;
     if (t.matches("[data-done]")) setDone(t.dataset.done, t.checked);
+    if (t.matches("[data-upload]") && t.files && t.files[0]) uploadFile(t.dataset.upload, t.files[0]);
   });
 
   $("#hide-done").addEventListener("change", (e) => { store.set("kindler.hideDone", e.target.checked); render(); });
@@ -477,6 +505,36 @@
 
   function findStep(id) { return K.steps.find((s) => s.id === id); }
 
+  const TYPE_BY_EXT = { pdf: "application/pdf", eml: "message/rfc822", msg: "application/vnd.ms-outlook", txt: "text/plain", doc: "application/msword", docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document", jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", heic: "image/heic", webp: "image/webp", gif: "image/gif" };
+
+  async function uploadFile(stepId, file) {
+    if (file.size > 10 * 1024 * 1024) { toast("Die Datei ist größer als 10 MB."); return; }
+    const ext = (file.name.split(".").pop() || "").toLowerCase();
+    const type = file.type || TYPE_BY_EXT[ext] || "application/octet-stream";
+    toast("Wird hochgeladen …");
+    try {
+      const data = await new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onload = () => resolve(String(r.result).split(",")[1] || "");
+        r.onerror = reject;
+        r.readAsDataURL(file);
+      });
+      const res = await fetch("/api/files/" + encodeURIComponent(stepId), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: file.name, type, data, by: whoAmI() }),
+        credentials: "same-origin",
+      });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(body.error || "Fehler");
+      state = body;
+      render();
+      toast("Hochgeladen");
+    } catch (e) {
+      toast(e.message && e.message !== "Fehler" ? e.message : "Hochladen hat nicht geklappt.");
+    }
+  }
+
   document.addEventListener("click", (e) => {
     const t = e.target.closest("button, a");
     if (!t) return;
@@ -498,6 +556,11 @@
       return;
     }
     if (t.dataset.viewGo) { showView(t.dataset.viewGo); return; }
+    if (t.dataset.delFile) {
+      if (t.dataset.confirm !== "1") { t.dataset.confirm = "1"; t.textContent = "Wirklich löschen?"; setTimeout(() => { t.dataset.confirm = ""; t.textContent = "Löschen"; }, 4000); return; }
+      api("DELETE", "/api/files/" + t.dataset.delFile).then((s) => { state = s; render(); toast("Gelöscht"); }).catch(() => toast("Löschen hat nicht geklappt."));
+      return;
+    }
     if (t.dataset.copyScript) {
       const [id, si] = t.dataset.copyScript.split(":");
       const s = findStep(id).scripts[+si];
@@ -578,17 +641,26 @@
     if (profileValue("attorneyName") || profileValue("attorneyEmail")) {
       extra.push(`<div class="place"><div class="place-name">Anwalt/Anwältin: ${esc(profileValue("attorneyName"))}</div>${profileValue("attorneyEmail") ? `<div><a href="mailto:${esc(profileValue("attorneyEmail"))}">${esc(profileValue("attorneyEmail"))}</a></div>` : ""}</div>`);
     }
-    if (profileValue("baseOwner")) {
-      extra.push(`<div class="place"><div class="place-name">Grundstückseigentümer/in: ${esc(profileValue("baseOwner"))}</div>${profileValue("baseOwnerPhone") ? `<div><a href="${telHref(profileValue("baseOwnerPhone"))}">${esc(profileValue("baseOwnerPhone"))}</a></div>` : ""}${profileValue("baseOwnerEmail") ? `<div><a href="mailto:${esc(profileValue("baseOwnerEmail"))}">${esc(profileValue("baseOwnerEmail"))}</a></div>` : ""}</div>`);
-    }
     $("#contacts").innerHTML = Object.keys(K.places).map(placeCard).join("") + extra.join("");
   }
+
+  function renderGlossary() {
+    const q = ($("#glossary-search").value || "").trim().toLowerCase();
+    const items = (K.glossary || []).filter((g) => !q || (g.en + " " + g.de + " " + g.text).toLowerCase().includes(q));
+    $("#glossary").innerHTML = items.length
+      ? items.map((g) => `<div class="gloss"><dt><span lang="en">${esc(g.en)}</span> <span class="gloss-de">${esc(g.de)}</span></dt><dd>${esc(g.text)}</dd></div>`).join("")
+      : `<p class="muted">Nichts gefunden.</p>`;
+  }
+  $("#glossary-search").addEventListener("input", renderGlossary);
 
   // ---------- Start ----------
 
   async function boot() {
     $("#app").hidden = false;
     $("#last-reviewed").textContent = K.lastReviewed;
+    $("#intro-list").innerHTML = (K.intro || []).map((t) => `<li>${esc(t)}</li>`).join("");
+    $("#intro").open = !store.get("kindler.introSeen", false);
+    $("#intro").addEventListener("toggle", () => { if (!$("#intro").open) store.set("kindler.introSeen", true); });
     $("#hide-done").checked = store.get("kindler.hideDone", false);
     openSteps = new Set(store.get("kindler.open", []));
     render();

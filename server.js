@@ -21,7 +21,8 @@ const DATA_FILE = path.join(__dirname, "data", "state.json");
 
 // ---------- Speicher ----------
 
-const EMPTY_STATE = () => ({ progress: {}, profile: {}, notes: {}, updatedAt: null });
+const EMPTY_STATE = () => ({ progress: {}, profile: {}, notes: {}, files: {}, updatedAt: null });
+const FILES_DIR = path.join(__dirname, "data", "files");
 
 let store;
 
@@ -36,6 +37,17 @@ if (process.env.DATABASE_URL) {
       await pool.query(
         "CREATE TABLE IF NOT EXISTS kv (key TEXT PRIMARY KEY, value JSONB NOT NULL, updated_at TIMESTAMPTZ NOT NULL DEFAULT now())"
       );
+      await pool.query("CREATE TABLE IF NOT EXISTS blobs (id TEXT PRIMARY KEY, data BYTEA NOT NULL)");
+    },
+    async putBlob(id, buf) {
+      await pool.query("INSERT INTO blobs (id, data) VALUES ($1, $2)", [id, buf]);
+    },
+    async getBlob(id) {
+      const r = await pool.query("SELECT data FROM blobs WHERE id = $1", [id]);
+      return r.rows[0] ? r.rows[0].data : null;
+    },
+    async delBlob(id) {
+      await pool.query("DELETE FROM blobs WHERE id = $1", [id]);
     },
     async read() {
       const r = await pool.query("SELECT value FROM kv WHERE key = 'state'");
@@ -52,8 +64,18 @@ if (process.env.DATABASE_URL) {
 } else {
   store = {
     async init() {
-      fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
+      fs.mkdirSync(FILES_DIR, { recursive: true });
       if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, JSON.stringify(EMPTY_STATE(), null, 2));
+    },
+    async putBlob(id, buf) {
+      fs.writeFileSync(path.join(FILES_DIR, id), buf);
+    },
+    async getBlob(id) {
+      const f = path.join(FILES_DIR, id);
+      return fs.existsSync(f) ? fs.readFileSync(f) : null;
+    },
+    async delBlob(id) {
+      try { fs.unlinkSync(path.join(FILES_DIR, id)); } catch { /* schon weg */ }
     },
     async read() {
       try {
@@ -108,7 +130,8 @@ function isAuthed(req) {
 
 const app = express();
 app.disable("x-powered-by");
-app.use(express.json({ limit: "200kb" }));
+const smallJson = express.json({ limit: "200kb" });
+app.use((req, res, next) => (req.method === "POST" && req.path.startsWith("/api/files/") ? next() : smallJson(req, res, next)));
 
 app.use((req, res, next) => {
   res.setHeader("X-Content-Type-Options", "nosniff");
@@ -193,6 +216,74 @@ app.put("/api/profile", async (req, res, next) => {
   try {
     const state = await mutate((s) => {
       s.profile = { ...s.profile, ...clean };
+    });
+    res.json(state);
+  } catch (e) {
+    next(e);
+  }
+});
+
+// ---------- Dateien (z. B. Bestätigungen vom Amt) ----------
+
+const MAX_FILE_BYTES = 10 * 1024 * 1024;
+const ALLOWED_TYPES = /^(application\/pdf|image\/(png|jpeg|gif|webp|heic|heif)|message\/rfc822|text\/plain|application\/vnd\.ms-outlook|application\/msword|application\/vnd\.openxmlformats-officedocument\.wordprocessingml\.document)$/;
+
+app.post("/api/files/:step", express.json({ limit: "15mb" }), async (req, res, next) => {
+  const step = req.params.step;
+  if (!ID_RE.test(step)) return res.status(400).json({ error: "Ungültige ID" });
+  const name = String((req.body && req.body.name) || "Datei").replace(/[\\/\r\n"]/g, "_").slice(0, 120);
+  const type = String((req.body && req.body.type) || "application/octet-stream");
+  const by = String((req.body && req.body.by) || "").slice(0, 40);
+  if (!ALLOWED_TYPES.test(type)) return res.status(415).json({ error: "Dieser Dateityp geht nicht. Bitte PDF, Foto oder E-Mail-Datei." });
+  let buf;
+  try {
+    buf = Buffer.from(String(req.body.data || ""), "base64");
+  } catch {
+    return res.status(400).json({ error: "Datei ungültig" });
+  }
+  if (!buf.length) return res.status(400).json({ error: "Datei ist leer" });
+  if (buf.length > MAX_FILE_BYTES) return res.status(413).json({ error: "Datei ist größer als 10 MB" });
+  const id = crypto.randomBytes(12).toString("hex");
+  try {
+    await store.putBlob(id, buf);
+    const state = await mutate((s) => {
+      s.files = s.files || {};
+      (s.files[step] = s.files[step] || []).push({ id, name, type, size: buf.length, by, at: new Date().toISOString() });
+    });
+    res.json(state);
+  } catch (e) {
+    next(e);
+  }
+});
+
+app.get("/api/files/:id", async (req, res, next) => {
+  const id = req.params.id;
+  if (!/^[a-f0-9]{24}$/.test(id)) return res.status(400).end();
+  try {
+    const state = await store.read();
+    let meta = null;
+    for (const list of Object.values(state.files || {})) for (const f of list) if (f.id === id) meta = f;
+    const buf = meta && (await store.getBlob(id));
+    if (!buf) return res.status(404).json({ error: "Nicht gefunden" });
+    res.setHeader("Content-Type", meta.type);
+    res.setHeader("Content-Disposition", `inline; filename*=UTF-8''${encodeURIComponent(meta.name)}`);
+    res.setHeader("Content-Security-Policy", "sandbox");
+    res.send(buf);
+  } catch (e) {
+    next(e);
+  }
+});
+
+app.delete("/api/files/:id", async (req, res, next) => {
+  const id = req.params.id;
+  if (!/^[a-f0-9]{24}$/.test(id)) return res.status(400).end();
+  try {
+    await store.delBlob(id);
+    const state = await mutate((s) => {
+      for (const k of Object.keys(s.files || {})) {
+        s.files[k] = s.files[k].filter((f) => f.id !== id);
+        if (!s.files[k].length) delete s.files[k];
+      }
     });
     res.json(state);
   } catch (e) {

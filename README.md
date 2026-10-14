@@ -36,6 +36,7 @@ All steps, scripts, email drafts and form helpers live in `public/content.js`.
 
 - `{{key}}` placeholders are filled from "Unsere Daten" (keys defined in `profileGroups`).
 - Don't change a step's `id` after launch, or its saved checkmark is lost.
+- Uploaded files (e.g. written confirmations from offices) are stored in the database on Render, or in `data/files/` locally. Max 10 MB per file.
 - Personal identity data (birth dates, passport or SSN numbers) is intentionally not stored.
 
 ## Forms
