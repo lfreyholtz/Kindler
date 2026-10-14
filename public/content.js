@@ -17,11 +17,11 @@ window.KINDLER = {
         { key: "businessName", label: "Name der Firma", default: "Kindler German Cuisine" },
         { key: "legalForm", label: "Rechtsform (z. B. LLC)", placeholder: "LLC" },
         { key: "ein", label: "EIN (Steuernummer der Firma)", placeholder: "12-3456789" },
-        { key: "street", label: "Straße und Hausnummer", default: "1957 Williams Mill Rd" },
-        { key: "city", label: "Ort", default: "Zebulon" },
+        { key: "street", label: "Aktuelle Firmenadresse: Straße (bis zur Änderung nach dem Visum)", default: "1957 Williams Mill Rd" },
+        { key: "city", label: "Aktuelle Firmenadresse: Ort", default: "Zebulon" },
         { key: "state", label: "Bundesstaat", default: "GA" },
-        { key: "zip", label: "PLZ", default: "30295" },
-        { key: "county", label: "County (Landkreis) der Firmenadresse", default: "Pike County" },
+        { key: "zip", label: "Aktuelle Firmenadresse: PLZ", default: "30295" },
+        { key: "county", label: "County der aktuellen Firmenadresse", default: "Pike County" },
         { key: "menuSummary", label: "Speisen in einem Satz (Englisch)", placeholder: "German food: bratwurst, schnitzel, soft pretzels, potato salad" },
       ],
     },
@@ -40,17 +40,17 @@ window.KINDLER = {
       ],
     },
     {
-      title: "Base of Operation (Standort für den Truck in Lamar County)",
+      title: "Grundstück Tom Bell Road (Base of Operation, Separat-Küche, künftiger Firmensitz)",
       fields: [
         { key: "baseName", label: "Name des Standorts (Englisch)", placeholder: "Kindler German Cuisine Base" },
-        { key: "baseStreet", label: "Straße und Hausnummer" },
-        { key: "baseCity", label: "Ort", placeholder: "Barnesville" },
-        { key: "baseZip", label: "PLZ", placeholder: "30204" },
-        { key: "baseJurisdiction", label: "Liegt der Standort in einer Stadt oder im County?", placeholder: "unincorporated Lamar County" },
-        { key: "baseParcel", label: "Flurstück-Nummer (Parcel ID), falls bekannt" },
-        { key: "baseOwner", label: "Eigentümer/in des Grundstücks" },
-        { key: "baseOwnerPhone", label: "Telefon Eigentümer/in" },
-        { key: "baseOwnerEmail", label: "E-Mail Eigentümer/in" },
+        { key: "baseStreet", label: "Straße und Hausnummer", placeholder: "1234 Tom Bell Rd" },
+        { key: "baseCity", label: "Ort (laut Post)", placeholder: "Barnesville oder Milner" },
+        { key: "baseZip", label: "PLZ" },
+        { key: "baseJurisdiction", label: "Liegt das Grundstück in einer Stadt oder im County? (Englisch)", placeholder: "unincorporated Lamar County" },
+        { key: "baseParcel", label: "Flurstück-Nummer (Parcel ID), steht im Grundsteuerbescheid" },
+        { key: "baseOwner", label: "Wem gehört das Grundstück? (Namen wie im Grundbuch, oder die Firma)" },
+        { key: "baseOwnerPhone", label: "Telefon Eigentümer/in (falls nicht ihr selbst)" },
+        { key: "baseOwnerEmail", label: "E-Mail Eigentümer/in (falls nicht ihr selbst)" },
         { key: "baseWater", label: "Wasser: öffentlich oder Brunnen? (Englisch)", placeholder: "public water / private well" },
       ],
     },
@@ -71,17 +71,22 @@ window.KINDLER = {
   // Phasen
   // ------------------------------------------------------------------
   phases: [
-    { id: "jetzt", title: "Jetzt bis zum Visumstermin", subtitle: "Ihr seid als Touristen hier: vorbereiten, nicht verkaufen.", until: "bis 11.11.2026" },
+    { id: "jetzt", title: "Jetzt bis zum Visumstermin", subtitle: "Vorbereiten und gleich für Lamar County beantragen, aber nichts verkaufen. Was bis 11.11. nicht fertig ist, geht danach weiter.", until: "bis 11.11.2026" },
     { id: "visum", title: "Visumstermin in Frankfurt", subtitle: "Donnerstag, 12.11.2026", until: "12.11.2026" },
-    { id: "ankunft", title: "Nach der Einreise mit E-2", subtitle: "Ab jetzt dürft ihr für eure Firma arbeiten.", until: "erste 4 Wochen" },
-    { id: "genehmigung", title: "Genehmigung für den Food Truck", subtitle: "Lamar County Environmental Health", until: "danach" },
+    { id: "ankunft", title: "Nach der Einreise mit E-2", subtitle: "Ab jetzt dürft ihr für eure Firma arbeiten. Firmensitz zieht auf die Tom Bell Road.", until: "erste 4 Wochen" },
+    { id: "genehmigung", title: "Inspektion und Genehmigung", subtitle: "Environmental Health (Lamar und Upson County)", until: "danach" },
     { id: "betrieb", title: "Laufender Betrieb", subtitle: "Was regelmäßig zu tun ist", until: "dauerhaft" },
   ],
 
   // Wichtige Stellen (werden in den Schritten wiederverwendet)
   places: {
+    upsonEH: {
+      name: "Upson County Environmental Health, Thomaston (Adresse aus eurem Vorab-Formular)",
+      address: "314 E Lee St, Thomaston, GA 30286",
+      url: "https://dph.georgia.gov/environmental-health",
+    },
     lamarEH: {
-      name: "Lamar County Environmental Health (Gesundheitsamt, Abteilung Umwelt/Lebensmittel)",
+      name: "Lamar County Environmental Health, Barnesville (Lamar und Upson teilen sich das Gesundheitsamt)",
       address: "100 Academy Drive, Barnesville, GA 30204",
       phone: "770-358-1483",
       ext: "Durchwahl 2",
@@ -150,14 +155,16 @@ window.KINDLER = {
           body:
             "Dear {{attorneyName}},\n\n" +
             "Our E-2 interview at the Frankfurt consulate is on November 12, 2026. We are currently in Georgia as visitors. Before then, we would like to confirm the following:\n\n" +
-            "1. Which of these activities are allowed for us as visitors: meeting with the county zoning and health offices, signing a lease for our base of operation, buying the food truck and equipment, taking the food safety manager course and exam?\n" +
+            "1. Which of these activities are allowed for us as visitors: meeting with the county zoning and health offices, finishing the separate kitchen on our property, buying the food truck and equipment, taking the food safety manager course and exam?\n" +
             "2. Is there anything we must NOT do before the visa is issued?\n" +
             "3. Can the interview be held in German, or should we prepare in English?\n" +
             "4. Which original documents should we bring to the interview?\n" +
-            "5. After approval, how long will the consulate keep our passports, and can we travel back to the US right away?\n\n" +
+            "5. After approval, how long will the consulate keep our passports, and can we travel back to the US right away?\n" +
+            "6. The health department suggested we apply for our food service permit and county business license in Lamar County now. Is that fine before the visa is issued?\n" +
+            "7. After the interview we will move our business address from Pike County to our property on Tom Bell Road in Lamar County. Does this affect the visa?\n\n" +
             "Thank you,\n{{owner1}}\n{{businessName}}\n{{phone}}",
           de:
-            "Übersetzung: Wir fragen, (1) welche Tätigkeiten als Besucher erlaubt sind (Termine bei Zoning und Gesundheitsamt, Mietvertrag für die Base of Operation, Kauf von Truck und Ausstattung, Food-Safety-Kurs und Prüfung), (2) was wir vor dem Visum auf keinen Fall tun dürfen, (3) ob das Gespräch auf Deutsch geführt werden kann, (4) welche Originale wir mitbringen sollen, (5) wie lange das Konsulat die Pässe behält und ob wir direkt zurückfliegen können.",
+            "Übersetzung: Wir fragen, (1) welche Tätigkeiten als Besucher erlaubt sind (Termine bei Zoning und Gesundheitsamt, Fertigstellung der Separat-Küche, Kauf von Truck und Ausstattung, Food-Safety-Kurs und Prüfung), (2) was wir vor dem Visum auf keinen Fall tun dürfen, (3) ob das Gespräch auf Deutsch geführt werden kann, (4) welche Originale wir mitbringen sollen, (5) wie lange das Konsulat die Pässe behält und ob wir direkt zurückfliegen können, (6) ob wir Gesundheitsgenehmigung und Gewerbeschein in Lamar County schon jetzt beantragen dürfen, wie es das Gesundheitsamt vorschlägt, (7) ob der Umzug des Firmensitzes von Pike County auf die Tom Bell Road das Visum betrifft.",
         },
       ],
       sources: [
@@ -178,7 +185,7 @@ window.KINDLER = {
         "Passfoto 5 × 5 cm (Reserve, falls das Foto im DS-160 abgelehnt wurde)",
         "Kopie des eingereichten E-Visa-Pakets (DS-156E, Businessplan, Nachweise), so wie euer Anwalt es eingereicht hat",
         "Gründungsunterlagen der Firma und EIN-Bestätigung (IRS-Brief)",
-        "Nachweise der Investition: Kaufvertrag Truck, Rechnungen für Ausstattung, Mietvertrag oder Vereinbarung für den Standort, Kontoauszüge der Firma",
+        "Nachweise der Investition: Kaufvertrag Truck, Rechnungen für Ausstattung und die Separat-Küche, Nachweis zum Grundstück Tom Bell Road, Kontoauszüge der Firma",
         "Nachweise zur Herkunft des Geldes: Kontoauszüge, Verkaufsverträge, Steuerbescheide aus Deutschland",
         "Heiratsurkunde (falls ihr verheiratet seid und beide mitreist)",
       ],
@@ -313,14 +320,15 @@ window.KINDLER = {
     {
       id: "gesundheitsamt-erstgespraech",
       phase: "jetzt",
-      title: "Erstes Telefonat mit Lamar County Environmental Health",
-      summary: "Fragt, wie der Ablauf in Lamar County genau ist. Jedes County hat eigene Zusatzformulare.",
-      why: "Das Vorab-Formular, das ihr habt, stammt aus Upson County. Für eure Base of Operation in Lamar County ist Lamar zuständig.",
-      where: [{ ref: "lamarEH" }],
+      title: "Offene Fragen mit dem Gesundheitsamt klären",
+      summary: "Die Sachbearbeiterin hat geraten, gleich alles für Lamar County zu beantragen. Klärt jetzt noch die Punkte, die den Antrag aufhalten könnten.",
+      why: "Lamar und Upson County teilen sich das Gesundheitsamt. Das Vorab-Formular aus Upson, das ihr habt, gilt deshalb auch für euch. Separat-Küche und Base of Operation liegen auf eurem Grundstück an der Tom Bell Road in Lamar County.",
+      where: [{ ref: "lamarEH" }, { ref: "upsonEH" }],
       todo: [
-        "Anrufen (Skript unten) und Antworten im Notizfeld festhalten",
-        "Um alle Formulare per E-Mail bitten",
-        "Termin für ein persönliches Gespräch vereinbaren, falls angeboten",
+        "Name der Sachbearbeiterin im Notizfeld festhalten",
+        "Anrufen oder vorbeigehen (Skript unten), Antworten notieren",
+        "Fragen: Wo wird abgegeben, Barnesville oder Thomaston?",
+        "Antworten zur Separat-Küche auf dem Wohngrundstück per E-Mail bestätigen lassen",
       ],
       scripts: [
         {
@@ -328,28 +336,35 @@ window.KINDLER = {
           kind: "call",
           to: "770-358-1483, Durchwahl 2",
           lines: [
-            { en: "Hello, my name is {{owner1}}. I am starting a food truck business called {{businessName}}. Our base of operation will be in Lamar County.", de: "Hallo, mein Name ist … Ich gründe einen Food Truck namens … Unsere Base of Operation wird in Lamar County sein." },
+            { en: "Hello, my name is {{owner1}}. We spoke before about our food truck, {{businessName}}. Our base of operation and separate kitchen are on our property at {{baseStreet}} in Lamar County.", de: "Hallo, mein Name ist … Wir haben schon über unseren Food Truck gesprochen. Base of Operation und Separat-Küche sind auf unserem Grundstück an der … in Lamar County." },
             { en: "My English is not perfect, so please speak slowly. Thank you.", de: "Mein Englisch ist nicht perfekt, bitte sprechen Sie langsam. Danke." },
-            { en: "Do you have a pre-application or checklist for mobile food units in Lamar County?", de: "Haben Sie ein Vorab-Formular oder eine Checkliste für Food Trucks in Lamar County?" },
-            { en: "How much is the plan review fee, and how can I pay?", de: "Wie hoch ist die Gebühr für die Prüfung der Pläne, und wie kann ich bezahlen?" },
+            { en: "The kitchen is a separate building on the same property as our home. Is that acceptable as a base of operation?", de: "Die Küche ist ein eigenes Gebäude auf demselben Grundstück wie unser Wohnhaus. Ist das als Base of Operation in Ordnung?" },
+            { en: "Do we use the pre-application form from Upson County, and do we submit everything in Thomaston or in Barnesville?", de: "Nutzen wir das Vorab-Formular aus Upson County, und geben wir alles in Thomaston oder in Barnesville ab?" },
+            { en: "Can we submit the application before our visa interview on November 12?", de: "Können wir den Antrag schon vor unserem Visumstermin am 12. November einreichen?" },
+            { en: "Is the plan review fee still 250 dollars, and how can I pay?", de: "Ist die Gebühr für die Planprüfung noch 250 Dollar, und wie kann ich bezahlen?" },
             { en: "Which food safety manager certificates do you accept?", de: "Welche Food-Safety-Manager-Zertifikate akzeptieren Sie?" },
             { en: "We are German citizens. We will have E-2 visas. Which documents do you accept for the verification of lawful presence?", de: "Wir sind deutsche Staatsbürger und bekommen E-2-Visa. Welche Dokumente akzeptieren Sie für den Nachweis des legalen Aufenthalts?" },
-            { en: "If our base uses a private well: which water test do you need, and where do we order it?", de: "Falls unser Standort einen eigenen Brunnen hat: Welchen Wassertest brauchen Sie, und wo bestellen wir ihn?" },
-            { en: "Could you please email me all forms? My email is {{email}}.", de: "Können Sie mir bitte alle Formulare per E-Mail schicken? Meine E-Mail ist …" },
+            { en: "Our business address will change from Pike County to {{baseStreet}} after the visa interview. Which address should we use on the application now?", de: "Unsere Firmenadresse ändert sich nach dem Visumstermin von Pike County auf … Welche Adresse sollen wir jetzt im Antrag angeben?" },
+            { en: "If our property uses a private well: is the test in the pre-application the right one?", de: "Falls unser Grundstück einen eigenen Brunnen hat: Ist der Test aus dem Vorab-Formular der richtige?" },
+            { en: "Could you please email me the DPH application and all other forms? My email is {{email}}.", de: "Können Sie mir bitte den DPH-Antrag und alle anderen Formulare per E-Mail schicken? Meine E-Mail ist …" },
             { en: "May I have your name, in case I have more questions?", de: "Darf ich Ihren Namen haben, falls ich noch Fragen habe?" },
           ],
         },
       ],
       emails: [
         {
-          title: "Nachfass-E-Mail nach dem Telefonat",
+          title: "Bestätigung per E-Mail nach dem Gespräch",
           to: "",
-          subject: "{{businessName}}: mobile food unit permit, base of operation in Lamar County",
+          subject: "{{businessName}}: mobile food unit permit, base of operation at {{baseStreet}}",
           body:
-            "Hello,\n\nThank you for speaking with me today. As discussed, we are planning a mobile food unit called {{unitName}} with our base of operation at {{baseStreet}}, {{baseCity}}, GA {{baseZip}}.\n\n" +
-            "Could you please send us:\n- all forms for a new mobile food unit permit in Lamar County\n- the current plan review fee\n- any checklist for the base of operation\n\n" +
-            "Our contact details:\n{{owner1}}, {{businessName}}\n{{street}}, {{city}}, {{state}} {{zip}}\n{{phone}}\n{{email}}\n\nThank you very much.",
-          de: "Übersetzung: Danke für das Gespräch. Bitte schicken Sie uns alle Formulare für eine neue Mobile-Food-Unit-Genehmigung in Lamar County, die aktuelle Gebühr und eine Checkliste für die Base of Operation. Die E-Mail-Adresse des Amts bekommt ihr am Telefon.",
+            "Hello,\n\nThank you for your help today. To make sure we understood everything correctly, here is a short summary:\n\n" +
+            "- Our base of operation and separate kitchen are a separate building on our property at {{baseStreet}}, {{baseCity}}, GA {{baseZip}} (Lamar County). This is acceptable as a base of operation.\n" +
+            "- We will use the mobile food unit pre-application and submit everything at [OFFICE].\n" +
+            "- We can submit before our visa interview on November 12.\n" +
+            "- The plan review fee is [AMOUNT].\n\n" +
+            "Please let us know if anything is not correct. Could you also send us the DPH application and any other forms we need?\n\n" +
+            "Thank you very much,\n{{owner1}}, {{businessName}}\n{{phone}}\n{{email}}",
+          de: "Übersetzung: Danke für Ihre Hilfe. Kurze Zusammenfassung, damit wir alles richtig verstanden haben: Die Separat-Küche auf unserem Grundstück ist als Base of Operation in Ordnung; wir nutzen das Vorab-Formular und geben in [BÜRO] ab; wir dürfen vor dem 12. November einreichen; die Gebühr ist [BETRAG]. Bitte korrigieren Sie uns, falls etwas nicht stimmt. Vor dem Senden die Punkte in eckigen Klammern ersetzen und alles streichen, was die Sachbearbeiterin anders gesagt hat.",
         },
       ],
       sources: [
@@ -359,33 +374,38 @@ window.KINDLER = {
     {
       id: "standort-zoning",
       phase: "jetzt",
-      title: "Base of Operation: Zoning-Freigabe beim Bauamt holen",
-      summary: "Das Bauamt muss bestätigen, dass ihr am Standort einen Food-Truck-Stützpunkt betreiben dürft.",
-      why: "Ohne Freigabe des Standorts gibt es keine Genehmigung vom Gesundheitsamt. Der Stützpunkt darf nicht euer Wohnhaus sein und nicht mit einer anderen Firma geteilt werden.",
+      title: "Zoning-Freigabe für das Grundstück Tom Bell Road holen",
+      summary: "Das Bauamt muss im Vorab-Formular unterschreiben, dass ihr auf eurem Grundstück eine gewerbliche Küche und den Truck-Stützpunkt betreiben dürft.",
+      why: "Ohne diese Unterschrift wird der Antrag abgelehnt („NO EXCEPTIONS“). Weil das Grundstück auch euer Wohnsitz ist, prüft das Bauamt, ob ein Gewerbe dort erlaubt ist. Der Stützpunkt darf nicht mit einer anderen Firma geteilt werden.",
       where: [{ ref: "lamarPlanning" }],
       todo: [
-        "Klären, ob der Standort im County („unincorporated“) oder in einer Stadt liegt (z. B. Barnesville). Liegt er in einer Stadt, ist das Bauamt der Stadt zuständig.",
+        "Klären, ob das Grundstück im County („unincorporated“) oder in einer Stadt liegt. Liegt es in einer Stadt (z. B. Milner oder Barnesville), ist das Bauamt der Stadt zuständig.",
         "E-Mail an das Bauamt schicken (Entwurf unten)",
-        "Schriftliche Bestätigung (Brief, E-Mail oder unterschriebenes Formular) aufbewahren",
+        "Mit dem Vorab-Formular hingehen: die Seite „Step 1, Zoning & Base of Operation“ muss die Beamtin ausfüllen und unterschreiben",
+        "Antrag für den Gewerbeschein (occupation tax) mitnehmen (nächster Schritt)",
       ],
       bring: [
         "Adresse und, wenn bekannt, Flurstück-Nummer (Parcel ID) des Standorts",
-        "Kurze Beschreibung, was dort passiert: Truck abstellen, Wasser auffüllen, Abwasser entleeren, reinigen, Lager",
-        "Wenn ihr nicht Eigentümer seid: Name und Kontakt des Eigentümers",
+        "Kurze Beschreibung, was dort passiert: Separat-Küche für die Vorbereitung, Truck abstellen, Wasser auffüllen, Abwasser entleeren, reinigen, Lager",
+        "Das Vorab-Formular (Seite „Step 1“)",
+        "Grundsteuerbescheid oder Kaufvertrag als Nachweis, dass euch das Grundstück gehört",
       ],
       emails: [
         {
           title: "Zoning-Anfrage an Lamar County",
           to: "abuice@lamarcountyga.com",
-          subject: "Zoning question: base of operation for a food truck at {{baseStreet}}",
+          subject: "Zoning approval: food truck base of operation at {{baseStreet}}",
           body:
-            "Dear Ms. Buice,\n\nWe are starting a food truck business, {{businessName}}. We would like to use the property at {{baseStreet}}, {{baseCity}}, GA {{baseZip}} (parcel {{baseParcel}}) as the base of operation for our food truck.\n\n" +
-            "At this location we will park the truck, fill fresh water, empty wastewater at a dump station, clean the truck and store supplies. We will not sell food at this location.\n\n" +
-            "The Georgia health department requires written approval of the location from the local zoning authority.\n\n" +
-            "1. Is this use allowed at this property under its current zoning?\n2. Can you sign the zoning approval for our health department application?\n3. Do we need any permit or business license from your office for this location?\n\n" +
-            "Our English is limited, so email is easiest for us. Thank you very much.\n\n{{owner1}}\n{{businessName}}\n{{street}}, {{city}}, {{state}} {{zip}}\n{{phone}}",
-          de: "Übersetzung: Wir möchten das Grundstück als Base of Operation nutzen (Truck abstellen, Wasser auffüllen, Abwasser entleeren, reinigen, lagern; kein Verkauf). Das Gesundheitsamt verlangt eine schriftliche Freigabe. Fragen: (1) Ist das nach der aktuellen Bebauungsart erlaubt? (2) Können Sie die Freigabe unterschreiben? (3) Brauchen wir eine Genehmigung oder einen Gewerbeschein von Ihnen?",
+            "Dear Ms. Buice,\n\nWe are starting a food truck business, {{businessName}}. We own the property at {{baseStreet}}, {{baseCity}}, GA {{baseZip}} (parcel {{baseParcel}}). We would like to use it as the base of operation for our food truck.\n\n" +
+            "On the property there is a separate kitchen building, apart from our home. We will use it to prepare food for the truck. We will also park the truck there, fill fresh water, empty wastewater at a dump station, clean the truck and store supplies. We will not sell food or serve customers at this location.\n\n" +
+            "The health department requires the local zoning office to approve the location on their pre-application form.\n\n" +
+            "1. Is this use allowed on our property under its current zoning?\n2. Can you sign the zoning section of the health department pre-application? When can we come by?\n3. Do we need a business license (occupation tax certificate) or any other permit from your office for this location?\n\n" +
+            "Our English is limited, so email is easiest for us. Thank you very much.\n\n{{owner1}}\n{{businessName}}\n{{phone}}\n{{email}}",
+          de: "Übersetzung: Uns gehört das Grundstück. Darauf steht eine Separat-Küche, getrennt vom Wohnhaus. Dort wollen wir für den Truck vorbereiten, den Truck abstellen, Wasser auffüllen, Abwasser entleeren, reinigen und lagern. Verkauf und Kunden gibt es dort nicht. Fragen: (1) Ist das nach der aktuellen Bebauungsart erlaubt? (2) Können Sie den Zoning-Teil des Vorab-Formulars unterschreiben, und wann können wir vorbeikommen? (3) Brauchen wir einen Gewerbeschein oder eine andere Genehmigung?",
         },
+      ],
+      cautions: [
+        "Die Regeln in Georgia verbieten einen Lebensmittelbetrieb in der Wohnung. Eine getrennte Küche auf dem Grundstück kann trotzdem in Ordnung sein. Lasst euch das vom Gesundheitsamt und vom Bauamt schriftlich bestätigen, bevor ihr Geld in den Umbau steckt.",
       ],
       sources: [
         { title: "Lamar County Planning and Community Development", url: "https://www.lamarcountyga.com/departments/buildingzoning-department/" },
@@ -393,42 +413,87 @@ window.KINDLER = {
       ],
     },
     {
-      id: "standort-eigentuemer",
+      id: "gewerbeschein-lamar",
       phase: "jetzt",
-      title: "Schriftliche Erlaubnis des Grundstückseigentümers",
-      summary: "Gehört euch das Grundstück nicht, braucht ihr eine unterschriebene, oft notariell beglaubigte Erlaubnis.",
-      why: "Das Gesundheitsamt verlangt einen „Property Use Agreement“. Der Antrag des Staates listet ihn als Pflichtanlage.",
-      todo: [
-        "Formular „Property Use Agreement“ von dph.georgia.gov/environmental-health/food-service herunterladen (oder das Formular, das Lamar County euch schickt)",
-        "Eigentümer anschreiben (Entwurf unten)",
-        "Gemeinsam bei einem Notar unterschreiben (Banken und UPS-Läden bieten oft Notare an, meist günstig oder kostenlos für Kunden)",
-        "Original aufbewahren, Kopie für den Antrag",
+      title: "Gewerbeschein (Occupation Tax Certificate) in Lamar County",
+      summary: "Für den Stützpunkt auf eurem Grundstück in Lamar County. Das Vorab-Formular verlangt, dass ihr den Antrag beim Bauamt holt. Jährlich bis 31. März zu erneuern.",
+      where: [{ ref: "lamarPlanning" }],
+      bring: [
+        "Ausgefüllter Antrag „LC Business License“ (auf lamarcountyga.com)",
+        "Lichtbildausweis (Georgia-Führerschein oder Pass)",
+        "Kopie staatlicher Lizenzen, falls vorhanden",
+        "Notariell beglaubigte Erklärung zum Aufenthaltsstatus",
+        "Passender Betrag in bar oder Scheck",
       ],
-      emails: [
+      scripts: [
         {
-          title: "Bitte an den Eigentümer",
-          to: "{{baseOwnerEmail}}",
-          subject: "Property use agreement for our food truck base",
-          body:
-            "Dear {{baseOwner}},\n\nThank you again for letting us use your property at {{baseStreet}}, {{baseCity}} as the base of operation for our food truck, {{businessName}}.\n\n" +
-            "The health department needs a signed property use agreement from the property owner. In some cases it must be signed in front of a notary. I have attached the form.\n\n" +
-            "Could we meet at a notary together? Many banks offer this service. Which days and times work for you?\n\n" +
-            "Thank you very much,\n{{owner1}}\n{{phone}}",
-          de: "Übersetzung: Danke, dass wir Ihr Grundstück als Stützpunkt nutzen dürfen. Das Gesundheitsamt braucht eine unterschriebene Nutzungsvereinbarung, teils vor einem Notar. Formular anbei. Können wir uns gemeinsam bei einem Notar treffen? Welche Tage passen Ihnen?",
+          title: "Am Schalter",
+          kind: "inperson",
+          lines: [
+            { en: "Hello, I would like to apply for a business license for our food truck base of operation at {{baseStreet}}.", de: "Hallo, ich möchte einen Gewerbeschein für den Stützpunkt unseres Food Trucks beantragen." },
+            { en: "The zoning for this location was approved by your office.", de: "Die Zoning-Freigabe für den Standort hat Ihr Amt schon erteilt." },
+            { en: "How much is the fee, and can I pay by check?", de: "Wie hoch ist die Gebühr, und kann ich mit Scheck zahlen?" },
+          ],
         },
       ],
       forms: [
         {
-          title: "Property Use Agreement (Ausfüllhilfe)",
+          title: "Lamar County Business License (Ausfüllhilfe)",
+          url: "https://www.lamarcountyga.com/?p=918",
+          note: "Typische Angaben. Das Formular selbst kann andere Bezeichnungen verwenden.",
+          fields: [
+            { label: "Business name", value: "{{businessName}}" },
+            { label: "Business location address", value: "{{baseStreet}}, {{baseCity}}, GA {{baseZip}}" },
+            { label: "Mailing address", value: "{{street}}, {{city}}, {{state}} {{zip}}" },
+            { label: "Owner(s)", value: "{{owner1}}; {{owner2}}" },
+            { label: "Type of business", value: "{{legalForm}}" },
+            { label: "Federal ID (EIN)", value: "{{ein}}" },
+            { label: "Description of business", value: "Base of operation for a mobile food unit (food truck). No food sales at this location." },
+            { label: "Phone", value: "{{phone}}" },
+            { label: "Email", value: "{{email}}" },
+          ],
+        },
+      ],
+      sources: [
+        { title: "Lamar County: Business Licenses", url: "https://www.lamarcountyga.com/?p=918" },
+      ],
+    },
+    {
+      id: "standort-eigentuemer",
+      phase: "jetzt",
+      title: "Eigentum am Grundstück nachweisen",
+      summary: "Das Grundstück gehört euch. Klärt nur, ob es auf euch persönlich oder auf die Firma läuft, denn dann braucht ihr eventuell trotzdem eine Erlaubnis.",
+      why: "Das Vorab-Formular verlangt eine notariell beglaubigte Erlaubnis, wenn der Antragsteller (die Firma) nicht Eigentümer des Grundstücks ist. Gehört das Grundstück euch privat und der Antrag läuft auf eure LLC, gelten die Firma und ihr rechtlich als verschiedene Personen.",
+      todo: [
+        "Nachsehen, wer im Kaufvertrag oder Grundsteuerbescheid als Eigentümer steht ({{baseOwner}})",
+        "Steht dort die Firma: nichts weiter nötig, Kopie des Nachweises für den Antrag",
+        "Steht dort ihr privat: beim Gesundheitsamt fragen, ob ihr die Erlaubnis (Affidavit / Property Use Agreement) an eure eigene Firma unterschreiben sollt",
+        "Falls ja: Formular bei einem Notar unterschreiben (Banken und UPS-Läden bieten Notare an)",
+      ],
+      scripts: [
+        {
+          title: "Frage an das Gesundheitsamt",
+          kind: "call",
+          to: "Environmental Health",
+          lines: [
+            { en: "The property belongs to us personally, but the permit will be in the name of our company, {{businessName}}. Do we need to sign the property owner affidavit for our own company?", de: "Das Grundstück gehört uns privat, die Genehmigung läuft aber auf unsere Firma. Müssen wir die Eigentümer-Erklärung für unsere eigene Firma unterschreiben?" },
+            { en: "Does it have to be notarized?", de: "Muss sie notariell beglaubigt werden?" },
+          ],
+        },
+      ],
+      forms: [
+        {
+          title: "Property Owner Affidavit / Property Use Agreement (Ausfüllhilfe)",
           url: "https://dph.georgia.gov/environmental-health/food-service",
-          note: "Das genaue Formular kann je nach County abweichen. Diese Angaben werden typischerweise verlangt.",
+          note: "Nur nötig, wenn das Amt es verlangt. Erst vor dem Notar unterschreiben.",
           fields: [
             { label: "Property owner name", value: "{{baseOwner}}" },
             { label: "Property address", value: "{{baseStreet}}, {{baseCity}}, GA {{baseZip}}" },
+            { label: "Parcel ID", value: "{{baseParcel}}" },
             { label: "Mobile unit / business name", value: "{{unitName}}" },
-            { label: "Permit holder", value: "{{owner1}}, {{businessName}}" },
+            { label: "Permit holder", value: "{{businessName}}" },
             { label: "Permit holder phone", value: "{{phone}}" },
-            { label: "Use of property", value: "Base of operation for a mobile food service unit: parking, fresh water supply, wastewater disposal, cleaning and storage." },
+            { label: "Use of property", value: "Base of operation for a mobile food service unit: separate kitchen, parking, fresh water supply, wastewater disposal, cleaning and storage." },
           ],
         },
       ],
@@ -442,17 +507,17 @@ window.KINDLER = {
       todo: [
         "Klären: öffentlicher Anschluss oder eigener Brunnen? ({{baseWater}})",
         "Bei Brunnen: beim Gesundheitsamt fragen, welcher Test genau verlangt wird",
-        "Bei Brunnen: Test über das UGA Extension Office in Lamar County bestellen und Ergebnis abwarten",
+        "Bei Brunnen: Test über das Extension Office bestellen (laut Vorab-Formular 706-647-8989) und Ergebnis abwarten",
         "Ergebnis (muss „satisfactory“ sein) kopieren",
       ],
       prepare: [
-        "In Upson County wird ein Bakterientest (Coliform und Fecal Coliform) plus eine vollständige Analyse (EPD-Test W-33) verlangt. Lamar County verlangt vermutlich Ähnliches. Fragt nach.",
+        "Verlangt wird laut Vorab-Formular ein Bakterientest (Coliform und Fecal Coliform) plus die vollständige Analyse EPD-Test W-33. Ist das Ergebnis nicht in Ordnung, müsst ihr nachbessern und neu testen.",
       ],
       scripts: [
         {
           title: "Anruf beim Extension Office (nur bei Brunnen)",
           kind: "call",
-          to: "UGA Extension Lamar County (Nummer über extension.uga.edu, County „Lamar“)",
+          to: "Extension Office, 706-647-8989 (Nummer aus dem Vorab-Formular)",
           lines: [
             { en: "Hello, I need a complete well water test for a food service permit from the health department.", de: "Hallo, ich brauche einen vollständigen Brunnenwassertest für eine Genehmigung des Gesundheitsamts." },
             { en: "I need a bacteria test for coliform and fecal coliform, and the full EPD W-33 analysis.", de: "Ich brauche einen Bakterientest (Coliform und Fecal Coliform) und die vollständige EPD-W-33-Analyse." },
@@ -553,6 +618,158 @@ window.KINDLER = {
         { title: "Regel 511-6-1-.08 Mobile Units", url: "https://www.law.cornell.edu/regulations/georgia/Ga-Comp-R-Regs-R-511-6-1-.08" },
       ],
     },
+    {
+      id: "vorab-antrag",
+      phase: "jetzt",
+      title: "Vorab-Formular (Pre-Application) vollständig machen",
+      summary: "Erst wenn jeder Teil erledigt und unterschrieben ist, nimmt das Gesundheitsamt den eigentlichen Antrag an.",
+      why: "Im Formular steht: Wer einen Teil nicht erfüllt, bekommt keine Genehmigung. Unvollständige Abgaben werden abgelehnt.",
+      where: [{ ref: "lamarEH" }, { ref: "upsonEH" }],
+      todo: [
+        "Checkliste: Regelwerk 511-6-1 gelesen (unterschreiben)",
+        "Checkliste: Design-Handbuch gelesen (unterschreiben)",
+        "Step 1 Zoning: eure Unterschrift plus Unterschrift und Datum der Zoning-Beamtin, „Location Approved: YES“",
+        "Step 1: Eigentümer-Erklärung, falls das Amt sie verlangt (siehe „Eigentum nachweisen“)",
+        "Step 2 Wasser: Unterschrift und Art des Wassers ankreuzen; bei Brunnen Testergebnis beilegen",
+        "Step 3: 2 Fotos der fertigen Dump Station oder des Ausgussbeckens",
+        "Step 4: Kopie des Vertrags für die Altöl-Abholung (nur mit Fritteuse oder Grillplatte)",
+        "Jede Seite: Unterschrift und Datum geprüft",
+        "Kopie von allem machen",
+      ],
+      prepare: [
+        "Pflicht auf dem Truck: 3-Kammer-Spülbecken und Handwaschbecken, je nach Speisen auch Gemüse- und Fleischbecken.",
+        "Pflicht am Stützpunkt: Dump Station und/oder Ausgussbecken (mop sink) und ein Trinkwasserhahn, alles am selben Ort, an dem der Truck steht.",
+        "Lager und Kühlschränke am Stützpunkt nur für den Truck, keine privaten Lebensmittel. Spülbecken im Wohnhaus zählen nicht.",
+      ],
+      forms: [
+        {
+          title: "Mobile Food Units Pre-Application (Ausfüllhilfe)",
+          note: "Das Formular habt ihr schon (aus Thomaston). Die Felder für die Beamten bleiben leer.",
+          fields: [
+            { label: "Signature / Date (Checkliste und Step 1, 2)", value: "", hint: "Selbst unterschreiben, Datum im US-Format: 10/20/2026" },
+            { label: "Location Approved for Business? / City/County Official", value: "", hint: "Nur das Bauamt füllt das aus" },
+            { label: "Which type of Water Supply will be used?", value: "{{baseWater}}", hint: "„Public Water City or County Supply“ oder „Private Well“ ankreuzen" },
+            { label: "Well water test (nur bei Brunnen)", value: "Total well analysis: bacteria (coliform and fecal coliform) and EPD test W-33", hint: "Laut Formular über das Extension Office: 706-647-8989" },
+            { label: "2 photos of completed dump station", value: "", hint: "Ausdrucken und beilegen" },
+            { label: "Oil collection service agreement", value: "", hint: "Kopie beilegen, falls Fritteuse oder Grillplatte" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "notar-save",
+      phase: "jetzt",
+      title: "Nachweis des legalen Aufenthalts notariell beglaubigen lassen",
+      summary: "Georgia verlangt für Gewerbeschein und Lebensmittelgenehmigung eine eidesstattliche Erklärung zum Aufenthaltsstatus, vor einem Notar unterschrieben.",
+      why: "Der staatliche Antrag für Mobile Food Units verlangt ausdrücklich eine „Original, notarized Verification of Residency“ mit Kopie eines anerkannten Ausweisdokuments.",
+      todo: [
+        "Formular vom Gesundheitsamt und vom Bauamt geben lassen (jedes Amt hat oft ein eigenes)",
+        "Bei einem Notar unterschreiben (Bank oder UPS-Laden)",
+        "Kopie von Pass plus I-94 anheften",
+        "Je ein Original für Gesundheitsamt und Gewerbeschein",
+      ],
+      forms: [
+        {
+          title: "Verification of Lawful Presence / Residency (Ausfüllhilfe)",
+          url: "https://dph.georgia.gov/sites/dph.georgia.gov/files/VerificationLawfulResidency061814.pdf",
+          note: "Nicht vor dem Notar ausfüllen, nur unterschreiben, wenn er dabei ist.",
+          fields: [
+            { label: "Status (Ankreuzen)", value: "I am a qualified alien or non-immigrant under the Federal Immigration and Nationality Act" },
+            { label: "Alien number", value: "", hint: "Habt ihr keine Alien-Nummer, fragt das Amt, ob die I-94-Nummer akzeptiert wird" },
+            { label: "Secure and verifiable document", value: "Unexpired foreign passport with Form I-94" },
+            { label: "Printed name", value: "{{owner1}}" },
+          ],
+        },
+      ],
+      cautions: [
+        "Für Nicht-Staatsbürger verlangt das Formular eine „Alien Number“. Viele E-2-Inhaber haben keine. Fragt beim Amt nach, was ihr stattdessen eintragen sollt.",
+      ],
+    },
+    {
+      id: "antrag-dph",
+      phase: "jetzt",
+      title: "Antrag „Mobile Food Unit Permit“ ausfüllen",
+      summary: "Der eigentliche Antrag beim Gesundheitsamt. Erst einreichen, wenn alle Anlagen vollständig sind.",
+      why: "Fehlende Anlagen verzögern die Prüfung. Das Amt bearbeitet unvollständige Anträge oft gar nicht.",
+      todo: [
+        "Vorab-Formular ist vollständig (vorheriger Schritt)",
+        "Formular herunterladen (Link unten) oder vom Gesundheitsamt geben lassen",
+        "Mit der Ausfüllhilfe unten ausfüllen",
+        "Anlage: Speisekarte",
+        "Anlage: mindestens 2 Fotos vom Truck (innen und außen)",
+        "Anlage: Grundriss-Zeichnung mit allen Geräten",
+        "Anlage: Datenblätter aller Geräte",
+        "Anlage: notariell beglaubigte Erklärung zum Aufenthaltsstatus mit Kopie von Pass und I-94",
+        "Anlage: Nachweise anderer Ämter (Zoning-Freigabe, ggf. Feuerwehr)",
+        "Anlage: Mobile Food Unit Location Form",
+        "Anlage: Toilet Use Agreement (Toilette in der Nähe der Verkaufsorte)",
+        "Anlage: Eigentümer-Erklärung, falls das Amt sie verlangt",
+        "Anlage: CFSM-Zertifikat (Kopie)",
+        "Anlage: Wassertest (nur bei Brunnen), Fotos der Dump Station, Altöl-Vertrag",
+        "Alles kopieren, bevor ihr es abgebt",
+      ],
+      forms: [
+        {
+          title: "DPH Mobile Food Unit Permit Application (Ausfüllhilfe)",
+          url: "https://dph.georgia.gov/document/document/dph-mobile-food-unit-permit-application-pdf/download",
+          note: "Felder in der Reihenfolge des Formulars. Fragen zur Technik beantwortet ihr mit den Datenblättern des Trucks.",
+          fields: [
+            { label: "Reason for application", value: "New Application" },
+            { label: "Name of Unit", value: "{{unitName}}" },
+            { label: "Unit Mailing Address", value: "{{street}}, {{city}}, {{state}} {{zip}}" },
+            { label: "Mobile Unit Vehicle License # and VIN", value: "{{unitPlate}} / {{unitVin}}" },
+            { label: "Name of Base of Operation", value: "{{baseName}}" },
+            { label: "Base of Operation Owner", value: "{{baseOwner}}" },
+            { label: "Base of Operation Permit #", value: "", hint: "Leer lassen, falls noch keine Nummer" },
+            { label: "County", value: "Lamar" },
+            { label: "Base of Operation Mailing Address", value: "{{baseStreet}}, {{baseCity}}, GA {{baseZip}}" },
+            { label: "Unit Manager", value: "{{cfsmName}}" },
+            { label: "Unit Manager Email / Phone", value: "{{email}} / {{phone}}" },
+            { label: "Unit Manager's Supervisor", value: "{{owner1}}" },
+            { label: "Billing Contact Name", value: "{{owner1}}" },
+            { label: "Billing Address", value: "{{street}}, {{city}}, {{state}} {{zip}}" },
+            { label: "Billing Contact Email / Phone", value: "{{email}} / {{phone}}" },
+            { label: "Business Ownership Type", value: "{{legalForm}}" },
+            { label: "Owners and officers", value: "{{owner1}} ({{owner1Title}}); {{owner2}} ({{owner2Title}}), {{street}}, {{city}}, {{state}} {{zip}}, {{phone}}" },
+            { label: "Freshwater tank capacity", value: "{{freshTank}} gallons" },
+            { label: "Wastewater tank capacity (must be 15% larger)", value: "{{wasteTank}} gallons" },
+            { label: "Method for removing wastewater at the base", value: "Wastewater tank is drained daily into the dump station at the base of operation at {{baseStreet}}, {{baseCity}}. The tank is flushed with potable water from the base tap." },
+            { label: "Name of Owner or Authorized Agent (Print)", value: "{{owner1}}" },
+            { label: "Title", value: "{{owner1Title}}" },
+            { label: "Address", value: "{{street}}, {{city}}, {{state}} {{zip}}" },
+            { label: "Phone #", value: "{{phone}}" },
+          ],
+        },
+      ],
+      sources: [
+        { title: "Georgia DPH: Antrag Mobile Food Unit (PDF)", url: "https://dph.georgia.gov/document/document/dph-mobile-food-unit-permit-application-pdf/download" },
+        { title: "Georgia DPH: Formulare (Location Form, Toilet Use, Property Use)", url: "https://dph.georgia.gov/environmental-health/food-service" },
+      ],
+    },
+    {
+      id: "antrag-einreichen",
+      phase: "jetzt",
+      title: "Antrag einreichen und Gebühr zahlen",
+      summary: "Persönlich bei Lamar County Environmental Health abgeben. Gebühr für die Planprüfung ist nicht erstattbar.",
+      where: [{ ref: "lamarEH" }, { ref: "upsonEH" }],
+      bring: [
+        "Kompletter Antrag mit allen Anlagen (Original)",
+        "Eine Kopie für euch",
+        "Zahlungsmittel für die Gebühr (laut Vorab-Formular 250 USD, nicht erstattbar)",
+      ],
+      scripts: [
+        {
+          title: "Am Schalter",
+          kind: "inperson",
+          lines: [
+            { en: "Hello, I would like to submit our application for a mobile food unit permit. Our base of operation is in Lamar County.", de: "Hallo, ich möchte unseren Antrag für eine Mobile-Food-Unit-Genehmigung abgeben. Unser Stützpunkt ist in Lamar County." },
+            { en: "Could you please check that everything is complete before I leave?", de: "Können Sie bitte prüfen, ob alles vollständig ist, bevor ich gehe?" },
+            { en: "How long does the plan review usually take?", de: "Wie lange dauert die Prüfung normalerweise?" },
+            { en: "What is the next step after the plan review? When can we schedule the inspection?", de: "Was ist der nächste Schritt nach der Prüfung? Wann können wir die Inspektion vereinbaren?" },
+          ],
+        },
+      ],
+    },
 
     // ================= PHASE: VISUM =================
     {
@@ -609,6 +826,43 @@ window.KINDLER = {
     },
 
     // ================= PHASE: ANKUNFT =================
+    {
+      id: "adresse-aendern",
+      phase: "ankunft",
+      title: "Firmensitz auf die Tom Bell Road ändern",
+      summary: "Nach dem Visumstermin zieht der Firmensitz von Pike County nach Lamar County. Die neue Adresse muss überall gemeldet werden.",
+      why: "Behörden schicken Bescheide an die gemeldete Adresse. Abweichende Adressen in Genehmigung, Steuer und Bank führen zu Rückfragen.",
+      todo: [
+        "Mit dem Anwalt klären, ob die Adressänderung das E-2-Visum betrifft (das Visum wurde mit der alten Adresse beantragt)",
+        "Georgia Secretary of State: Hauptsitz (principal office address) online ändern",
+        "IRS: Formular 8822-B (Change of Address, Business) per Post schicken",
+        "Georgia Tax Center: Adresse im Firmenkonto ändern",
+        "Bank, Versicherungen, Steuerberater informieren",
+        "Gesundheitsamt: neue Postadresse für die Genehmigung mitteilen",
+        "Falls ihr auch privat umzieht: SSA, DDS (innerhalb von 60 Tagen neue Adresse im Führerschein) und Zulassungsstelle informieren",
+        "In „Unsere Daten“ die Firmenadresse auf die neue Adresse ändern",
+      ],
+      forms: [
+        {
+          title: "IRS Form 8822-B (Ausfüllhilfe)",
+          url: "https://www.irs.gov/forms-pubs/about-form-8822-b",
+          fields: [
+            { label: "Check all boxes this change affects", value: "Business location; Employment, excise, income, and other business returns" },
+            { label: "Business name", value: "{{businessName}}" },
+            { label: "Employer identification number", value: "{{ein}}" },
+            { label: "Old mailing address", value: "{{street}}, {{city}}, {{state}} {{zip}}" },
+            { label: "New mailing address", value: "{{baseStreet}}, {{baseCity}}, GA {{baseZip}}" },
+            { label: "New business location", value: "{{baseStreet}}, {{baseCity}}, GA {{baseZip}}" },
+            { label: "Signature: name and title", value: "{{owner1}}, {{owner1Title}}" },
+            { label: "Daytime telephone", value: "{{phone}}" },
+          ],
+        },
+      ],
+      sources: [
+        { title: "Georgia Secretary of State: Corporations Division (eCorp)", url: "https://ecorp.sos.ga.gov/" },
+        { title: "IRS: Form 8822-B", url: "https://www.irs.gov/forms-pubs/about-form-8822-b" },
+      ],
+    },
     {
       id: "ssn-beantragen",
       phase: "ankunft",
@@ -787,103 +1041,6 @@ window.KINDLER = {
       ],
     },
     {
-      id: "notar-save",
-      phase: "ankunft",
-      title: "Nachweis des legalen Aufenthalts notariell beglaubigen lassen",
-      summary: "Georgia verlangt für Gewerbeschein und Lebensmittelgenehmigung eine eidesstattliche Erklärung zum Aufenthaltsstatus, vor einem Notar unterschrieben.",
-      why: "Der staatliche Antrag für Mobile Food Units verlangt ausdrücklich eine „Original, notarized Verification of Residency“ mit Kopie eines anerkannten Ausweisdokuments.",
-      todo: [
-        "Formular vom Gesundheitsamt und vom Bauamt geben lassen (jedes Amt hat oft ein eigenes)",
-        "Bei einem Notar unterschreiben (Bank oder UPS-Laden)",
-        "Kopie von Pass plus I-94 anheften",
-        "Je ein Original für Gesundheitsamt und Gewerbeschein",
-      ],
-      forms: [
-        {
-          title: "Verification of Lawful Presence / Residency (Ausfüllhilfe)",
-          url: "https://dph.georgia.gov/sites/dph.georgia.gov/files/VerificationLawfulResidency061814.pdf",
-          note: "Nicht vor dem Notar ausfüllen, nur unterschreiben, wenn er dabei ist.",
-          fields: [
-            { label: "Status (Ankreuzen)", value: "I am a qualified alien or non-immigrant under the Federal Immigration and Nationality Act" },
-            { label: "Alien number", value: "", hint: "Habt ihr keine Alien-Nummer, fragt das Amt, ob die I-94-Nummer akzeptiert wird" },
-            { label: "Secure and verifiable document", value: "Unexpired foreign passport with Form I-94" },
-            { label: "Printed name", value: "{{owner1}}" },
-          ],
-        },
-      ],
-      cautions: [
-        "Für Nicht-Staatsbürger verlangt das Formular eine „Alien Number“. Viele E-2-Inhaber haben keine. Fragt beim Amt nach, was ihr stattdessen eintragen sollt.",
-      ],
-    },
-    {
-      id: "gewerbeschein-lamar",
-      phase: "ankunft",
-      title: "Gewerbeschein (Occupation Tax Certificate) in Lamar County",
-      summary: "Für den Stützpunkt in Lamar County. Jährlich bis 31. März zu erneuern.",
-      where: [{ ref: "lamarPlanning" }],
-      bring: [
-        "Ausgefüllter Antrag „LC Business License“ (auf lamarcountyga.com)",
-        "Lichtbildausweis (Georgia-Führerschein oder Pass)",
-        "Kopie staatlicher Lizenzen, falls vorhanden",
-        "Notariell beglaubigte Erklärung zum Aufenthaltsstatus",
-        "Passender Betrag in bar oder Scheck",
-      ],
-      scripts: [
-        {
-          title: "Am Schalter",
-          kind: "inperson",
-          lines: [
-            { en: "Hello, I would like to apply for a business license for our food truck base of operation at {{baseStreet}}.", de: "Hallo, ich möchte einen Gewerbeschein für den Stützpunkt unseres Food Trucks beantragen." },
-            { en: "The zoning for this location was approved by your office.", de: "Die Zoning-Freigabe für den Standort hat Ihr Amt schon erteilt." },
-            { en: "How much is the fee, and can I pay by check?", de: "Wie hoch ist die Gebühr, und kann ich mit Scheck zahlen?" },
-          ],
-        },
-      ],
-      forms: [
-        {
-          title: "Lamar County Business License (Ausfüllhilfe)",
-          url: "https://www.lamarcountyga.com/?p=918",
-          note: "Typische Angaben. Das Formular selbst kann andere Bezeichnungen verwenden.",
-          fields: [
-            { label: "Business name", value: "{{businessName}}" },
-            { label: "Business location address", value: "{{baseStreet}}, {{baseCity}}, GA {{baseZip}}" },
-            { label: "Mailing address", value: "{{street}}, {{city}}, {{state}} {{zip}}" },
-            { label: "Owner(s)", value: "{{owner1}}; {{owner2}}" },
-            { label: "Type of business", value: "{{legalForm}}" },
-            { label: "Federal ID (EIN)", value: "{{ein}}" },
-            { label: "Description of business", value: "Base of operation for a mobile food unit (food truck). No food sales at this location." },
-            { label: "Phone", value: "{{phone}}" },
-            { label: "Email", value: "{{email}}" },
-          ],
-        },
-      ],
-      sources: [
-        { title: "Lamar County: Business Licenses", url: "https://www.lamarcountyga.com/?p=918" },
-      ],
-    },
-    {
-      id: "gewerbeschein-pike",
-      phase: "ankunft",
-      title: "Prüfen: Braucht ihr auch in Pike County einen Gewerbeschein?",
-      summary: "Eure Firmenadresse liegt in Pike County. Fragt, ob für einen Firmensitz zu Hause ein Gewerbeschein nötig ist.",
-      todo: [
-        "Pike County anrufen (Nummer auf pikecoga.com) und fragen",
-        "Falls ja: beantragen, wie in Lamar County",
-      ],
-      scripts: [
-        {
-          title: "Anruf bei Pike County",
-          kind: "call",
-          to: "Pike County Verwaltung (pikecoga.com)",
-          lines: [
-            { en: "Hello, our company {{businessName}} has its mailing address at our home, {{street}}, {{city}}.", de: "Hallo, unsere Firma hat ihre Postadresse bei uns zu Hause." },
-            { en: "We run a food truck. The truck's base of operation is in Lamar County, and we do not sell food at our home.", de: "Wir betreiben einen Food Truck. Der Stützpunkt ist in Lamar County, zu Hause verkaufen wir nichts." },
-            { en: "Do we need a business license or home occupation permit in Pike County?", de: "Brauchen wir in Pike County einen Gewerbeschein oder eine Genehmigung für ein Gewerbe von zu Hause?" },
-          ],
-        },
-      ],
-    },
-    {
       id: "versicherungen",
       phase: "ankunft",
       title: "Geschäftsversicherungen abschließen",
@@ -909,90 +1066,6 @@ window.KINDLER = {
     },
 
     // ================= PHASE: GENEHMIGUNG =================
-    {
-      id: "antrag-dph",
-      phase: "genehmigung",
-      title: "Antrag „Mobile Food Unit Permit“ ausfüllen",
-      summary: "Der eigentliche Antrag beim Gesundheitsamt. Erst einreichen, wenn alle Anlagen vollständig sind.",
-      why: "Fehlende Anlagen verzögern die Prüfung. Das Amt bearbeitet unvollständige Anträge oft gar nicht.",
-      todo: [
-        "Formular herunterladen (Link unten)",
-        "Mit der Ausfüllhilfe unten ausfüllen",
-        "Anlage: Speisekarte",
-        "Anlage: mindestens 2 Fotos vom Truck (innen und außen)",
-        "Anlage: Grundriss-Zeichnung mit allen Geräten",
-        "Anlage: Datenblätter aller Geräte",
-        "Anlage: notariell beglaubigte Erklärung zum Aufenthaltsstatus mit Kopie von Pass und I-94",
-        "Anlage: Nachweise anderer Ämter (Zoning-Freigabe, ggf. Feuerwehr)",
-        "Anlage: Mobile Food Unit Location Form",
-        "Anlage: Toilet Use Agreement (Toilette in der Nähe der Verkaufsorte)",
-        "Anlage: Property Use Agreement (Grundstückseigentümer)",
-        "Anlage: CFSM-Zertifikat (Kopie)",
-        "Anlage: Wassertest (nur bei Brunnen), Fotos der Dump Station, Altöl-Vertrag",
-        "Alles kopieren, bevor ihr es abgebt",
-      ],
-      forms: [
-        {
-          title: "DPH Mobile Food Unit Permit Application (Ausfüllhilfe)",
-          url: "https://dph.georgia.gov/document/document/dph-mobile-food-unit-permit-application-pdf/download",
-          note: "Felder in der Reihenfolge des Formulars. Fragen zur Technik beantwortet ihr mit den Datenblättern des Trucks.",
-          fields: [
-            { label: "Reason for application", value: "New Application" },
-            { label: "Name of Unit", value: "{{unitName}}" },
-            { label: "Unit Mailing Address", value: "{{street}}, {{city}}, {{state}} {{zip}}" },
-            { label: "Mobile Unit Vehicle License # and VIN", value: "{{unitPlate}} / {{unitVin}}" },
-            { label: "Name of Base of Operation", value: "{{baseName}}" },
-            { label: "Base of Operation Owner", value: "{{baseOwner}}" },
-            { label: "Base of Operation Permit #", value: "", hint: "Leer lassen, falls noch keine Nummer" },
-            { label: "County", value: "Lamar" },
-            { label: "Base of Operation Mailing Address", value: "{{baseStreet}}, {{baseCity}}, GA {{baseZip}}" },
-            { label: "Unit Manager", value: "{{cfsmName}}" },
-            { label: "Unit Manager Email / Phone", value: "{{email}} / {{phone}}" },
-            { label: "Unit Manager's Supervisor", value: "{{owner1}}" },
-            { label: "Billing Contact Name", value: "{{owner1}}" },
-            { label: "Billing Address", value: "{{street}}, {{city}}, {{state}} {{zip}}" },
-            { label: "Billing Contact Email / Phone", value: "{{email}} / {{phone}}" },
-            { label: "Business Ownership Type", value: "{{legalForm}}" },
-            { label: "Owners and officers", value: "{{owner1}} ({{owner1Title}}); {{owner2}} ({{owner2Title}}), {{street}}, {{city}}, {{state}} {{zip}}, {{phone}}" },
-            { label: "Freshwater tank capacity", value: "{{freshTank}} gallons" },
-            { label: "Wastewater tank capacity (must be 15% larger)", value: "{{wasteTank}} gallons" },
-            { label: "Method for removing wastewater at the base", value: "Wastewater tank is drained daily into the dump station at the base of operation at {{baseStreet}}, {{baseCity}}. The tank is flushed with potable water from the base tap." },
-            { label: "Name of Owner or Authorized Agent (Print)", value: "{{owner1}}" },
-            { label: "Title", value: "{{owner1Title}}" },
-            { label: "Address", value: "{{street}}, {{city}}, {{state}} {{zip}}" },
-            { label: "Phone #", value: "{{phone}}" },
-          ],
-        },
-      ],
-      sources: [
-        { title: "Georgia DPH: Antrag Mobile Food Unit (PDF)", url: "https://dph.georgia.gov/document/document/dph-mobile-food-unit-permit-application-pdf/download" },
-        { title: "Georgia DPH: Formulare (Location Form, Toilet Use, Property Use)", url: "https://dph.georgia.gov/environmental-health/food-service" },
-      ],
-    },
-    {
-      id: "antrag-einreichen",
-      phase: "genehmigung",
-      title: "Antrag einreichen und Gebühr zahlen",
-      summary: "Persönlich bei Lamar County Environmental Health abgeben. Gebühr für die Planprüfung ist nicht erstattbar.",
-      where: [{ ref: "lamarEH" }],
-      bring: [
-        "Kompletter Antrag mit allen Anlagen (Original)",
-        "Eine Kopie für euch",
-        "Zahlungsmittel für die Gebühr (Betrag vorher erfragen; in Upson County 250 USD)",
-      ],
-      scripts: [
-        {
-          title: "Am Schalter",
-          kind: "inperson",
-          lines: [
-            { en: "Hello, I would like to submit our application for a mobile food unit permit. Our base of operation is in Lamar County.", de: "Hallo, ich möchte unseren Antrag für eine Mobile-Food-Unit-Genehmigung abgeben. Unser Stützpunkt ist in Lamar County." },
-            { en: "Could you please check that everything is complete before I leave?", de: "Können Sie bitte prüfen, ob alles vollständig ist, bevor ich gehe?" },
-            { en: "How long does the plan review usually take?", de: "Wie lange dauert die Prüfung normalerweise?" },
-            { en: "What is the next step after the plan review? When can we schedule the inspection?", de: "Was ist der nächste Schritt nach der Prüfung? Wann können wir die Inspektion vereinbaren?" },
-          ],
-        },
-      ],
-    },
     {
       id: "inspektion",
       phase: "genehmigung",
