@@ -31,7 +31,13 @@ if (process.env.DATABASE_URL) {
   const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: process.env.PGSSL === "disable" ? false : { rejectUnauthorized: false },
+    max: 3,
+    idleTimeoutMillis: 10000,
+    connectionTimeoutMillis: 10000,
   });
+  // Render beendet ungenutzte Datenbank-Verbindungen. Ohne diesen Handler
+  // wirft der Pool einen unbehandelten Fehler und der ganze Prozess stürzt ab (502).
+  pool.on("error", (e) => console.error("Datenbank-Verbindung verloren, wird neu aufgebaut:", e.message));
   store = {
     async init() {
       await pool.query(
@@ -297,6 +303,9 @@ app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).json({ error: "Serverfehler" });
 });
+
+process.on("unhandledRejection", (e) => console.error("Unbehandelter Fehler:", e));
+process.on("uncaughtException", (e) => console.error("Unerwarteter Fehler:", e));
 
 store
   .init()
